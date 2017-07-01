@@ -170,3 +170,43 @@
 (el-get-bundle monokai-theme
   :url "https://github.com/oneKelvinSmith/monokai-emacs"
   (load-theme 'monokai t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; calendar
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq calendar-week-start-day 0)	; 0:Sunday, 1:Monday
+
+;; korean holidays
+(el-get-bundle korean-holidays
+  :type github :pkgname "tttuuu888/korean-holidays"
+  (setq calendar-holidays korean-holidays))
+
+;; calfw
+(el-get-bundle calfw
+  :type github :pkgname "kiwanami/emacs-calfw"
+  (require 'calfw)
+  (require 'calfw-org))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; org
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-mode
+(require 'org)
+
+(add-to-list 'auto-mode-alist		; org-mode extension
+	     '("\\.org$" . org-mode))
+
+(load-library "find-lisp")		; set agenda files
+(setq org-agenda-files
+      (find-lisp-find-files "/home/backup/Org" "\.org$"))
+
+(setq org-todo-keywords			; todo keyword
+      '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
+
+(setq org-hide-leading-stars t)
+
+(setq org-startup-with-inline-images t)	; show inline image
+(setq org-image-actual-width		; resize inline image (1/3)
+      (/ (display-pixel-width) 3))
+
+(setq org-agenda-start-on-weekday 0)	; agenda starts on sunday
