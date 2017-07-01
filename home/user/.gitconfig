@@ -1,0 +1,19 @@
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+[user]
+	email = seunguk.shin@gmail.com
+	name = Seunguk Shin
+[core]
+	editor = vi
+[http]
+#	proxy = ip:port
+#	sslVerify = false
+#	noproxy = localhost,ip
+[color]
+	ui = true
+[push]
+	default = simple
