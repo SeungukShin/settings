@@ -200,7 +200,10 @@
 (el-get-bundle calfw
   :type github :pkgname "kiwanami/emacs-calfw"
   (require 'calfw)
-  (require 'calfw-org))
+  (require 'calfw-org)
+
+  ;; remove warning message from compiler
+  (declare-function org-bookmark-jump-unhide "org"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
