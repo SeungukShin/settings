@@ -190,9 +190,11 @@
 (setq calendar-week-start-day 0)	; 0:Sunday, 1:Monday
 
 ;; korean holidays
-(el-get-bundle korean-holidays
-  :type github :pkgname "tttuuu888/korean-holidays"
-  (setq calendar-holidays korean-holidays))
+(with-eval-after-load 'holidays
+  (el-get-bundle korean-holidays
+    :type github :pkgname "tttuuu888/korean-holidays"
+    (require 'korean-holidays)
+    (setq calendar-holidays korean-holidays)))
 
 ;; calfw
 (el-get-bundle calfw
