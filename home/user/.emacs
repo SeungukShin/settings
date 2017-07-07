@@ -185,6 +185,38 @@
   (load-theme 'monokai t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; org
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-mode
+(require 'org)
+
+(add-to-list 'auto-mode-alist		; org-mode extension
+	     '("\\.org$" . org-mode))
+
+(setq org-todo-keywords			; todo keyword
+      '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
+
+(setq org-hide-leading-stars t)
+
+(setq org-startup-with-inline-images t)	; show inline image
+(setq org-image-actual-width		; resize inline image (1/3)
+      (/ (display-pixel-width) 3))
+
+;; agenda
+(load-library "find-lisp")		; set agenda files
+(setq org-agenda-files
+      (find-lisp-find-files "/home/backup/Org" "\.org$"))
+
+(setq org-agenda-start-on-weekday 0)	; agenda starts on sunday
+
+;; binding
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cr" 'org-remember)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq calendar-week-start-day 0)	; 0:Sunday, 1:Monday
@@ -204,34 +236,3 @@
 
   ;; remove warning message from compiler
   (declare-function org-bookmark-jump-unhide "org"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; org
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org-mode
-(require 'org)
-
-(add-to-list 'auto-mode-alist		; org-mode extension
-	     '("\\.org$" . org-mode))
-
-(load-library "find-lisp")		; set agenda files
-(setq org-agenda-files
-      (find-lisp-find-files "/home/backup/Org" "\.org$"))
-
-(setq org-todo-keywords			; todo keyword
-      '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
-
-(setq org-hide-leading-stars t)
-
-(setq org-startup-with-inline-images t)	; show inline image
-(setq org-image-actual-width		; resize inline image (1/3)
-      (/ (display-pixel-width) 3))
-
-(setq org-agenda-start-on-weekday 0)	; agenda starts on sunday
-
-;; binding
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-(global-set-key "\C-cr" 'org-remember)
