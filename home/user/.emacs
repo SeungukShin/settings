@@ -291,3 +291,11 @@
 
   ;; remove warning message from compiler
   (declare-function org-bookmark-jump-unhide "org"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; git-gutter
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; git-gutter
+(el-get-bundle git-gutter
+  (require 'git-gutter)
+  (global-git-gutter-mode t))
