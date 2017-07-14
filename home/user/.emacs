@@ -264,6 +264,13 @@
 
 (setq org-agenda-start-on-weekday 0)	; agenda starts on sunday
 
+;; babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh . t)
+   (R . nil)))
+
 ;; binding
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cl" 'org-store-link)
