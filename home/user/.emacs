@@ -240,6 +240,43 @@
       "k" 'kill-buffer)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; cscope
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; xcscope & helm-cscope
+(el-get-bundle xcscope)
+(el-get-bundle helm-cscope
+  :type github :pkgname "alpha22jp/helm-cscope.el")
+(when (and (require 'xcscope nil t)
+	   (require 'helm-cscope nil t))
+
+  ;; emacs binding
+  (add-hook 'c-mode-common-hook 'helm-cscope-mode)
+  (add-hook 'helm-cscope-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
+	      (local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
+	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-funtcion)
+	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-funtcion)
+	      (local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
+	      (local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
+	      (local-set-key (kbd "C-, cf") 'helm-cscope-find-this-file)
+	      (local-set-key (kbd "C-, ci") 'helm-cscope-find-files-including-file)
+	      (local-set-key (kbd "C-, co") 'helm-cscope-pop-mark)))
+
+  ;; evil binding
+  (with-eval-after-load 'evil
+    (evil-leader/set-key-for-mode 'c-mode
+      "cs" 'helm-cscope-find-this-symbol
+      "cg" 'helm-cscope-find-global-definition
+      "cd" 'helm-cscope-find-called-this-funtcion
+      "cc" 'helm-cscope-find-calling-this-funtcion
+      "ct" 'helm-cscope-find-this-text-string
+      "ce" 'helm-cscope-find-egrep-pattern
+      "cf" 'helm-cscope-find-this-file
+      "ci" 'helm-cscope-find-files-including-file
+      "co" 'helm-cscope-pop-mark)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
