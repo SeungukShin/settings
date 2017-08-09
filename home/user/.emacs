@@ -337,8 +337,12 @@
   (declare-function org-bookmark-jump-unhide "org"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; git-gutter
+;;; git
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; magit
+(el-get-bundle magit
+  (require 'magit))
+
 ;; git-gutter
 (el-get-bundle git-gutter
   (require 'git-gutter)
