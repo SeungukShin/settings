@@ -5,8 +5,8 @@
 (require 'server)
 
 ;; use tcp server
-;(setq server-use-tcp t)
-;(setq server-host "ip")
+;(setq server-use-tcp t
+;      server-host "ip")
 
 ;; start server
 ;(unless (server-running-p) (server-start))
@@ -48,8 +48,8 @@
 (setq el-get-dir (concat user-emacs-directory "lisp/"))
 (add-to-list 'el-get-recipe-path (concat user-emacs-directory "recipes/"))
 
-(setq el-get-bundle-sync nil)		; allow async. operation
-(setq el-get-allow-insecure t)		; allow local file
+(setq el-get-bundle-sync nil		; allow async. operation
+      el-get-allow-insecure t)		; allow local file
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; configure
@@ -109,14 +109,14 @@
 ;;; save
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto saving
-(setq backup-inhibited t)               ; disable backaup
-(setq auto-save-default nil)            ; disable auto save
-(setq auto-save-list-file-prefix temp-emacs-directory)
+(setq backup-inhibited t                ; disable backaup
+      auto-save-default nil             ; disable auto save
+      auto-save-list-file-prefix temp-emacs-directory)
 
 ;; save last position
 (save-place-mode t)
-(setq save-place-file (expand-file-name "places" temp-emacs-directory))
-(setq save-place-forget-unreadable-files nil)
+(setq save-place-file (expand-file-name "places" temp-emacs-directory)
+      save-place-forget-unreadable-files nil)
 
 ;; save recent files
 (recentf-mode t)
@@ -166,8 +166,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ediff
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; global binding
@@ -282,24 +282,24 @@
 ;; org-mode
 (require 'org)
 
+;; basic
 (add-to-list 'auto-mode-alist		; org-mode extension
 	     '("\\.org$" . org-mode))
-
 (setq org-todo-keywords			; todo keyword
       '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
-
 (setq org-hide-leading-stars t)
 
-(setq org-startup-with-inline-images t)	; show inline image
-(setq org-image-actual-width		; resize inline image (1/3)
+;; image
+(setq org-startup-with-inline-images t	; show inline image
+      org-image-actual-width		; resize inline image (1/3)
       (/ (display-pixel-width) 3))
 
 ;; agenda
 (load-library "find-lisp")		; set agenda files
 (setq org-agenda-files
-      (find-lisp-find-files "/home/backup/Org" "\.org$"))
-
-(setq org-agenda-start-on-weekday 0)	; agenda starts on sunday
+      (find-lisp-find-files "/home/backup/Org" "\.org$")
+      org-agenda-start-on-weekday 0	; agenda starts on sunday
+      org-agenda-span 31)		; number of days for agenda
 
 ;; babel
 (org-babel-do-load-languages
