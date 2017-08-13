@@ -175,6 +175,11 @@
 (setq show-paren-style 'mixed)
 (set-face-background 'show-paren-match-face "blue")
 
+;; smartparens
+(el-get-bundle smartparens)
+(when (require 'smartparens-config nil t)
+  (smartparens-global-mode t))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ediff
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
