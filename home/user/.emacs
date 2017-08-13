@@ -142,6 +142,10 @@
 ;; empty line
 (setq indicate-empty-lines t)
 
+;; blank mode
+(el-get-bundle blank-mode
+  (require 'blank-mode))
+
 ;; highlight current word
 (defvar highlight-current-word-color-index
   0
