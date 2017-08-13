@@ -79,6 +79,14 @@
 (global-auto-revert-mode t)		; auto refresh
 ;(global-linum-mode)                    ; line number
 
+;; fill column indicator
+(el-get-bundle fill-column-indicator)
+(when (require 'fill-column-indicator nil t)
+  (setq fci-rule-width 1)
+  (setq fci-rule-color "dark blue")
+  (setq-default fill-column 80)
+  (add-hook 'after-change-major-mode-hook 'fci-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; mode line
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
