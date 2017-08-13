@@ -294,6 +294,42 @@
       "co" 'helm-cscope-pop-mark)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; C/C++
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; style
+(setq c-default-style "bsd"
+      c-basic-offset 8)
+(which-function-mode 1)
+
+;; tab
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq-default indent-tabs-mode t)
+            (setq indent-tabs-mode t)
+            (setq tab-always-indent t)))
+
+;; auto-correction
+(add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1))))
+
+;; compile
+(defun compile-default-directory ()
+  (interactive)
+  (setq work-directory default-directory)
+  (call-interactively 'compile))
+
+(defun compile-work-directory ()
+  (interactive)
+  (if (boundp 'work-directory) nil
+    (setq work-directory default-directory))
+  (setq backup-directory default-directory)
+  (setq default-directory work-directory)
+  (call-interactively 'compile)
+  (setq default-directory backup-directory))
+
+(global-set-key "\C-c\C-m" 'compile-default-directory)
+(global-set-key "\C-cm"    'compile-work-directory)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
