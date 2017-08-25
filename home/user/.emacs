@@ -194,6 +194,9 @@
 (global-set-key (kbd "C-S-SPC")   'rectangle-mark-mode)
 (global-set-key (kbd "<C-kanji>") 'set-mark-command)
 
+;; yes/no to y/n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; theme
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
