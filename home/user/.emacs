@@ -364,6 +364,14 @@
    (sh . t)
    (R . nil)))
 
+;; fonts
+(custom-set-faces '(org-level-1 ((t (:height 1.0))))
+		  '(org-level-2 ((t (:height 1.0))))
+		  '(org-level-3 ((t (:height 1.0))))
+		  '(org-level-4 ((t (:height 1.0))))
+		  '(org-level-5 ((t (:height 1.0))))
+		  '(org-level-6 ((t (:height 1.0)))))
+
 ;; binding
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cl" 'org-store-link)
