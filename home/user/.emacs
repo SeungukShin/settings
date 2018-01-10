@@ -424,3 +424,11 @@
 (el-get-bundle git-gutter
   (require 'git-gutter)
   (global-git-gutter-mode t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; gradle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gradle
+(el-get-bundle gradle-mode
+  (require 'gradle-mode)
+  (gradle-mode 1))
