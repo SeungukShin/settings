@@ -97,15 +97,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; fonts
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(progn
-  (add-to-list 'default-frame-alist '(font . "-outline-D2Coding-normal-normal-normal-mono-16-*-*-*-c-*-iso10646-1"))
-  (add-hook 'after-make-frame-functions
-	    (lambda (frame)
-	      (with-selected-frame frame
-		(set-fontset-font "fontset-default" 'hangul '("D2Coding" . "unicode-bmp"))))))
-(when window-system
-  (set-face-font 'default "-outline-D2Coding-normal-normal-normal-mono-16-*-*-*-c-*-iso10646-1")
-  (set-fontset-font "fontset-default" 'hangul '("D2Coding" . "unicode-bmp")))
+(set-face-attribute 'default nil
+		    :font "D2Coding"
+		    :height 120)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; input method
