@@ -418,7 +418,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 (el-get-bundle magit
-  (require 'magit))
+  (load (concat el-get-dir "magit/lisp/magit-autoloads")))
 
 ;; git-gutter
 (el-get-bundle git-gutter
