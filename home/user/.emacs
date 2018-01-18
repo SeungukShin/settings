@@ -364,9 +364,10 @@
       (/ (display-pixel-width) 3))
 
 ;; agenda
-(load-library "find-lisp")		; set agenda files
-(setq org-agenda-files
-      (find-lisp-find-files (concat home-emacs-directory "Org") "\.org$")
+;(load-library "find-lisp")
+(setq org-agenda-files			; set agenda files
+      (file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
+      ;(find-lisp-find-files (concat home-emacs-directory "Org") "\.org$")
       org-agenda-start-on-weekday 0	; agenda starts on sunday
       org-agenda-span 31)		; number of days for agenda
 
