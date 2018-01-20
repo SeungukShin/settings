@@ -129,9 +129,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; highlight current line
 (global-hl-line-mode 1)
-(set-face-foreground  'highlight nil)
-(set-face-background  'highlight "#444444")
-(set-face-underline-p 'highlight nil)
+(set-face-foreground 'highlight nil)
+(set-face-background 'highlight "#444444")
+(set-face-underline  'highlight nil)
 
 ;; empty line
 (setq indicate-empty-lines t)
@@ -222,7 +222,7 @@
   (when (executable-find "curl")
     (setq helm-net-prefer-curl t))
 
-  (setq helm-split-window-in-side-p t
+  (setq helm-split-window-inside-p t
 	helm-move-to-line-cycle-in-source t
 	helm-ff-search-library-in-sexp t
 	helm-scroll-amount 8
