@@ -309,6 +309,10 @@
 (add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1))))
 
 ;; compile
+(eval-when-compile
+  (defvar work-directory)
+  (defvar backup-directory))
+
 (defun compile-default-directory ()
   (interactive)
   (setq work-directory default-directory)
