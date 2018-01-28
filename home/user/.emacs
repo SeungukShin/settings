@@ -425,3 +425,12 @@
   (if (eq system-type 'windows-nt)
       (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
   (gradle-mode 1))
+
+;; flyspell
+(el-get-bundle flyspell
+  (require 'ispell)
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (if (eq system-type 'windows-nt)
+		  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
+	      (flyspell-mode 1))))
