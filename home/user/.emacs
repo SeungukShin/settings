@@ -71,6 +71,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; display
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; main frame
 (setq inhibit-startup-message t)	; disable startup message
 (menu-bar-mode -1)			; hide menu bar
 (tool-bar-mode -1)			; hide tool bar
@@ -79,6 +80,21 @@
 (global-auto-revert-mode t)		; auto refresh
 ;(global-linum-mode)                    ; line number
 
+;; mode line
+(line-number-mode t)			; display line number in mode line
+(column-number-mode t)			; display column number in mode line
+(size-indication-mode t)		; display file size in mode line
+
+;; fonts
+(set-face-attribute 'default nil
+		    :font "D2Coding"
+		    :height 120)
+
+;; theme
+(el-get-bundle monokai-theme
+  :url "https://github.com/oneKelvinSmith/monokai-emacs"
+  (load-theme 'monokai t))
+
 ;; fill column indicator
 (el-get-bundle fill-column-indicator)
 (when (require 'fill-column-indicator nil t)
@@ -86,20 +102,6 @@
   (setq fci-rule-color "dark blue")
   (setq-default fill-column 80)
   (add-hook 'after-change-major-mode-hook 'fci-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; mode line
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(line-number-mode t)			; display line number in mode line
-(column-number-mode t)			; display column number in mode line
-(size-indication-mode t)		; display file size in mode line
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; fonts
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(set-face-attribute 'default nil
-		    :font "D2Coding"
-		    :height 120)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; input method
@@ -181,7 +183,7 @@
       ediff-split-window-function 'split-window-horizontally)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; global binding
+;;; etc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; selection
 (global-set-key (kbd "C-SPC")     'set-mark-command)
@@ -191,16 +193,6 @@
 ;; yes/no to y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; theme
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(el-get-bundle monokai-theme
-  :url "https://github.com/oneKelvinSmith/monokai-emacs"
-  (load-theme 'monokai t))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; which-key
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; which-key
 (el-get-bundle which-key)
 (when (require 'which-key)
@@ -331,19 +323,6 @@
 (global-set-key "\C-cm"    'compile-work-directory)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; latex
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; auctex
-(el-get-bundle auctex
-  :url "https://git.savannah.gnu.org/git/auctex.git"
-  (load "auctex.el" nil t t))
-
-;; latex preview pane
-(el-get-bundle latex-preview-pane
-  (require 'latex-preview-pane)
-  (latex-preview-pane-enable))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
@@ -413,7 +392,20 @@
   (declare-function org-bookmark-jump-unhide "org"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; git
+;;; latex
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auctex
+(el-get-bundle auctex
+  :url "https://git.savannah.gnu.org/git/auctex.git"
+  (load "auctex.el" nil t t))
+
+;; latex preview pane
+(el-get-bundle latex-preview-pane
+  (require 'latex-preview-pane)
+  (latex-preview-pane-enable))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; version control system
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 (el-get-bundle magit
@@ -425,9 +417,11 @@
   (global-git-gutter-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; gradle
+;;; check & build
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gradle
 (el-get-bundle gradle-mode
   (require 'gradle-mode)
+  (if (eq system-type 'windows-nt)
+      (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
   (gradle-mode 1))
