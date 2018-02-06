@@ -192,6 +192,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; selection
 (cua-mode t)
+(setq cua-enable-cua-keys nil)
 (global-set-key (kbd "C-SPC")     'set-mark-command)
 (global-set-key (kbd "<C-kanji>") 'set-mark-command)
 
