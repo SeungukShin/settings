@@ -86,8 +86,13 @@
 (size-indication-mode t)		; display file size in mode line
 
 ;; fonts
+;(set-face-attribute 'default nil
+;		    :font "D2Coding"
+;		    :height 120)
+(set-fontset-font "fontset-default" 'latin (font-spec :name "D2Coding"))
+(set-fontset-font "fontset-default" 'hangul (font-spec :name "D2Coding"))
 (set-face-attribute 'default nil
-		    :font "D2Coding"
+		    :font "fontset-default"
 		    :height 120)
 
 ;; theme
