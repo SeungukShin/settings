@@ -266,7 +266,7 @@
 	    (lambda ()
 	      (local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
 	      (local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
-	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-funtcion)
+	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-function)
 	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-funtcion)
 	      (local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
 	      (local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
