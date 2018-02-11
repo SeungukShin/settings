@@ -268,7 +268,7 @@
 	      (local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
 	      (local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
 	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-function)
-	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-funtcion)
+	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-function)
 	      (local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
 	      (local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
 	      (local-set-key (kbd "C-, cf") 'helm-cscope-find-this-file)
@@ -280,8 +280,8 @@
     (evil-leader/set-key-for-mode 'c-mode
       "cs" 'helm-cscope-find-this-symbol
       "cg" 'helm-cscope-find-global-definition
-      "cd" 'helm-cscope-find-called-this-funtcion
-      "cc" 'helm-cscope-find-calling-this-funtcion
+      "cd" 'helm-cscope-find-called-this-function
+      "cc" 'helm-cscope-find-calling-this-function
       "ct" 'helm-cscope-find-this-text-string
       "ce" 'helm-cscope-find-egrep-pattern
       "cf" 'helm-cscope-find-this-file
