@@ -335,7 +335,10 @@
 	     '("\\.org$" . org-mode))
 (setq org-todo-keywords			; todo keyword
       '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
-(setq org-hide-leading-stars t)
+(setq org-hide-leading-stars t
+      org-odd-levels-only t)
+(add-to-list 'org-emphasis-alist
+	     '("*" (:foreground "red")))
 
 ;; image
 (setq org-startup-with-inline-images t	; show inline image
