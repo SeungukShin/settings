@@ -327,11 +327,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org-mode
+;; org
 (require 'org)
 
 ;; basic
-(add-to-list 'auto-mode-alist		; org-mode extension
+(add-to-list 'auto-mode-alist		; org mode extension
 	     '("\\.org$" . org-mode))
 (setq org-todo-keywords			; todo keyword
       '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
