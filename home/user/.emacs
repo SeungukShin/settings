@@ -454,3 +454,38 @@
 	w3m-input-coding-system 'utf-8
 	w3m-output-coding-system 'utf-8
 	w3m-terminal-coding-system 'utf-8))
+
+;; gnus
+(setq user-mail-address "user@gmail.com"
+      user-full-name "user")
+
+(setq gnus-select-method
+      '(nnimap "gmail"
+	       (nnimap-address "imap.gmail.com")
+	       (nnimap-server-port 993)
+	       (nnimap-stream ssl)))
+
+(setq smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587)
+
+(setq mm-text-html-renderer 'w3m)
+(setq mm-inline-text-html-with-images t)
+(setq mm-w3m-safe-url-regexp nil)
+
+(setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+	       (vertical 25
+			 (group 1.0))
+	       (vertical 1.0
+			 (summary 0.25 point)
+			 (article 1.0)))))
+(gnus-add-configuration
+ '(summary
+   (horizontal 1.0
+	       (vertical 25
+			 (group 1.0))
+	       (vertical 1.0
+			 (summary 1.0 point)))))
