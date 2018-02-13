@@ -436,3 +436,21 @@
 	      (if (eq system-type 'windows-nt)
 		  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
 	      (flyspell-mode 1))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; mail
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; emacs-w3m
+(el-get-bundle emacs-w3m
+  :type git
+  :url "https://github.com/ecbrown/emacs-w3m"
+  (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+  (setq browse-url-browser-function 'w3m-browse-url)
+  (setq w3m-use-cookies t)
+  (setq w3m-default-display-inline-images t)
+  (setq w3m-coding-system 'utf-8
+	w3m-file-coding-system 'utf-8
+	w3m-file-name-coding-system 'utf-8
+	w3m-input-coding-system 'utf-8
+	w3m-output-coding-system 'utf-8
+	w3m-terminal-coding-system 'utf-8))
