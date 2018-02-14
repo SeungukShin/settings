@@ -91,7 +91,15 @@
 (set-face-attribute 'default nil
 		    :font "fontset-default"
 		    :height 120)
-(setq default-frame-alist '((font . "D2Coding")))	;; for emacsclient
+(create-fontset-from-fontset-spec
+"-*-fixed-medium-r-normal-*-16-*-*-*-c-*-fontset-frame,
+latin-jisx0201:-unknown-D2Coding-normal-normal-*-*-*-*-*-d-0-iso10646-1,
+korean-ksc5601:-unknown-D2Coding-normal-normal-*-*-*-*-*-d-0-iso10646-1,
+japanese-jisx0208:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1983-*,
+japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
+(set-fontset-font "fontset-frame" 'latin (font-spec :name "D2Coding"))
+(set-fontset-font "fontset-frame" 'hangul (font-spec :name "D2Coding"))
+(add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
 
 ;; theme
 (el-get-bundle monokai-theme
