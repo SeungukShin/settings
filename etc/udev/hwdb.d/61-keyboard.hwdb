@@ -2,3 +2,4 @@
 evdev:name:Kinesis Advantage2 Keyboard:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
  KEYBOARD_KEY_70029=delete
  KEYBOARD_KEY_7004c=esc
+ KEYBOARD_KEY_70045=rightmeta
