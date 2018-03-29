@@ -115,8 +115,13 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (add-hook 'after-change-major-mode-hook 'fci-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; input method
+;;; language
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; default encoding
+(set-language-environment "utf-8")
+(set-default-coding-systems 'utf-8)
+
+;; input method
 (setq default-input-method "korean-hangul")
 (global-set-key [?\S- ] 'toggle-input-method)
 
