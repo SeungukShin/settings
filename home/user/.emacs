@@ -114,6 +114,11 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (setq-default fill-column 80)
   (add-hook 'after-change-major-mode-hook 'fci-mode))
 
+;; diminish mode name on modeline
+(el-get-bundle delight
+  (require 'delight)
+  (delight 'auto-complete-mode "Ⓐ" 'auto-complete))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -186,7 +191,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; smartparens
 (el-get-bundle smartparens)
 (when (require 'smartparens-config nil t)
-  (smartparens-global-mode t))
+  (smartparens-global-mode t)
+
+  (when (require 'delight nil t)
+    (delight 'smartparens-mode "Ⓟ" 'smartparens)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ediff
@@ -209,7 +217,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; which-key
 (el-get-bundle which-key)
 (when (require 'which-key)
-  (which-key-mode))
+  (which-key-mode)
+
+  (when (require 'delight nil t)
+    (delight 'which-key-mode "Ⓚ" 'which-key)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; helm
@@ -256,7 +267,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
       "x" 'helm-M-x
       "e" 'helm-find-files
       "b" 'helm-mini
-      "k" 'kill-buffer)))
+      "k" 'kill-buffer))
+
+  (when (require 'delight nil t)
+    (delight 'helm-mode "Ⓗ" 'helm)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; cscope
@@ -430,7 +444,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; git-gutter
 (el-get-bundle git-gutter
   (require 'git-gutter)
-  (global-git-gutter-mode t))
+  (global-git-gutter-mode t)
+
+  (when (require 'delight nil t)
+    (delight 'git-gutter-mode "Ⓖ" 'git-gutter)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; check & build
@@ -440,7 +457,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (require 'gradle-mode)
   (if (eq system-type 'windows-nt)
       (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
-  (gradle-mode 1))
+  (gradle-mode 1)
+
+  (when (require 'delight nil t)
+    (delight 'gradle-mode "Ⓡ" 'gradle-mode)))
 
 ;; flyspell
 (el-get-bundle flyspell
@@ -449,7 +469,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	    (lambda ()
 	      (if (eq system-type 'windows-nt)
 		  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
-	      (flyspell-mode 1))))
+	      (flyspell-mode 1)))
+
+  (when (require 'delight nil t)
+    (delight 'flyspell-mode "Ⓕ" 'flyspell)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; mail
