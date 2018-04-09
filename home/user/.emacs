@@ -320,9 +320,12 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; tab
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (setq-default indent-tabs-mode t)
-            (setq indent-tabs-mode t)
-            (setq tab-always-indent t)))
+            (setq-default indent-tabs-mode t
+			  tab-width 8
+			  tab-always-indent t)
+            (setq indent-tabs-mode t
+		  tab-width 8
+		  tab-always-indent t)))
 
 ;; auto-correction
 (add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1))))
