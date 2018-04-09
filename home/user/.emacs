@@ -307,7 +307,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
       "ce" 'helm-cscope-find-egrep-pattern
       "cf" 'helm-cscope-find-this-file
       "ci" 'helm-cscope-find-files-including-file
-      "co" 'helm-cscope-pop-mark)))
+      "co" 'helm-cscope-pop-mark))
+
+  (when (require 'delight nil t)
+    (delight 'helm-cscope-mode "Ⓒ" 'helm-cscope)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
