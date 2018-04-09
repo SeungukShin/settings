@@ -126,6 +126,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (set-language-environment "utf-8")
 (set-default-coding-systems 'utf-8)
 
+;; locale
+(setq system-time-locale "C")
+
 ;; input method
 (setq default-input-method "korean-hangul")
 (global-set-key [?\S- ] 'toggle-input-method)
