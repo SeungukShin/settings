@@ -62,11 +62,11 @@
 ;  (init-loader-load (concat user-emacs-directory "init.d/")))
 
 ;; reload .emacs
-(defun reload-dotemacs-file()
+(defun b/reload-dotemacs-file()
   "reload .emacs"
   (interactive)
   (load-file (expand-file-name ".emacs" home-emacs-directory)))
-(global-set-key (kbd "C-c C-l") 'reload-dotemacs-file)
+(global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; display
