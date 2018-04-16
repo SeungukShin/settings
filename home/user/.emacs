@@ -117,7 +117,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; diminish mode name on modeline
 (el-get-bundle delight
   (require 'delight)
-  (delight 'auto-complete-mode "Ⓐ" 'auto-complete))
+  (delight 'server-buffer-clients "Ⓢ" 'server)
+  (delight 'auto-complete-mode "Ⓐ" 'auto-complete)
+  (delight 'abbrev-mode "Ⓑ" 'abbrev))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
