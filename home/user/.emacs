@@ -397,12 +397,17 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
       (/ (display-pixel-width) 3))
 
 ;; agenda
-;(load-library "find-lisp")
+(load-library "find-lisp")
 (setq org-agenda-files			; set agenda files
-      (file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
-      ;(find-lisp-find-files (concat home-emacs-directory "Org") "\.org$")
+      ;(file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
+      (find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$")
       org-agenda-start-on-weekday 0	; agenda starts on sunday
       org-agenda-span 31)		; number of days for agenda
+(defun b/org-agenda-redo ()
+  (interactive)
+  (setq org-agenda-files
+	(find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$"))
+  (org-agenda-redo t))
 
 ;; babel
 (org-babel-do-load-languages
@@ -425,6 +430,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key "\C-cr" 'org-remember)
+(eval-after-load "org-agenda"
+  '(progn
+     (define-key org-agenda-mode-map "r" 'b/org-agenda-redo)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
