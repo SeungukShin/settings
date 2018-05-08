@@ -378,6 +378,16 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		  py-indent-tabs-mode t
 		  tab-always-indent t)))
 
+;; jupyter
+(el-get-bundle skewer-mode)
+(el-get-bundle ein)
+(when (and (require 'skewer-mode nil t)
+	   (require 'ein nil t))
+  (setq request-backend 'url-retrieve)
+  (setq ein:jupyter-default-server-command "jupyter"
+	ein:jupyter-server-args (list "--no-browser")
+	ein:jupyter-default-notebook-directory "~/src/jupyter"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
