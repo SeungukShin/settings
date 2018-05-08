@@ -287,6 +287,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (when (and (require 'xcscope nil t)
 	   (require 'helm-cscope nil t))
 
+  ;; disable auto database update
+  (setq cscope-option-do-not-update-database t)
+
   ;; emacs binding
   (add-hook 'c-mode-common-hook 'helm-cscope-mode)
   (add-hook 'helm-cscope-mode-hook
