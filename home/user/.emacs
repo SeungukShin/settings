@@ -547,6 +547,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	w3m-output-coding-system 'utf-8
 	w3m-terminal-coding-system 'utf-8))
 
+;; notmuch
+(el-get-bundle notmuch
+  (autoload 'notmuch "notmuch" "notmuch mail" t))
+
 ;; gnus
 (setq user-mail-address "user@gmail.com"
       user-full-name "user")
