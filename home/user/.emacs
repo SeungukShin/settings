@@ -474,7 +474,12 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; markdown
 (el-get-bundle markdown-mode
   (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
-  (markdown-mode gfm-mode))
+  (autoload 'gfm-mode "markdown-mode" "Major mode for editing GitHub Flavored Markdown files" t)
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
+
+  (when (require 'delight nil t)
+    (delight 'markdown-mode "Ⓜ" 'markdown)
+    (delight 'gfm-mode "Ⓜ" 'markdown)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; latex
