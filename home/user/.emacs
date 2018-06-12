@@ -511,6 +511,12 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
     (delight 'markdown-mode "Ⓜ" 'markdown)
     (delight 'gfm-mode "Ⓜ" 'markdown)))
 
+;; markdown preview
+(el-get-bundle markdown-preview-mode
+  (setq browse-url-browser-function 'browse-url-firefox
+	browse-url-new-window-flag  t
+	browse-url-firefox-new-window-is-tab t))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; latex
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
