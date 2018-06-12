@@ -292,6 +292,11 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (when (require 'delight nil t)
     (delight 'helm-mode "Ⓗ" 'helm)))
 
+;; helm-google
+(el-get-bundle helm-google
+  (require 'helm-google)
+  (global-set-key (kbd "C-c g") 'helm-google))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; cscope
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
