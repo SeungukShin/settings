@@ -498,6 +498,15 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (autoload 'gfm-mode "markdown-mode" "Major mode for editing GitHub Flavored Markdown files" t)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
+  (add-hook 'markdown-mode-hook
+	    (lambda ()
+	      (setq-default indent-tabs-mode nil
+			    tab-width 8
+			    tab-always-indent nil)
+	      (setq indent-tabs-mode nil
+		    tab-width 8
+		    tab-always-indent nil)))
+
   (when (require 'delight nil t)
     (delight 'markdown-mode "Ⓜ" 'markdown)
     (delight 'gfm-mode "Ⓜ" 'markdown)))
