@@ -438,11 +438,17 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (org-agenda-redo t))
 
 ;; babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (sh . t)
-   (R . nil)))
+(if (>= emacs-major-version 26)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (shell . t)
+       (R . nil)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (sh . t)
+     (R . nil))))
 
 ;; fonts
 (custom-set-faces '(org-level-1 ((t (:height 1.0))))
