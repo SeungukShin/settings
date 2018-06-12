@@ -205,7 +205,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
-(set-face-background 'show-paren-match-face "blue")
+(set-face-attribute 'show-paren-match nil
+		    :background "blue")
 
 ;; smartparens
 (el-get-bundle smartparens)
