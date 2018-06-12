@@ -78,7 +78,7 @@
 ;(scroll-bar-mode -1)			; hide scroll bar
 (auto-image-file-mode t)		; show inline image
 (global-auto-revert-mode t)		; auto refresh
-;(global-linum-mode)                    ; line number
+;(global-linum-mode)			; line number
 
 ;; mode line
 (line-number-mode t)			; display line number in mode line
@@ -170,10 +170,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
       '(face spaces tabs newline space-mark tab-mark newline-mark))
 (setq whitespace-display-mappings
       '(
-        (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
-        (newline-mark 10 [182 10])	; newline
-        (tab-mark 9 [8614 9] [92 9])	; tab
-        ))
+	(space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
+	(newline-mark 10 [182 10])	; newline
+	(tab-mark 9 [8614 9] [92 9])	; tab
+	))
 (when (require 'delight nil t)
   (delight 'global-whitespace-mode "Ⓦ" 'whitespace)
   (delight 'eldoc-mode "Ⓓ" 'eldoc))
