@@ -164,6 +164,20 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; empty line
 (setq indicate-empty-lines t)
 
+;; whitespace
+(global-whitespace-mode 1)
+(setq whitespace-style
+      '(face spaces tabs newline space-mark tab-mark newline-mark))
+(setq whitespace-display-mappings
+      '(
+        (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
+        (newline-mark 10 [182 10])	; newline
+        (tab-mark 9 [8614 9] [92 9])	; tab
+        ))
+(when (require 'delight nil t)
+  (delight 'global-whitespace-mode "Ⓦ" 'whitespace)
+  (delight 'eldoc-mode "Ⓓ" 'eldoc))
+
 ;; highlight current word
 (defvar highlight-current-word-color-index
   0
