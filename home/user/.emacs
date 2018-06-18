@@ -448,11 +448,13 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
      'org-babel-load-languages
      '((emacs-lisp . t)
        (shell . t)
+       (latex . t)
        (R . nil)))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (sh . t)
+     (latex . t)
      (R . nil))))
 
 ;; fonts
