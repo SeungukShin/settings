@@ -465,6 +465,17 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		  '(org-level-5 ((t (:height 1.0))))
 		  '(org-level-6 ((t (:height 1.0)))))
 
+;; beamer
+(add-to-list 'org-latex-packages-alist '("" "listings" nil))
+(setq org-latex-listings t
+      org-latex-listings-options '(("basicstyle" "\\tiny")
+				   ("frame" "single")
+				   ("keywordstyle" "\\color{cyan}")
+				   ("stringstyle" "\\color{orange}")
+				   ("commentstyle" "\\color{gray}")
+				   ("frame" "noney")
+				   ("breaklines" "true")))
+
 ;; binding
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cl" 'org-store-link)
