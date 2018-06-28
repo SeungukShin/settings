@@ -1,17 +1,4 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; server
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; server
-(require 'server)
-
-;; use tcp server
-;(setq server-use-tcp t
-;      server-host "ip")
-
-;; start server
-;(unless (server-running-p) (server-start))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; default directory
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; home directory
@@ -22,44 +9,44 @@
 (unless (file-exists-p temp-emacs-directory)
   (make-directory temp-emacs-directory t))
 
-;; load path
-;(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-;(let ((default-directory (concat user-emacs-directory "lisp/")))
-;  (normal-top-level-add-to-load-path '("."))
-;  (normal-top-level-add-subdirs-to-load-path))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; package
-;(require 'package)
-;(add-to-list 'package-archives
-;	     '(("melpa" . "http://melpa.org/packages/")
-;	       ("gnu" . "elpa.gnu.org/packages/")
-;	       ("marmalade" . "marmalade-repo.org/packages/")))
-;(package-refresh-contents)
-;(package-initialize)
+(when nil
+  (require 'package)
+  (add-to-list 'package-archives
+	       '(("melpa" . "http://melpa.org/packages/")
+		 ("gnu" . "elpa.gnu.org/packages/")
+		 ("marmalade" . "marmalade-repo.org/packages/")))
+  (package-refresh-contents)
+  (package-initialize))
 
 ;; el-get
-(add-to-list 'load-path (concat user-emacs-directory "el-get/"))
-
-(require 'el-get)
-
-(setq el-get-dir (concat user-emacs-directory "lisp/"))
-(add-to-list 'el-get-recipe-path (concat user-emacs-directory "recipes/"))
-
-(setq el-get-bundle-sync nil		; allow async. operation
-      el-get-allow-insecure t)		; allow local file
+(when t
+  (add-to-list 'load-path (concat user-emacs-directory "el-get/"))
+  (require 'el-get)
+  (setq el-get-dir (concat user-emacs-directory "lisp/"))
+  (add-to-list 'el-get-recipe-path (concat user-emacs-directory "recipes/"))
+  (setq el-get-bundle-sync nil			; allow async. operation
+	el-get-allow-insecure t))		; allow local file
+(when nil
+  ;; load path
+  (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+  (let ((default-directory (concat user-emacs-directory "lisp/")))
+    (normal-top-level-add-to-load-path '("."))
+    (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; configure
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; init-loader
-;(el-get-bundle init-loader
-;  (require 'init-loader nil t)
-;  (setq init-loader-show-log-after-init t
-;	init-loader-byte-compile t)
-;  (init-loader-load (concat user-emacs-directory "init.d/")))
+(when nil
+  (el-get-bundle init-loader
+    (require 'init-loader nil t)
+    (setq init-loader-show-log-after-init t
+	  init-loader-byte-compile t)
+    (init-loader-load (concat user-emacs-directory "init.d/"))))
 
 ;; reload .emacs
 (defun b/reload-dotemacs-file()
@@ -67,6 +54,29 @@
   (interactive)
   (load-file (expand-file-name ".emacs" home-emacs-directory)))
 (global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
+
+;; diminish mode name on modeline
+(when t
+  (el-get-bundle delight
+    (require 'delight)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; server
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; server
+(when nil
+  (require 'server)
+  (server-mode 1)
+
+  ;; use tcp server
+;  (setq server-use-tcp t
+;	server-host "ip")
+
+  (when (featurep 'delight)
+    (delight 'server-buffer-clients "Ⓢ" 'server))
+
+  ;; start server
+  (unless (server-running-p) (server-start)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; display
@@ -102,24 +112,19 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
 
 ;; theme
-(el-get-bundle monokai-theme
-  :url "https://github.com/oneKelvinSmith/monokai-emacs"
-  (load-theme 'monokai t))
+(when t
+  (el-get-bundle monokai-theme
+    :url "https://github.com/oneKelvinSmith/monokai-emacs"
+    (load-theme 'monokai t)))
 
 ;; fill column indicator
-(el-get-bundle fill-column-indicator)
-(when (require 'fill-column-indicator nil t)
-  (setq fci-rule-width 1)
-  (setq fci-rule-color "dark blue")
-  (setq-default fill-column 80)
-  (add-hook 'after-change-major-mode-hook 'fci-mode))
-
-;; diminish mode name on modeline
-(el-get-bundle delight
-  (require 'delight)
-  (delight 'server-buffer-clients "Ⓢ" 'server)
-  (delight 'auto-complete-mode "Ⓐ" 'auto-complete)
-  (delight 'abbrev-mode "Ⓑ" 'abbrev))
+(when t
+  (el-get-bundle fill-column-indicator
+    (require 'fill-column-indicator)
+    (setq fci-rule-width 1)
+    (setq fci-rule-color "dark blue")
+    (setq-default fill-column 80)
+    (add-hook 'after-change-major-mode-hook 'fci-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
@@ -165,18 +170,18 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (setq indicate-empty-lines t)
 
 ;; whitespace
-(global-whitespace-mode 1)
-(setq whitespace-style
-      '(face spaces tabs newline space-mark tab-mark newline-mark))
-(setq whitespace-display-mappings
-      '(
-	(space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
-	(newline-mark 10 [182 10])	; newline
-	(tab-mark 9 [8614 9] [92 9])	; tab
-	))
-(when (require 'delight nil t)
-  (delight 'global-whitespace-mode "Ⓦ" 'whitespace)
-  (delight 'eldoc-mode "Ⓓ" 'eldoc))
+(when t
+  (global-whitespace-mode 1)
+  (setq whitespace-style
+	'(face spaces tabs newline space-mark tab-mark newline-mark))
+  (setq whitespace-display-mappings
+	'(
+	  (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
+	  (newline-mark 10 [182 10])	; newline
+	  (tab-mark 9 [8614 9] [92 9])	; tab
+	  ))
+  (when (featurep 'delight)
+    (delight 'global-whitespace-mode "Ⓦ" 'whitespace)))
 
 ;; highlight current word
 (defvar highlight-current-word-color-index
@@ -203,18 +208,19 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; paren
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(show-paren-mode t)
-(setq show-paren-style 'mixed)
-(set-face-attribute 'show-paren-match nil
-		    :background "blue")
+;; show paren
+(when t
+  (show-paren-mode t)
+  (setq show-paren-style 'mixed)
+  (set-face-attribute 'show-paren-match nil
+		      :background "blue"))
 
 ;; smartparens
-(el-get-bundle smartparens)
-(when (require 'smartparens-config nil t)
-  (smartparens-global-mode t)
-
-  (when (require 'delight nil t)
-    (delight 'smartparens-mode "Ⓟ" 'smartparens)))
+(when t
+  (el-get-bundle smartparens
+    (smartparens-global-mode t)
+    (when (featurep 'delight)
+      (delight 'smartparens-mode "Ⓟ" 'smartparens))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ediff
@@ -235,110 +241,135 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; which-key
-(el-get-bundle which-key)
-(when (require 'which-key)
-  (which-key-mode)
+(when t
+  (el-get-bundle which-key
+    (require 'which-key)
+    (which-key-mode)
+    (when (featurep 'delight)
+      (delight 'which-key-mode "Ⓚ" 'which-key))))
 
-  (when (require 'delight nil t)
-    (delight 'which-key-mode "Ⓚ" 'which-key)))
+;; eldoc
+(when t
+  (when (featurep 'delight)
+    (delight 'eldoc-mode "Ⓓ" 'eldoc)))
+
+;; auto complete
+(when t
+  (el-get-bundle auto-complete
+    (when (featurep 'delight)
+      (delight 'auto-complete-mode "Ⓐ" 'auto-complete))))
+
+;; auto-correction
+(when t
+  (when (featurep 'delight)
+    (delight 'abbrev-mode "Ⓑ" 'abbrev)))
+
+;; async
+(when t
+  (el-get-bundle emacs-async
+    (dired-async-mode 1)
+    (async-bytecomp-package-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; helm
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; async
-(el-get-bundle emacs-async)
-
 ;; helm
-(el-get-bundle helm)
-(when (and (require 'helm-config nil t)
-	   (require 'helm nil t))
-  (helm-mode t)
-  (helm-autoresize-mode t)
+(when t
+  (el-get-bundle helm
+    (require 'helm-config)
 
-  (when (executable-find "curl")
-    (setq helm-net-prefer-curl t))
+    (helm-mode t)
+    (helm-autoresize-mode t)
 
-  (setq helm-split-window-inside-p t
-	helm-move-to-line-cycle-in-source t
-	helm-ff-search-library-in-sexp t
-	helm-scroll-amount 8
-	helm-M-x-fuzzy-match t
-	helm-buffers-fuzzy-matching t
-	helm-recentf-fuzzy-match t
-	helm-ff-file-name-history-use-recentf t)
+    (when (executable-find "curl")
+      (setq helm-net-prefer-curl t))
 
-  ;; emacs binding
-  (global-set-key (kbd "C-c h") 'helm-command-prefix)
-  (global-set-key (kbd "C-h") 'helm-command-prefix)
-  (global-unset-key (kbd "C-x c"))
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-, ,") 'helm-resume)
+    (setq helm-split-window-inside-p t
+	  helm-move-to-line-cycle-in-source t
+	  helm-ff-search-library-in-sexp t
+	  helm-scroll-amount 8
+	  helm-M-x-fuzzy-match t
+	  helm-buffers-fuzzy-matching t
+	  helm-recentf-fuzzy-match t
+	  helm-ff-file-name-history-use-recentf t)
 
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z")   'helm-select-action)
+    ;; emacs binding
+    (global-set-key (kbd "C-c h") 'helm-command-prefix)
+    (global-set-key (kbd "C-h") 'helm-command-prefix)
+    (global-unset-key (kbd "C-x c"))
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+    (global-set-key (kbd "C-x b") 'helm-mini)
+    (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    (global-set-key (kbd "C-, ,") 'helm-resume)
 
-  ;; evil binding
-  (with-eval-after-load 'evil
-    (evil-leader/set-key
-      "x" 'helm-M-x
-      "e" 'helm-find-files
-      "b" 'helm-mini
-      "k" 'kill-buffer))
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-z")   'helm-select-action)
 
-  (when (require 'delight nil t)
-    (delight 'helm-mode "Ⓗ" 'helm)))
+    ;; evil binding
+    (with-eval-after-load 'evil
+      (evil-leader/set-key
+       "x" 'helm-M-x
+       "e" 'helm-find-files
+       "b" 'helm-mini
+       "k" 'kill-buffer))
+
+    (when (featurep 'delight)
+      (delight 'helm-mode "Ⓗ" 'helm))))
 
 ;; helm-google
-(el-get-bundle helm-google
-  (require 'helm-google)
-  (global-set-key (kbd "C-c g") 'helm-google))
+(when (and t
+	   (featurep 'helm))
+  (el-get-bundle helm-google
+    (global-set-key (kbd "C-c g") 'helm-google)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; cscope
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; xcscope & helm-cscope
-(el-get-bundle xcscope)
-(el-get-bundle helm-cscope
-  :type github :pkgname "alpha22jp/helm-cscope.el")
-(when (and (require 'xcscope nil t)
-	   (require 'helm-cscope nil t))
+;; xcscope
+(when t
+  (el-get-bundle xcscope)
+  (require 'xcscope))
 
-  ;; disable auto database update
-  (setq cscope-option-do-not-update-database t)
+;; helm-cscope
+(when (and t
+	   (featurep 'xcscope)
+	   (featurep 'helm))
+  (el-get-bundle helm-cscope
+    :type github :pkgname "alpha22jp/helm-cscope.el"
+    ;; disable auto database update
+    (setq cscope-option-do-not-update-database t)
 
-  ;; emacs binding
-  (add-hook 'c-mode-common-hook 'helm-cscope-mode)
-  (add-hook 'helm-cscope-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
-	      (local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
-	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-function)
-	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-function)
-	      (local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
-	      (local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
-	      (local-set-key (kbd "C-, cf") 'helm-cscope-find-this-file)
-	      (local-set-key (kbd "C-, ci") 'helm-cscope-find-files-including-file)
-	      (local-set-key (kbd "C-, co") 'helm-cscope-pop-mark)))
+    ;; emacs binding
+    (add-hook 'c-mode-common-hook 'helm-cscope-mode)
+    (add-hook 'helm-cscope-mode-hook
+	      (lambda ()
+		(local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
+		(local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
+		(local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-function)
+		(local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-function)
+		(local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
+		(local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
+		(local-set-key (kbd "C-, cf") 'helm-cscope-find-this-file)
+		(local-set-key (kbd "C-, ci") 'helm-cscope-find-files-including-file)
+		(local-set-key (kbd "C-, co") 'helm-cscope-pop-mark)))
 
-  ;; evil binding
-  (with-eval-after-load 'evil
-    (evil-leader/set-key-for-mode 'c-mode
-      "cs" 'helm-cscope-find-this-symbol
-      "cg" 'helm-cscope-find-global-definition
-      "cd" 'helm-cscope-find-called-this-function
-      "cc" 'helm-cscope-find-calling-this-function
-      "ct" 'helm-cscope-find-this-text-string
-      "ce" 'helm-cscope-find-egrep-pattern
-      "cf" 'helm-cscope-find-this-file
-      "ci" 'helm-cscope-find-files-including-file
-      "co" 'helm-cscope-pop-mark))
+    ;; evil binding
+    (with-eval-after-load 'evil
+      (evil-leader/set-key-for-mode 'c-mode
+				    "cs" 'helm-cscope-find-this-symbol
+				    "cg" 'helm-cscope-find-global-definition
+				    "cd" 'helm-cscope-find-called-this-function
+				    "cc" 'helm-cscope-find-calling-this-function
+				    "ct" 'helm-cscope-find-this-text-string
+				    "ce" 'helm-cscope-find-egrep-pattern
+				    "cf" 'helm-cscope-find-this-file
+				    "ci" 'helm-cscope-find-files-including-file
+				    "co" 'helm-cscope-pop-mark))
 
-  (when (require 'delight nil t)
-    (delight 'helm-cscope-mode "Ⓒ" 'helm-cscope)))
+    (when (featurep 'delight)
+      (delight 'helm-cscope-mode "Ⓒ" 'helm-cscope))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
@@ -359,7 +390,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		  tab-always-indent t)))
 
 ;; auto-correction
-(add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1))))
+(when (featurep 'abbrev)
+  (add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1)))))
 
 ;; compile
 (eval-when-compile
@@ -399,256 +431,293 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		  tab-always-indent t)))
 
 ;; jupyter
-(el-get-bundle skewer-mode)
-(el-get-bundle ein)
-(when (and (require 'skewer-mode nil t)
-	   (require 'ein nil t))
-  (setq request-backend 'url-retrieve)
-  (setq ein:jupyter-default-server-command "jupyter"
-	ein:jupyter-server-args (list "--no-browser")
-	ein:jupyter-default-notebook-directory "~/src/jupyter"))
+(when t
+  (el-get-bundle skewer-mode
+    (require 'skewer-mode)))
+(when (and t
+	   (featurep 'skwer-mode))
+  (el-get-bundle ein
+    (require 'ein)
+    (setq request-backend 'url-retrieve)
+    (setq ein:jupyter-default-server-command "jupyter"
+	  ein:jupyter-server-args (list "--no-browser")
+	  ein:jupyter-default-notebook-directory "~/src/jupyter")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org
-(require 'org)
+(when t
+  (require 'org)
 
-;; basic
-(add-to-list 'auto-mode-alist		; org mode extension
-	     '("\\.org$" . org-mode))
-(setq org-todo-keywords			; todo keyword
-      '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
-(setq org-hide-leading-stars t
-      org-odd-levels-only t)
-(add-to-list 'org-emphasis-alist
-	     '("*" (:foreground "red")))
+  ;; basic
+  (add-to-list 'auto-mode-alist		; org mode extension
+	       '("\\.org$" . org-mode))
+  (setq org-todo-keywords			; todo keyword
+	'((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
+  (setq org-hide-leading-stars t
+	org-odd-levels-only t)
+  (add-to-list 'org-emphasis-alist
+	       '("*" (:foreground "red")))
 
-;; image
-(setq org-startup-with-inline-images t	; show inline image
-      org-image-actual-width		; resize inline image (1/3)
-      (/ (display-pixel-width) 3))
+  ;; image
+  (setq org-startup-with-inline-images t	; show inline image
+	org-image-actual-width			; resize inline image (1/3)
+	(/ (display-pixel-width) 3))
 
-;; agenda
-(load-library "find-lisp")
-(setq org-agenda-files			; set agenda files
-      ;(file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
-      (find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$")
-      org-agenda-start-on-weekday 0	; agenda starts on sunday
-      org-agenda-span 31)		; number of days for agenda
-(defun b/org-agenda-redo ()
-  (interactive)
-  (setq org-agenda-files
-	(find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$"))
-  (org-agenda-redo t))
+  ;; agenda
+  (load-library "find-lisp")
+  (setq org-agenda-files			; set agenda files
+;	(file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
+	(find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$")
+	org-agenda-start-on-weekday 0		; agenda starts on sunday
+	org-agenda-span 31)			; number of days for agenda
+  (defun b/org-agenda-redo ()
+    (interactive)
+    (setq org-agenda-files
+	  (find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$"))
+    (org-agenda-redo t))
 
-;; babel
-(if (>= emacs-major-version 26)
+  ;; babel
+  (if (>= emacs-major-version 26)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((emacs-lisp . t)
+	 (shell . t)
+	 (latex . t)
+	 (R . nil)))
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((emacs-lisp . t)
-       (shell . t)
+       (sh . t)
        (latex . t)
-       (R . nil)))
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (sh . t)
-     (latex . t)
-     (R . nil))))
+       (R . nil))))
 
-;; fonts
-(custom-set-faces '(org-level-1 ((t (:height 1.0))))
-		  '(org-level-2 ((t (:height 1.0))))
-		  '(org-level-3 ((t (:height 1.0))))
-		  '(org-level-4 ((t (:height 1.0))))
-		  '(org-level-5 ((t (:height 1.0))))
-		  '(org-level-6 ((t (:height 1.0)))))
+  (custom-set-faces '(org-level-1 ((t (:height 1.0))))
+		    '(org-level-2 ((t (:height 1.0))))
+		    '(org-level-3 ((t (:height 1.0))))
+		    '(org-level-4 ((t (:height 1.0))))
+		    '(org-level-5 ((t (:height 1.0))))
+		    '(org-level-6 ((t (:height 1.0)))))
 
-;; beamer
-(add-to-list 'org-latex-packages-alist '("" "listings" nil))
-(setq org-latex-listings t
-      org-latex-listings-options '(("basicstyle" "\\tiny")
-				   ("frame" "single")
-				   ("keywordstyle" "\\color{cyan}")
-				   ("stringstyle" "\\color{orange}")
-				   ("commentstyle" "\\color{gray}")
-				   ("frame" "noney")
-				   ("breaklines" "true")))
+  ;; beamer
+  (add-to-list 'org-latex-packages-alist '("" "listings" nil))
+  (setq org-latex-listings t
+	org-latex-listings-options '(("basicstyle" "\\tiny")
+				     ("frame" "single")
+				     ("keywordstyle" "\\color{cyan}")
+				     ("stringstyle" "\\color{orange}")
+				     ("commentstyle" "\\color{gray}")
+				     ("frame" "noney")
+				     ("breaklines" "true")))
 
-;; binding
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-(global-set-key "\C-cr" 'org-remember)
-(eval-after-load "org-agenda"
-  '(progn
-     (define-key org-agenda-mode-map "r" 'b/org-agenda-redo)))
+  ;; binding
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-cc" 'org-capture)
+  (global-set-key "\C-cb" 'org-iswitchb)
+  (global-set-key "\C-cr" 'org-remember)
+  (eval-after-load "org-agenda"
+    '(progn
+       (define-key org-agenda-mode-map "r" 'b/org-agenda-redo))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq calendar-week-start-day 0)	; 0:Sunday, 1:Monday
+(when t
+  (setq calendar-week-start-day 0))	; 0:Sunday, 1:Monday
 
 ;; korean holidays
-(with-eval-after-load 'holidays
-  (el-get-bundle korean-holidays
-    :type github :pkgname "tttuuu888/korean-holidays"
+(when t
+  (with-eval-after-load 'holidays
+    (el-get-bundle korean-holidays
+      :type github :pkgname "tttuuu888/korean-holidays")
     (require 'korean-holidays)
     (setq calendar-holidays korean-holidays)))
 
 ;; calfw
-(el-get-bundle calfw
-  :type github :pkgname "kiwanami/emacs-calfw"
-  (require 'calfw)
-  (require 'calfw-org)
-
-  ;; remove warning message from compiler
-  (declare-function org-bookmark-jump-unhide "org"))
+(when (and t
+	   (featurep 'org))
+  (el-get-bundle calfw
+    :type github :pkgname "kiwanami/emacs-calfw"
+    (require 'calfw)
+    (require 'calfw-org)
+    ;; remove warning message from compiler
+    (declare-function org-bookmark-jump-unhide "org")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; markdown
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; markdown
-(el-get-bundle markdown-mode
-  (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
-  (autoload 'gfm-mode "markdown-mode" "Major mode for editing GitHub Flavored Markdown files" t)
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
+(when t
+  (el-get-bundle markdown-mode
+    (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
+    (autoload 'gfm-mode "markdown-mode" "Major mode for editing GitHub Flavored Markdown files" t)
+    (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
-  (add-hook 'markdown-mode-hook
-	    (lambda ()
-	      (setq-default indent-tabs-mode nil
-			    tab-width 8
-			    tab-always-indent nil)
-	      (setq indent-tabs-mode nil
-		    tab-width 8
-		    tab-always-indent nil)))
+    (add-hook 'markdown-mode-hook
+	      (lambda ()
+		(setq-default indent-tabs-mode nil
+			      tab-width 8
+			      tab-always-indent nil)
+		(setq indent-tabs-mode nil
+		      tab-width 8
+		      tab-always-indent nil)))
 
-  (when (require 'delight nil t)
-    (delight 'markdown-mode "Ⓜ" 'markdown)
-    (delight 'gfm-mode "Ⓜ" 'markdown)))
+    (when (featurep 'delight)
+      (delight 'markdown-mode "Ⓜ" 'markdown)
+      (delight 'gfm-mode "Ⓜ" 'markdown))))
 
 ;; markdown preview
-(el-get-bundle markdown-preview-mode
-  (setq browse-url-browser-function 'browse-url-firefox
-	browse-url-new-window-flag  t
-	browse-url-firefox-new-window-is-tab t))
+(when t
+  (el-get-bundle markdown-preview-mode
+    (setq browse-url-browser-function 'browse-url-firefox
+	  browse-url-new-window-flag  t
+	  browse-url-firefox-new-window-is-tab t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; latex
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auctex
-(el-get-bundle auctex
-  :url "https://git.savannah.gnu.org/git/auctex.git"
-  (load "auctex.el" nil t t))
+(when t
+  (el-get-bundle auctex
+    :url "https://git.savannah.gnu.org/git/auctex.git"
+    (load "auctex.el" nil t t)))
 
 ;; latex preview pane
-(el-get-bundle latex-preview-pane
-  (require 'latex-preview-pane)
-  (latex-preview-pane-enable))
+(when t
+  (el-get-bundle latex-preview-pane
+    (require 'latex-preview-pane)
+    (latex-preview-pane-enable)))
 
 ;; doc view
-(setq doc-view-resolution 240)
-(setq doc-view-continuous t)
+(when t
+  (setq doc-view-resolution 240)
+  (setq doc-view-continuous t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; version control system
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
-(el-get-bundle magit
-  (load (concat el-get-dir "magit/lisp/magit-autoloads")))
+(when t
+  (el-get-bundle magit
+    (load (concat el-get-dir "magit/lisp/magit-autoloads"))))
 
 ;; git-gutter
-(el-get-bundle git-gutter
-  (require 'git-gutter)
-  (global-git-gutter-mode t)
-
-  (when (require 'delight nil t)
-    (delight 'git-gutter-mode "Ⓖ" 'git-gutter)))
+(when t
+  (el-get-bundle git-gutter
+    (require 'git-gutter)
+    (global-git-gutter-mode t)
+    (when (featurep 'delight)
+      (delight 'git-gutter-mode "Ⓖ" 'git-gutter))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; check & build
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gradle
-(el-get-bundle gradle-mode
-  (require 'gradle-mode)
-  (if (eq system-type 'windows-nt)
-      (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
-  (gradle-mode 1)
+(when nil
+  (el-get-bundle gradle-mode
+    (require 'gradle-mode)
+    (if (eq system-type 'windows-nt)
+	(setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
+    (gradle-mode 1)
 
-  (when (require 'delight nil t)
-    (delight 'gradle-mode "Ⓡ" 'gradle-mode)))
+    (when (featurep 'delight)
+      (delight 'gradle-mode "Ⓡ" 'gradle-mode))))
 
 ;; flyspell
-(el-get-bundle flyspell
-  (require 'ispell)
-  (add-hook 'org-mode-hook
-	    (lambda ()
-	      (if (eq system-type 'windows-nt)
-		  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
-	      (flyspell-mode 1)))
+(when (and t
+	   (featurep 'ispell))
+  (el-get-bundle flyspell
+    (require 'ispell)
+    (add-hook 'org-mode-hook
+	      (lambda ()
+		(if (eq system-type 'windows-nt)
+		    (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
+		(flyspell-mode 1)))
 
-  (when (require 'delight nil t)
-    (delight 'flyspell-mode "Ⓕ" 'flyspell)))
+    (when (featurep 'delight)
+      (delight 'flyspell-mode "Ⓕ" 'flyspell))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; mail
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; epa-file for encryption
-(require 'epa-file)
-(epa-file-enable)
-
 ;; emacs-w3m
-(el-get-bundle emacs-w3m
-  :type git
-  :url "https://github.com/ecbrown/emacs-w3m"
-  (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-  (setq browse-url-browser-function 'w3m-browse-url)
-  (setq w3m-use-cookies t)
-  (setq w3m-default-display-inline-images t)
-  (setq w3m-coding-system 'utf-8
-	w3m-file-coding-system 'utf-8
-	w3m-file-name-coding-system 'utf-8
-	w3m-input-coding-system 'utf-8
-	w3m-output-coding-system 'utf-8
-	w3m-terminal-coding-system 'utf-8))
+(when t
+  (el-get-bundle emacs-w3m
+    :type git
+    :url "https://github.com/ecbrown/emacs-w3m"
+    (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+    (setq browse-url-browser-function 'w3m-browse-url)
+    (setq w3m-use-cookies t)
+    (setq w3m-default-display-inline-images t)
+    (setq w3m-coding-system 'utf-8
+	  w3m-file-coding-system 'utf-8
+	  w3m-file-name-coding-system 'utf-8
+	  w3m-input-coding-system 'utf-8
+	  w3m-output-coding-system 'utf-8
+	  w3m-terminal-coding-system 'utf-8)))
+
+;; epa-file for encryption
+(when nil
+  (require 'epa-file)
+  (epa-file-enable))
 
 ;; notmuch
-(el-get-bundle notmuch
-  (autoload 'notmuch "notmuch" "notmuch mail" t))
+(when nil
+  (el-get-bundle notmuch
+    (autoload 'notmuch "notmuch" "notmuch mail" t)))
 
 ;; gnus
-(setq user-mail-address "user@gmail.com"
-      user-full-name "user")
+(when nil
+  ;; user
+  (setq user-mail-address "user@gmail.com"
+	user-full-name "user")
 
-(setq gnus-select-method
-      '(nnimap "gmail"
-	       (nnimap-address "imap.gmail.com")
-	       (nnimap-server-port 993)
-	       (nnimap-stream ssl)))
+  ;; server
+  ;(setq gnus-select-method '(nnnil ""))
+  (setq gnus-select-method
+	'(nnimap "gmail.com"
+		 (nnimap-address "imap.gmail.com")
+		 (nnimap-server-port 993)
+		 (nnimap-stream ssl)
+		 (nnir-search-engine imap)))
+  (setq gnus-secondary-select-methods
+	'((nnmaildir "Archives"
+		     (directory (concat home-emacs-directory "Mail/Archives"))
+		     (get-new-mail nil)
+		     (nnir-search-engine notmuch))))
 
-(setq smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587)
+  (setq smtpmail-smtp-server "smtp.gmail.com"
+	smtpmail-smtp-service 587
+	send-mail-function 'smtpmail-send-it
+	message-send-mail-function 'smtpmail-send-it)
 
-(setq mm-text-html-renderer 'w3m)
-(setq mm-inline-text-html-with-images t)
-(setq mm-w3m-safe-url-regexp nil)
+  (require 'nnir)
+  (setq nnir-notmuch-program (concat user-emacs-directory "lisp/notmuch/notmuch"))
+  (setq nnir-notmuch-remove-prefix (concat home-emacs-directory "Mail/Archives/"))
 
-(setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+  (setq gnus-fetch-old-headers t
+	gnus-asynchronous t)
 
-(gnus-add-configuration
- '(article
-   (horizontal 1.0
-	       (vertical 25
-			 (group 1.0))
-	       (vertical 1.0
-			 (summary 0.25 point)
-			 (article 1.0)))))
-(gnus-add-configuration
- '(summary
-   (horizontal 1.0
-	       (vertical 25
-			 (group 1.0))
-	       (vertical 1.0
-			 (summary 1.0 point)))))
+  (setq mm-text-html-renderer 'w3m
+	mm-inline-text-html-with-images t
+	mm-w3m-safe-url-regexp nil)
+
+  (setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+  (gnus-add-configuration
+   '(article
+     (horizontal 1.0
+		 (vertical 25
+			   (group 1.0))
+		 (vertical 1.0
+			   (summary 0.25 point)
+			   (article 1.0)))))
+  (gnus-add-configuration
+   '(summary
+     (horizontal 1.0
+		 (vertical 25
+			   (group 1.0))
+		 (vertical 1.0
+			   (summary 1.0 point))))))
