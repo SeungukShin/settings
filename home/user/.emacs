@@ -658,6 +658,103 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	  w3m-output-coding-system 'utf-8
 	  w3m-terminal-coding-system 'utf-8)))
 
+;; wanderlust
+(when t
+  (el-get-bundle wanderlust
+    (require 'wl)
+    (autoload 'wl "wl" "Wanderlust" t)
+    (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
+    (autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+    (autoload 'wl-user-agent-compose "wl-draft" "Compose with Wanderlust." t)
+
+    ;; inline image
+    (setq mime-w3m-safe-url-regexp nil
+	  mime-w3m-display-inline-images t)
+    (setq mime-edit-split-message nil)
+
+    ;; directory
+    (setq elmo-msgdb-directory (concat user-emacs-directory ".elmo/")
+	  elmo-cache-directory (concat elmo-msgdb-directory "cache/")
+	  wl-temporary-file-directory (concat elmo-msgdb-directory "tmp/")
+	  wl-folders-file (concat user-emacs-directory ".folders"))
+
+    ;; user information
+    (setq wl-from "user <user@gmail.com>")
+
+    ;; local maildir
+    (setq maildir-path (concat home-emacs-directory "Mail/")
+	  elmo-maildir-folder-path maildir-path
+	  elmo-localdir-folder-path maildir-path
+	  elmo-search-namazu-default-index-path maildir-path
+	  elmo-archive-folder-path maildir-path)
+
+    ;; imap
+    (setq elmo-imap4-default-server "imap.gmail.com"
+	  elmo-imap4-default-port 993
+	  elmo-imap4-default-stream-type 'ssl
+	  elmo-imap4-default-user "user"
+	  elmo-imap4-default-authenticate-type 'clear
+	  elmo-imap4-use-modified-utf7 t)
+
+    ;; pop3
+    (setq elmo-pop3-default-server "pop.gmail.com"
+	  elmo-pop3-default-port 995
+	  elmo-pop3-default-stream-type 'ssl
+	  elmo-pop3-default-user "user")
+
+    ;; default folder
+    (setq wl-default-folder "%Inbox"
+	  wl-fcc "%[Gmail]/Sent Mail"
+	  wl-draft-folder "%[Gmail]/Drafts"
+	  wl-trash-folder "%[Gmail]/Trash"
+	  wl-quicksearch-folder "%[Gmail]/All Mail"
+	  wl-spam-folder ".Spam"
+	  wl-queue-folder ".Queue"
+	  wl-fcc-force-as-read t
+	  wl-default-spec "%")
+    (setq wl-folder-check-async t)
+
+    ;; smtp
+    (setq wl-smtp-posting-server "smtp.gmail.com"
+	  wl-smtp-posting-port 587
+	  wl-smtp-connection-type 'starttls
+	  wl-smtp-posting-user "user"
+	  wl-smtp-authenticate-type "plain"
+	  wl-local-domain "gmail.com"
+	  wl-message-id-domain "smtp.gmail.com")
+
+    ;; summary
+    (setq wl-auto-select-next 'unread
+	  wl-summary-width nil
+	  wl-summary-fix-timezone nil
+	  wl-summary-weekday-name-lang "en"
+	  wl-summary-showto-folder-regexp ".Sent.*"
+	  wl-summary-fix-timezone "KST"
+	  wl-summary-line-format "%T%P%Y-%M-%D(%W)%h:%m %[ %17f %]%[%1@%] %t%C%s"
+	  wl-message-mode-line-format (propertize "%f" 'face 'powerline-active1)
+	  wl-thread-insert-opened t
+	  wl-thread-open-reading-thread t)
+
+    ;; message
+    (setq wl-message-mode-line-format (propertize "%f/%n %F" 'face 'powerline-active1)
+	  wl-message-ignored-field-list '("^.*:")
+	  wl-message-visible-field-list
+	  '("^\\(To\\|Cc\\):"
+	    "^Subject:"
+	    "^\\(From\\|Reply-To\\):"
+	    "^Organization:"
+	    "^X-Attribution:"
+	    "^\\(Posted\\|Date\\):"
+	    )
+	  wl-message-sort-field-list
+	  '("^From"
+	    "^Organization:"
+	    "^X-Attribution:"
+	    "^Subject"
+	    "^Date"
+	    "^To"
+	    "^Cc"))))
+
 ;; epa-file for encryption
 (when nil
   (require 'epa-file)
