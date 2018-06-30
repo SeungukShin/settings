@@ -421,13 +421,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; tab
 (add-hook 'python-mode-hook
 	  (lambda ()
-	    (setq-default indent-tabs-mode t
-			  tab-width 8
-			  py-indent-tabs-mode t
-			  tab-always-indent t)
 	    (setq indent-tabs-mode t
+		  python-indent 8
 		  tab-width 8
-		  py-indent-tabs-mode t
 		  tab-always-indent t)))
 
 ;; jupyter
