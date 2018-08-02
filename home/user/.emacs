@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; default directory
+;;; basic configure
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; home directory
 (setq home-emacs-directory (expand-file-name "~/"))
@@ -8,6 +8,10 @@
 (setq temp-emacs-directory (concat user-emacs-directory ".cache/"))
 (unless (file-exists-p temp-emacs-directory)
   (make-directory temp-emacs-directory t))
+
+;; exec path
+(if (eq system-type 'windows-nt)
+    (add-to-list 'exec-path (concat home-emacs-directory "AppData/Roaming/emacs/bin/")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; package management
