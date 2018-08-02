@@ -322,6 +322,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (when (and t
 	   (featurep 'helm))
   (el-get-bundle helm-google
+    :type git :url "https://framagit.org/steckerhalter/helm-google.git"
     (global-set-key (kbd "C-c g") 'helm-google)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -641,8 +642,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; emacs-w3m
 (when t
   (el-get-bundle emacs-w3m
-    :type git
-    :url "https://github.com/ecbrown/emacs-w3m"
+    :type git :url "https://github.com/ecbrown/emacs-w3m"
     (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
     (setq browse-url-browser-function 'w3m-browse-url)
     (setq w3m-use-cookies t)
