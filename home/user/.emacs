@@ -69,6 +69,7 @@
 ;; diminish mode name on modeline
 (when t
   (el-get-bundle delight
+    :type git :url "http://git.savannah.gnu.org/git/delight.git"
     (require 'delight)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
