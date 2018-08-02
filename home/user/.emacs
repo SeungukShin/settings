@@ -13,6 +13,13 @@
 (if (eq system-type 'windows-nt)
     (add-to-list 'exec-path (concat home-emacs-directory "AppData/Roaming/emacs/bin/")))
 
+;; proxy
+(when nil
+  (setq url-proxy-services
+	'(("no_proxy" . "^\\(localhost\\|192\\.168\\..*\\)")
+	  ("http" . "proxy.com:8080")
+	  ("https" . "proxy.com:8080"))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
