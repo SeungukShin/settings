@@ -275,8 +275,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm
 (when t
-  (el-get-bundle helm
-    (require 'helm-config)
+  (el-get-bundle helm)
+  (when (require 'helm nil t)
 
     (helm-mode t)
     (helm-autoresize-mode t)
