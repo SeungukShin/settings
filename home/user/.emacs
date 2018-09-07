@@ -330,6 +330,16 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
     (when (featurep 'delight)
       (delight 'helm-mode "Ⓗ" 'helm))))
 
+;; helm-ag
+(when (and t
+	   (featurep 'helm))
+  (el-get-bundle helm-ag)
+  (global-set-key (kbd "C-, aa") 'helm-do-ag-project-root)
+  (global-set-key (kbd "C-, ad") 'helm-do-ag)
+  (global-set-key (kbd "C-, af") 'helm-do-ag-this-file)
+  (global-set-key (kbd "C-, ab") 'helm-do-ag-buffers)
+  (global-set-key (kbd "C-, ao") 'helm-ag-pop-stack))
+
 ;; helm-google
 (when (and t
 	   (featurep 'helm))
