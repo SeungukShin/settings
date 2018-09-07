@@ -417,6 +417,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
   (add-hook 'c-mode-common-hook (function (lambda nil (abbrev-mode 1)))))
 
 ;; compile
+(setq compilation-scroll-output 'first-error)
 (eval-when-compile
   (defvar work-directory)
   (defvar backup-directory))
