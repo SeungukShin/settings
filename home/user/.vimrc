@@ -175,6 +175,8 @@ set showcmd
 " Display white space
 set list
 set listchars=eol:$,tab:>-
+hi NonText ctermfg=238 guifg=#444444
+hi SpecialKey ctermfg=238 guifg=#444444
 
 " Display line number
 set nu
