@@ -144,6 +144,9 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; default encoding
 (set-language-environment "utf-8")
 (set-default-coding-systems 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(modify-coding-system-alist 'file "" 'utf-8-unix)
 
 ;; locale
 (setq system-time-locale "C")
