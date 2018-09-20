@@ -508,12 +508,14 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
        '((emacs-lisp . t)
 	 (shell . t)
 	 (latex . t)
+	 (dot . t)
 	 (R . nil)))
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((emacs-lisp . t)
        (sh . t)
        (latex . t)
+       (dot . t)
        (R . nil))))
 
   (custom-set-faces '(org-level-1 ((t (:height 1.0))))
