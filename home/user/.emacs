@@ -525,6 +525,15 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		    '(org-level-5 ((t (:height 1.0))))
 		    '(org-level-6 ((t (:height 1.0)))))
 
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (setq-default indent-tabs-mode nil
+			    tab-width 8
+			    tab-always-indent nil)
+	      (setq indent-tabs-mode nil
+		    tab-width 8
+		    tab-always-indent nil)))
+
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
   (setq org-latex-listings t
