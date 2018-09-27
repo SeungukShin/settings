@@ -43,7 +43,9 @@ URxvt*cursorBlink:            true
 !! Scroll
 URxvt.scrollBar:              false
 URxvt.mouseWheelScrollPage:   false
-urxvt.saveLines:              1000000
+URxvt.saveLines:              1000000
+URxvt*scrollTtyOutput:        false
+URxvt*scrollTtyKeypress:      true
 
 !! Color
 URxvt.background:             [80]#06060a
