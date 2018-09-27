@@ -42,6 +42,10 @@ defscrollback 10240
 # SCREEN KEYBINDINGS
 # ------------------------------------------------------------------------------
 
+# mouse
+defmousetrack on
+mousetrack on
+
 # Remove some stupid / dangerous key bindings
 bind ^k
 #bind L
