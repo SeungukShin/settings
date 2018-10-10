@@ -856,3 +856,72 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 			   (group 1.0))
 		 (vertical 1.0
 			   (summary 1.0 point))))))
+
+;; mew
+(when nil
+  (el-get-bundle mew
+    (autoload 'mew "mew" nil t)
+    (autoload 'mew-send "mew" nil t)
+
+    (add-to-list 'exec-path (concat user-emacs-directory "lisp/mew/bin/"))
+
+    ;; read mail menu
+    (setq read-mail-command 'mew)
+
+    ;; sending a message command
+    (autoload 'mew-user-agent-compose "mew" nil t)
+    (if (boundp 'mail-user-agent)
+	(setq mail-user-agent 'mew-user-agent))
+    (if (fboundp 'define-mail-user-agent)
+	(define-mail-user-agent
+          'mew-user-agent
+          'mew-user-agent-compose
+          'mew-draft-send-message
+          'mew-draft-kill
+          'mew-send-hook))
+
+    ;; icon
+    (setq mew-icon-directory
+	  (expand-file-name "etc" (file-name-directory (locate-library "mew.el"))))
+
+    ;; network
+    (setq mew-prog-ssl "/usr/bin/stunnel"
+	  mew-ssl-verify-level 0
+	  mew-use-cached-passwd t)
+
+    ;; user
+    (setq mew-name "user"
+	  mew-user "user")
+
+    (setq mew-config-alist
+	  '(
+	    (default
+	      (mailbox-type imap)
+	      (proto "%")
+	      ;; imap
+	      (imap-server "imap-mail.outlook.com")
+	      (imap-ssl-port "993")
+	      (imap-user "user")
+	      (name "user")
+	      (imap-ssl t)
+	      (imap-auth t)
+	      (imap-size 0)
+	      (imap-delete t)
+	      (imap-trash-folder "%Deleted")
+	      ;; smtp
+	      (smtp-server "smtp-mail.outlook.com")
+	      (smtp-ssl-port "465")
+	      (smtp-user "user")
+	      (smtp-ssl t)
+	      (smtp-auth t)
+	      )))
+
+    ;; encoding
+    (setq mew-cs-database-for-encoding
+	  '(((ascii) nil "7bit" "7bit")
+	    (nil utf-8 "base64" "B")))
+
+    ;; html
+    (require 'mew-w3m)
+    (setq mew-mime-multipart-alternative-list '("Text/Html" "Text/Plain" ".*"))
+    (setq mew-use-text/html t)))
