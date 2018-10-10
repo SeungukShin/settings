@@ -752,6 +752,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	  wl-default-spec "%")
     (setq wl-folder-check-async t)
 
+    ;; prefetch
+    (setq wl-summary-incorporate-marks '("N" "U" "!" "A" "F" "$")
+	  wl-prefetch-threshold nil)
+
     ;; smtp
     (setq wl-smtp-posting-server "smtp.gmail.com"
 	  wl-smtp-posting-port 587
