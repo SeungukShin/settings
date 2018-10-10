@@ -787,6 +787,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	    "^Organization:"
 	    "^X-Attribution:"
 	    "^\\(Posted\\|Date\\):"
+	    "^User-Agent:"
 	    )
 	  wl-message-sort-field-list
 	  '("^From"
