@@ -534,6 +534,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		    tab-width 8
 		    tab-always-indent nil)))
 
+  (setq org-startup-indented t)
+
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
   (setq org-latex-listings t
