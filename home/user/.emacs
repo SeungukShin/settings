@@ -86,8 +86,7 @@
 ;; server
 (use-package server
   :ensure t
-  :delight
-  (server-buffer-clients "Ⓢ")
+  :delight (server-buffer-clients "Ⓢ")
   :config
   (server-mode 1)
 
@@ -195,8 +194,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; whitespace
 (use-package whitespace
   :ensure t
-  :delight
-  (global-whitespace-mode "Ⓦ")
+  :delight (global-whitespace-mode "Ⓦ")
   :config
   (global-whitespace-mode 1)
   (setq whitespace-style
@@ -244,8 +242,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; smartparens
 (use-package smartparens
   :ensure t
-  :delight
-  (smartparens-mode "Ⓟ")
+  :delight (smartparens-mode "Ⓟ")
   :config
   (smartparens-global-mode t))
 
@@ -270,27 +267,23 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; which-key
 (use-package which-key
   :ensure t
-  :delight
-  (which-key-mode "Ⓚ")
-  :config
-  (which-key-mode))
+  :defer t
+  :delight (which-key-mode "Ⓚ")
+  :config (which-key-mode))
 
 ;; eldoc
 (use-package eldoc
   :ensure t
-  :delight
-  (eldoc-mode "Ⓓ"))
+  :delight (eldoc-mode "Ⓓ"))
 
 ;; auto complete
 (use-package auto-complete
   :ensure t
-  :delight
-  (auto-complete-mode "Ⓐ"))
+  :delight (auto-complete-mode "Ⓐ"))
 
 ;; auto-correction
 (use-package abbrev
-  :delight
-  (abbrev-mode "Ⓑ"))
+  :delight (abbrev-mode "Ⓑ"))
 
 ;; async
 (use-package async
@@ -305,8 +298,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; helm
 (use-package helm
   :ensure t
-  :delight
-  (helm-mode "Ⓗ")
+  :delight (helm-mode "Ⓗ")
   :config
   (helm-mode t)
   (helm-autoresize-mode t)
@@ -376,8 +368,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (use-package helm-cscope
   :requires (xcscope helm)
   :ensure t
-  :delight
-  (helm-cscope-mode "Ⓒ")
+  :delight (helm-cscope-mode "Ⓒ")
   :config
   ;; disable auto database update
   (setq cscope-option-do-not-update-database t)
@@ -662,8 +653,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (use-package git-gutter
   :ensure t
   :delight (git-gutter-mode "Ⓖ")
-  :config
-  (global-git-gutter-mode t))
+  :config (global-git-gutter-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; check & build
