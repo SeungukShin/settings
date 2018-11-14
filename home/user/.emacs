@@ -644,10 +644,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 (use-package magit
-  :defer t
   :ensure t
-  :config
-  (load (concat el-get-dir "magit/lisp/magit-autoloads")))
+  :defer t)
 
 ;; git-gutter
 (use-package git-gutter
