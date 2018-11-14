@@ -540,6 +540,10 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 		    tab-always-indent nil)))
 
   (setq org-startup-indented t)
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (visual-line-mode t)
+	      (t)))
 
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
@@ -562,6 +566,12 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
    ("\C-cc" . org-capture)
    ("\C-cb" . org-iswitchb)
    ("\C-cr" . org-remember)))
+
+(use-package org-indent
+  :defer t
+  :delight
+  (org-indent-mode "Ⓘ")
+  (visual-line-mode "Ⓥ"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
