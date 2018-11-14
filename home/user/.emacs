@@ -267,7 +267,6 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; which-key
 (use-package which-key
   :ensure t
-  :defer t
   :delight (which-key-mode "Ⓚ")
   :config (which-key-mode))
 
@@ -298,6 +297,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; helm
 (use-package helm
   :ensure t
+  :defer nil
   :delight (helm-mode "Ⓗ")
   :config
   (helm-mode t)
@@ -463,6 +463,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (use-package ein
   :requires skewer-mode
   :ensure t
+  :defer t
   :config
   (setq request-backend 'url-retrieve)
   (setq ein:jupyter-default-server-command "jupyter"
@@ -475,6 +476,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; org
 (use-package org
   :ensure t
+  :defer t
   :config
   ;; basic
   (add-to-list 'auto-mode-alist		; org mode extension
@@ -570,17 +572,20 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 (use-package korean-holidays
   :requires holidays
   :ensure t
+  :defer t
   :config
   (setq calendar-holidays korean-holidays))
 
 ;; calfw
 (use-package calfw
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; calfw-org
 (use-package calfw-org
   :requires (org calfw)
   :ensure t
+  :defer t
   :config
   ;; remove warning message from compiler
   (declare-function org-bookmark-jump-unhide "org"))
@@ -591,6 +596,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; markdown
 (use-package markdown-mode
   :ensure t
+  :defer t
   :delight
   (markdown-mode "Ⓜ")
   (gfm-mode "Ⓜ")
@@ -611,6 +617,7 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; markdown preview
 (use-package markdown-preview-mode
   :ensure t
+  :defer t
   :config
   (setq browse-url-browser-function 'browse-url-firefox
 	browse-url-new-window-flag  t
@@ -621,20 +628,22 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auctex
 (use-package auctex
-  :defer t
   :ensure t
+  :defer t
   :config
   (load "auctex.el" nil t t))
 
 ;; latex preview pane
 (use-package latex-preview-pane
   :ensure t
+  :defer t
   :config
   (latex-preview-pane-enable))
 
 ;; doc view
 (use-package doc-view
   :ensure t
+  :defer t
   :config
   (setq doc-view-resolution 240)
   (setq doc-view-continuous t))
@@ -658,8 +667,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gradle
 (use-package gradle-mode
-  :defer t
   :ensure t
+  :defer t
   :delight (gradle-mode "Ⓡ")
   :config
   (if (eq system-type 'windows-nt)
@@ -687,8 +696,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m
 (use-package w3m
-  :defer t
   :ensure t
+  :defer t
   :config
   (autoload 'w3m "w3m" "Interface for w3m on Emacs." t)
   (autoload 'w3m-find-file "w3m" "w3m interface function for local file." t)
@@ -709,8 +718,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; wanderlust
 (use-package wandrlust
   :disabled
-  :defer t
   :ensure t
+  :defer t
   :config
   (autoload 'wl "wl" "Wanderlust" t)
   (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
@@ -818,16 +827,16 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; notmuch
 (use-package notmuch
   :disabled
-  :defer t
   :ensure t
+  :defer t
   :config
   (autoload 'notmuch "notmuch" "notmuch mail" t))
 
 ;; gnus
 (use-package gnus
   :disabled
-  :difer t
   :ensure t
+  :defer t
   :config
   ;; user
   (setq user-mail-address "user@gmail.com"
@@ -884,8 +893,8 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 ;; mew
 (use-package mew
   :disabled
-  :defer t
   :ensure t
+  :defer t
   :config
   (autoload 'mew "mew" nil t)
   (autoload 'mew-send "mew" nil t)
