@@ -836,7 +836,6 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 
 ;; notmuch
 (use-package notmuch
-  :disabled
   :ensure t
   :defer t
   :config
@@ -844,7 +843,6 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 
 ;; gnus
 (use-package gnus
-  :disabled
   :ensure t
   :defer t
   :config
@@ -853,16 +851,15 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	user-full-name "user")
 
   ;; server
-  ;(setq gnus-select-method '(nnnil ""))
-  (setq gnus-select-method
-	'(nnimap "gmail.com"
-		 (nnimap-address "imap.gmail.com")
-		 (nnimap-server-port 993)
-		 (nnimap-stream ssl)
-		 (nnir-search-engine imap)))
+  (setq gnus-select-method '(nnnil ""))
   (setq gnus-secondary-select-methods
-	'((nnmaildir "Archives"
-		     (directory (concat home-emacs-directory "Mail/Archives"))
+	'((nnimap "user@gmail.com"
+		  (nnimap-address "imap.gmail.com")
+		  (nnimap-server-port 993)
+		  (nnimap-stream ssl)
+		  (nnir-search-engine imap))
+	  (nnmaildir "Archives"
+		     (directory (concat home-emacs-directory "Mail/Local"))
 		     (get-new-mail nil)
 		     (nnir-search-engine notmuch))))
 
@@ -872,33 +869,37 @@ japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
 	message-send-mail-function 'smtpmail-send-it)
 
   (require 'nnir)
-  (setq nnir-notmuch-program (concat user-emacs-directory "lisp/notmuch/notmuch"))
-  (setq nnir-notmuch-remove-prefix (concat home-emacs-directory "Mail/Archives/"))
+  (setq nnir-notmuch-program "notmuch"
+	nnir-notmuch-remove-prefix (concat home-emacs-directory "Mail/Local/"))
 
-  (setq gnus-fetch-old-headers t
-	gnus-asynchronous t)
+  (setq gnus-asynchronous t
+	gnus-nntp-server nil
+	gnus-fetch-old-headers t
+	gnus-auto-select-first nil
+	gnus-check-new-newsgroups nil
+	gnus-check-bogus-newsgroups nil
+	gnus-check-new-news nil
+	gnus-read-active-file nil)
 
   (setq mm-text-html-renderer 'w3m
 	mm-inline-text-html-with-images t
 	mm-w3m-safe-url-regexp nil)
 
-  (setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+  ;; summary
+  (setq gnus-parameters
+	'((".*"
+	   (display . all))))
 
-  (gnus-add-configuration
-   '(article
-     (horizontal 1.0
-		 (vertical 25
-			   (group 1.0))
-		 (vertical 1.0
-			   (summary 0.25 point)
-			   (article 1.0)))))
-  (gnus-add-configuration
-   '(summary
-     (horizontal 1.0
-		 (vertical 25
-			   (group 1.0))
-		 (vertical 1.0
-			   (summary 1.0 point))))))
+  (setq-default gnus-summary-line-format "%U%R%z %(%-15,15f  %B%s%)\n"
+		gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
+		gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
+		gnus-thread-sort-functions '(gnus-thread-sort-by-date)
+		gnus-sum-thread-tree-false-root ""
+		gnus-sum-thread-tree-indent " "
+		gnus-sum-thread-tree-leaf-with-other "├► "
+		gnus-sum-thread-tree-root ""
+		gnus-sum-thread-tree-single-leaf "╰► "
+		gnus-sum-thread-tree-vertical "│"))
 
 ;; mew
 (use-package mew
