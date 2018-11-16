@@ -11,7 +11,7 @@ URxvt.keysym.Control-Right:   \033[1;5C
 
 !! Extensions
 URxvt.perl-lib: /home/shin/.urxvt/perl/
-URxvt.perl-ext-common: default,matcher,resize-font,fullscreen
+URxvt.perl-ext-common: default,selection-to-clipboard,matcher,resize-font,fullscreen
 ! Open urls in browser with Control-Click
 URxvt.url-launcher: /usr/bin/firefox
 URxvt.matcher.button: C1
