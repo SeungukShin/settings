@@ -102,7 +102,7 @@ syntax enable
 " Color theme
 set background=dark
 colorscheme monokai
-set guifont=NanumGothicCoding\ 12
+set guifont=D2Coding\ 12
 " disable menu
 set guioptions-=m
 " disable toolbar
