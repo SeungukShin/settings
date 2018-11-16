@@ -5,8 +5,8 @@
 [alias]
 	d = difftool
 [user]
-	email = seunguk.shin@gmail.com
-	name = Seunguk Shin
+	email = user@gmail.com
+	name = user
 [core]
 	editor = vi
 [http]
