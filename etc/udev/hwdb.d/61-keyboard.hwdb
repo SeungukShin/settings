@@ -3,3 +3,18 @@ evdev:name:Kinesis Advantage2 Keyboard:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
  KEYBOARD_KEY_70029=delete
  KEYBOARD_KEY_7004c=esc
  KEYBOARD_KEY_70045=rightmeta
+
+# ThinkPad Compact Bluetooth Keyboard with TrackPoint
+evdev:name:ThinkPad Compact Bluetooth Keyboard with TrackPoint:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
+ KEYBOARD_KEY_70029=grave
+ KEYBOARD_KEY_70035=esc
+ KEYBOARD_KEY_70039=leftctrl
+ KEYBOARD_KEY_700e0=capslock
+
+# Switch Keyboard
+evdev:name:Chicony ACER Keyboard:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
+ KEYBOARD_KEY_70029=grave
+ KEYBOARD_KEY_70035=esc
+ KEYBOARD_KEY_70039=leftctrl
+ KEYBOARD_KEY_700e0=capslock
+
