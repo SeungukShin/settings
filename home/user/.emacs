@@ -38,6 +38,16 @@
 ;  (package-refresh-contents)
   (package-initialize))
 
+;; quelpa
+(use-package quelpa
+  :ensure t
+  :config
+  (setq quelpa-update-melpa-p nil))
+
+(use-package quelpa-use-package
+  :requires (quelpa package)
+  :ensure t)
+
 ;; el-get
 (when nil
   (add-to-list 'load-path (concat user-emacs-directory "el-get/"))
