@@ -115,20 +115,30 @@
 (size-indication-mode t)		; display file size in mode line
 
 ;; fonts
-(set-fontset-font "fontset-default" 'latin (font-spec :name "D2Coding"))
-(set-fontset-font "fontset-default" 'hangul (font-spec :name "D2Coding"))
-(set-face-attribute 'default nil
-		    :font "fontset-default"
-		    :height 120)
 (create-fontset-from-fontset-spec
-"-*-fixed-medium-r-normal-*-16-*-*-*-c-*-fontset-frame,
-latin-jisx0201:-unknown-D2Coding-normal-normal-*-*-*-*-*-d-0-iso10646-1,
-korean-ksc5601:-unknown-D2Coding-normal-normal-*-*-*-*-*-d-0-iso10646-1,
-japanese-jisx0208:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1983-*,
-japanese-jisx0208-1978:-*-*-medium-r-normal-*-16-*-*-*-c-*-jisx0208.1978-*")
-(set-fontset-font "fontset-frame" 'latin (font-spec :name "D2Coding"))
-(set-fontset-font "fontset-frame" 'hangul (font-spec :name "D2Coding"))
+ "-monotype-courier-medium-r-normal-*-*-130-*-*-m-*-fontset-frame,
+ korean-ksc5601:-hanyang-gothic-medium-r-normal-*-*-150-*-*-*-*-ksc5601*-0,
+ japanese-jisx0208:-ricoh-gothic-medium-r-normal-*-*-150-*-*-*-*-jisx0208*-0,
+ japanese-jisx0212:-ricoh-mincho-medium-r-normal-*-*-150-*-*-*-*-jisx0212*-0,
+ chinese-big5-1:-dynalab-ming-medium-r-normal-*-*-150-*-*-*-*-big5*-0,
+ chinese-big5-2:-dynalab-ming-medium-r-normal-*-*-150-*-*-*-*-big5*-0,
+ chinese-gb2312:-zhuhai-song-medium-r-normal-*-*-150-*-*-*-*-gb2312*-*,
+ thai-tis620:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-tis620.2529-1,
+ vietnamese-viscii-lower:-monotype-courier-medium-r-normal-*-*-130-*-*-*-*-viscii1.1-1,
+ lao:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-mulelao-1,
+ indian-is13194:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-is13194-devanagari,
+ indian-1-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-1,
+ indian-2-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-2")
+(set-fontset-font "fontset-frame" 'latin (font-spec :name "D2Coding" :size 16))
+(set-fontset-font "fontset-frame" 'han (font-spec :name "Noto Sans Mono CJK SC" :size 16))
+(set-fontset-font "fontset-frame" 'kana (font-spec :name "Noto Sans Mono CJK JP" :size 16))
+(set-fontset-font "fontset-frame" 'hangul (font-spec :name "Noto Sans Mono CJK KR" :size 16))
+(set-face-font 'default "fontset-frame")
+(set-face-attribute 'default nil
+		    :font "fontset-frame"
+		    :height 120)
 (add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
+(add-to-list 'face-font-rescale-alist '("*" . 1.0))
 
 ;; theme
 (use-package monokai-theme
