@@ -304,6 +304,12 @@
 (use-package abbrev
   :delight (abbrev-mode "Ⓑ"))
 
+;; dired
+(use-package dired
+  :config
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))))
+
 ;; async
 (use-package async
   :ensure t
