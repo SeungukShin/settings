@@ -1,3 +1,6 @@
+!! Disable XIM for Emacs
+Emacs*useXIM: false
+
 !! Name
 URxvt.termName:               rxvt-unicode
 
