@@ -46,7 +46,9 @@
 
 (use-package quelpa-use-package
   :requires (quelpa package)
-  :ensure t)
+  :ensure t
+  :config
+  (setq use-package-ensure-function 'quelpa))
 
 ;; el-get
 (when nil
