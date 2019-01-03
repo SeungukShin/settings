@@ -45,7 +45,7 @@
   (setq quelpa-update-melpa-p nil))
 
 (use-package quelpa-use-package
-  :requires (quelpa package)
+  :requires (quelpa use-package)
   :ensure t
   :config
   (setq use-package-ensure-function 'quelpa))
