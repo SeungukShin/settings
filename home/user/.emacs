@@ -371,6 +371,8 @@
   :requires helm
   :ensure t
   :config
+  (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
+  (setq helm-ag-insert-at-point 'symbol)
   :bind
   (("C-, aa" . helm-do-ag-project-root)
    ("C-, ad" . helm-do-ag)
