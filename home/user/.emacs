@@ -715,6 +715,11 @@
       (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
   (gradle-mode 1))
 
+;; flymake
+(use-package flymake
+  :ensure t
+  :delight (flymake-mode "Ⓕ"))
+
 ;; ispell
 (use-package ispell
   :ensure t)
