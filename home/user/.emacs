@@ -865,6 +865,8 @@
   (epa-file-enable))
 
 ;; notmuch
+(quelpa '(notmuch :fetcher github :repo "notmuch/notmuch"
+		  :files ("emacs/*.el" "emacs/*.png")))
 (use-package notmuch
   :ensure t
   :defer t
