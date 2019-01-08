@@ -116,10 +116,14 @@
  indian-is13194:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-is13194-devanagari,
  indian-1-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-1,
  indian-2-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-2")
-(set-fontset-font "fontset-frame" 'latin (font-spec :name "D2Coding" :size 16))
-(set-fontset-font "fontset-frame" 'han (font-spec :name "Noto Sans Mono CJK SC" :size 16))
-(set-fontset-font "fontset-frame" 'kana (font-spec :name "Noto Sans Mono CJK JP" :size 16))
-(set-fontset-font "fontset-frame" 'hangul (font-spec :name "Noto Sans Mono CJK KR" :size 16))
+(set-fontset-font "fontset-frame" 'latin
+		  (font-spec :name "D2Coding" :size 16))
+(set-fontset-font "fontset-frame" 'han
+		  (font-spec :name "Noto Sans Mono CJK SC" :size 16))
+(set-fontset-font "fontset-frame" 'kana
+		  (font-spec :name "Noto Sans Mono CJK JP" :size 16))
+(set-fontset-font "fontset-frame" 'hangul
+		  (font-spec :name "Noto Sans Mono CJK KR" :size 16))
 (set-face-font 'default "fontset-frame")
 (set-face-attribute 'default nil
 		    :font "fontset-frame"
@@ -198,7 +202,8 @@
 	'(face spaces tabs newline space-mark tab-mark newline-mark))
   (setq whitespace-display-mappings
 	'(
-	  (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」, 46 full stop 「.」
+	  (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」,
+					; 46 full stop 「.」
 	  (newline-mark 10 [182 10])	; newline
 	  (tab-mark 9 [8614 9] [92 9])	; tab
 	  )))
@@ -213,7 +218,8 @@
 (defun highlight-current-word()
   "highlight current word"
   (interactive)
-  (highlight-regexp (current-word) (nth highlight-current-word-color-index highlight-current-word-color-list))
+  (highlight-regexp (current-word) (nth highlight-current-word-color-index
+					highlight-current-word-color-list))
   (incf highlight-current-word-color-index)
   (when (= highlight-current-word-color-index 4)
     (setq highlight-current-word-color-index 0)))
@@ -286,7 +292,8 @@
   :config
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))))
+  (define-key dired-mode-map (kbd "^")
+    (lambda () (interactive) (find-alternate-file ".."))))
 
 ;; async
 (use-package async
@@ -606,8 +613,8 @@
   (markdown-mode "Ⓜ")
   (gfm-mode "Ⓜ")
   :config
-  (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
-  (autoload 'gfm-mode "markdown-mode" "Major mode for editing GitHub Flavored Markdown files" t)
+  (autoload 'markdown-mode "markdown-mode" "Markdown" t)
+  (autoload 'gfm-mode "markdown-mode" "GitHub Flavored Markdown" t)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
   (add-hook 'markdown-mode-hook
@@ -669,8 +676,6 @@
   :defer t
   :delight (gradle-mode "Ⓡ")
   :config
-  (if (eq system-type 'windows-nt)
-      (setq gradle-executable-path "\"C:/Program Files/Android/Android Studio/gradle/gradle-4.1/bin/gradle.bat\""))
   (gradle-mode 1))
 
 ;; flymake
@@ -688,7 +693,8 @@
   (add-hook 'org-mode-hook
 	    (lambda ()
 	      (if (eq system-type 'windows-nt)
-		  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell"))
+		  (setq ispell-program-name
+			"C:/Program Files (x86)/Aspell/bin/aspell"))
 	      (flyspell-mode 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -797,7 +803,8 @@
 	wl-thread-open-reading-thread t)
 
   ;; message
-  (setq wl-message-mode-line-format (propertize "%f/%n %F" 'face 'powerline-active1)
+  (setq wl-message-mode-line-format
+	(propertize "%f/%n %F" 'face 'powerline-active1)
 	wl-message-ignored-field-list '("^.*:")
 	wl-message-visible-field-list
 	'("^\\(To\\|Cc\\):"
@@ -879,7 +886,8 @@
 
   (setq-default gnus-summary-line-format "%U%R%z %(%-15,15f  %B%s%)\n"
 		gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-		gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
+		gnus-summary-thread-gathering-function
+		'gnus-gather-threads-by-references
 		gnus-thread-sort-functions '(gnus-thread-sort-by-date)
 		gnus-sum-thread-tree-false-root ""
 		gnus-sum-thread-tree-indent " "
@@ -915,7 +923,8 @@
 
   ;; icon
   (setq mew-icon-directory
-	(expand-file-name "etc" (file-name-directory (locate-library "mew.el"))))
+	(expand-file-name "etc"
+			  (file-name-directory (locate-library "mew.el"))))
 
   ;; network
   (setq mew-prog-ssl "/usr/bin/stunnel"
