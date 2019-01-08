@@ -540,10 +540,6 @@
 		    tab-always-indent nil)))
 
   (setq org-startup-indented t)
-  (add-hook 'org-mode-hook
-	    (lambda ()
-	      (visual-line-mode t)
-	      (t)))
 
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
@@ -571,8 +567,7 @@
   :straight nil
   :defer t
   :delight
-  (org-indent-mode "Ⓘ")
-  (visual-line-mode "Ⓥ"))
+  (org-indent-mode "Ⓘ"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
