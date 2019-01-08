@@ -72,6 +72,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; server
 (use-package server
+  :disabled
   :delight (server-buffer-clients "Ⓢ")
   :config
   (server-mode 1)
