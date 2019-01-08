@@ -434,19 +434,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; python
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; tab
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode t
-		  python-indent 8
-		  tab-width 8
-		  tab-always-indent t)))
+;; python
+(use-package python
+  :defer t
+  :config
+  (add-hook 'python-mode-hook
+	    (lambda ()
+	      (setq indent-tabs-mode t
+		    python-indent-offset 8
+		    tab-width 8
+		    tab-always-indent t))))
 
 ;; jupyter
-(use-package skewer-mode)
-
+(use-package skewer-mode
+  :defer t)
 (use-package ein
-  :requires skewer-mode
   :defer t
   :config
   (setq request-backend 'url-retrieve)
