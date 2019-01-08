@@ -23,6 +23,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; straight
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(setq straight-use-package-by-default t)
+
 ;; use-package
 (eval-when-compile
   (add-to-list 'load-path (concat user-emacs-directory "use-package/"))
@@ -40,13 +55,11 @@
 
 ;; quelpa
 (use-package quelpa
-  :ensure t
   :config
   (setq quelpa-update-melpa-p nil))
 
 (use-package quelpa-use-package
   :requires (quelpa use-package)
-  :ensure t
   :config
   (setq use-package-ensure-function 'quelpa))
 
@@ -71,7 +84,6 @@
 ;; init-loader
 (use-package init-loader
   :disabled
-  :ensure t
   :config
   (setq init-loader-show-log-after-init t
 	init-loader-byte-compile t)
@@ -85,19 +97,16 @@
 (global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
 
 ;; diminish mode name on modeline
-(use-package delight
-  :ensure t)
+(use-package delight)
 
 ;; bind-key
-(use-package bind-key
-  :ensure t)
+(use-package bind-key)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; server
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; server
 (use-package server
-  :ensure t
   :delight (server-buffer-clients "Ⓢ")
   :config
   (server-mode 1)
@@ -154,13 +163,11 @@
 
 ;; theme
 (use-package monokai-theme
-  :ensure t
   :config
   (load-theme 'monokai t))
 
 ;; fill column indicator
 (use-package fill-column-indicator
-  :ensure t
   :config
   (setq fci-rule-width 1)
   (setq fci-rule-color "dark blue")
@@ -215,7 +222,6 @@
 
 ;; whitespace
 (use-package whitespace
-  :ensure t
   :delight (global-whitespace-mode "Ⓦ")
   :config
   (global-whitespace-mode 1)
@@ -263,7 +269,6 @@
 
 ;; smartparens
 (use-package smartparens
-  :ensure t
   :delight (smartparens-mode "Ⓟ")
   :config
   (smartparens-global-mode t))
@@ -288,26 +293,25 @@
 
 ;; which-key
 (use-package which-key
-  :ensure t
   :delight (which-key-mode "Ⓚ")
   :config (which-key-mode))
 
 ;; eldoc
 (use-package eldoc
-  :ensure t
   :delight (eldoc-mode "Ⓓ"))
 
 ;; auto complete
 (use-package auto-complete
-  :ensure t
   :delight (auto-complete-mode "Ⓐ"))
 
 ;; auto-correction
 (use-package abbrev
+  :straight nil
   :delight (abbrev-mode "Ⓑ"))
 
 ;; dired
 (use-package dired
+  :straight nil
   :config
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
@@ -315,7 +319,6 @@
 
 ;; async
 (use-package async
-  :ensure t
   :config
   (dired-async-mode 1)
   (async-bytecomp-package-mode 1))
@@ -325,7 +328,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm
 (use-package helm
-  :ensure t
   :defer nil
   :delight (helm-mode "Ⓗ")
   :config
@@ -370,7 +372,6 @@
 ;; helm-ag
 (use-package helm-ag
   :requires helm
-  :ensure t
   :config
   (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
   (setq helm-ag-insert-at-point 'symbol)
@@ -384,7 +385,6 @@
 ;; helm-google
 (use-package helm-google
   :requires helm
-  :ensure t
   :config
   :bind ("C-c g" . helm-google))
 
@@ -392,13 +392,11 @@
 ;;; cscope
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; xcscope
-(use-package xcscope
-  :ensure t)
+(use-package xcscope)
 
 ;; helm-cscope
 (use-package helm-cscope
   :requires (xcscope helm)
-  :ensure t
   :delight (helm-cscope-mode "Ⓒ")
   :config
   ;; disable auto database update
@@ -488,12 +486,10 @@
 		  tab-always-indent t)))
 
 ;; jupyter
-(use-package skewer-mode
-  :ensure t)
+(use-package skewer-mode)
 
 (use-package ein
   :requires skewer-mode
-  :ensure t
   :defer t
   :config
   (setq request-backend 'url-retrieve)
@@ -506,7 +502,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org
 (use-package org
-  :ensure t
   :defer t
   :config
   ;; basic
@@ -599,6 +594,7 @@
    ("\C-cr" . org-remember)))
 
 (use-package org-indent
+  :straight nil
   :defer t
   :delight
   (org-indent-mode "Ⓘ")
@@ -612,20 +608,17 @@
 ;; korean holidays
 (use-package korean-holidays
   :requires holidays
-  :ensure t
   :defer t
   :config
   (setq calendar-holidays korean-holidays))
 
 ;; calfw
 (use-package calfw
-  :ensure t
   :defer t)
 
 ;; calfw-org
 (use-package calfw-org
   :requires (org calfw)
-  :ensure t
   :defer t
   :config
   ;; remove warning message from compiler
@@ -636,7 +629,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; markdown
 (use-package markdown-mode
-  :ensure t
   :defer t
   :delight
   (markdown-mode "Ⓜ")
@@ -657,7 +649,6 @@
 
 ;; markdown preview
 (use-package markdown-preview-mode
-  :ensure t
   :defer t
   :config
   (setq browse-url-browser-function 'browse-url-firefox
@@ -669,21 +660,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auctex
 (use-package auctex
-  :ensure t
   :defer t
   :config
   (load "auctex.el" nil t t))
 
 ;; latex preview pane
 (use-package latex-preview-pane
-  :ensure t
   :defer t
   :config
   (latex-preview-pane-enable))
 
 ;; doc view
 (use-package doc-view
-  :ensure t
   :defer t
   :config
   (setq doc-view-resolution 240)
@@ -694,12 +682,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 (use-package magit
-  :ensure t
   :defer t)
 
 ;; git-gutter
 (use-package git-gutter
-  :ensure t
   :delight (git-gutter-mode "Ⓖ")
   :config (global-git-gutter-mode t))
 
@@ -708,7 +694,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gradle
 (use-package gradle-mode
-  :ensure t
   :defer t
   :delight (gradle-mode "Ⓡ")
   :config
@@ -718,17 +703,14 @@
 
 ;; flymake
 (use-package flymake
-  :ensure t
   :delight (flymake-mode "Ⓕ"))
 
 ;; ispell
-(use-package ispell
-  :ensure t)
+(use-package ispell)
 
 ;; flyspell
 (use-package flyspell
   :requires ispell
-  :ensure t
   :delight (flyspell-mode "Ⓕ")
   :config
   (add-hook 'org-mode-hook
@@ -742,7 +724,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m
 (use-package w3m
-  :ensure t
   :defer t
   :config
   (autoload 'w3m "w3m" "Interface for w3m on Emacs." t)
@@ -764,7 +745,6 @@
 ;; wanderlust
 (use-package wandrlust
   :disabled
-  :ensure t
   :defer t
   :config
   (autoload 'wl "wl" "Wanderlust" t)
@@ -867,6 +847,7 @@
 
 ;; epa-file for encryption
 (use-package epa-file
+  :straight nil
   :config
   (epa-file-enable))
 
@@ -874,14 +855,12 @@
 (quelpa '(notmuch :fetcher github :repo "notmuch/notmuch"
 		  :files ("emacs/*.el" "emacs/*.png")))
 (use-package notmuch
-  :ensure t
   :defer t
   :config
   (autoload 'notmuch "notmuch" "notmuch mail" t))
 
 ;; gnus
 (use-package gnus
-  :ensure t
   :defer t
   :config
   ;; user
@@ -942,7 +921,6 @@
 ;; mew
 (use-package mew
   :disabled
-  :ensure t
   :defer t
   :config
   (autoload 'mew "mew" nil t)
