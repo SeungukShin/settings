@@ -59,7 +59,12 @@
 (defun b/reload-dotemacs-file()
   "reload .emacs"
   (interactive)
-  (load-file (expand-file-name ".emacs" home-dir)))
+  (when (y-or-n-p "Rebuild Packages?")
+    (byte-recompile-directory user-emacs-directory 0))
+  (when (file-exists-p (expand-file-name ".emacs.elc" home-dir))
+    (delete-file (expand-file-name ".emacs.elc" home-dir)))
+  (byte-compile-file (expand-file-name ".emacs" home-dir))
+  (load-file (expand-file-name ".emacs.elc" home-dir)))
 (global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
