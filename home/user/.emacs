@@ -487,13 +487,67 @@
   (defvar org-agenda-dir (concat home-dir "Org/Task/"))
   (setq org-agenda-files
 	(directory-files-recursively org-agenda-dir "\\.org$")
+	org-agenda-show-all-dates nil		; hide empty day
 	org-agenda-start-on-weekday 0		; agenda starts on sunday
-	org-agenda-span 31)			; number of days for agenda
-  (defun b/org-agenda-redo ()
-    (interactive)
-    (setq org-agenda-files
-	  (directory-files-recursively org-agenda-dir "\\.org$"))
-    (org-agenda-redo t))
+	org-agenda-span 31			; number of days for agenda
+	org-agenda-time-leading-zero t
+	org-agenda-skip-scheduled-if-deadline-is-shown 'not-today
+	org-agenda-skip-scheduled-if-done t
+	org-agenda-skip-deadline-if-done t
+	org-agenda-skip-timestamp-if-done t
+	org-agenda-todo-ignore-scheduled 'future
+	org-agenda-todo-ignore-deadlines nil
+	org-agenda-todo-ignore-timestamp t
+	org-agenda-tags-todo-honor-ignore-options t)
+
+  ;; custom agenda
+  (defun b/org-agenda-skip-if-scheduled-later ()
+    "If this functino returns nil, the current match should not be skipped"
+    (ignore-errors
+      (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+	    (scheduled-seconds
+	     (time-to-seconds
+	      (org-time-string-to-time
+	       (org-entry-get nil "SCHEDULED"))))
+	    (now (time-to-seconds (current-time))))
+	(and scheduled-seconds
+	     (>= scheduled-seconds now)
+	     subtree-end))))
+  (setq org-agenda-custom-commands
+	'(("w" "Agenda + Todo"
+	   ((agenda ""
+		    ((org-agenda-overriding-header "Agenda:")
+		     (org-agenda-skip-function 'b/org-agenda-skip-if-scheduled-later)
+		     (org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
+		     (org-agenda-span 1)))
+	    (agenda ""
+		    ((org-agenda-overriding-header "")
+		     (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
+		     (org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
+		     (org-agenda-start-day "+1d")))
+	    (todo ""
+		  ((org-agenda-todo-ignore-scheduled 'future)))))))
+
+  ;; capture
+  (defvar org-agenda-inbox-file (expand-file-name "Inbox.org" org-agenda-dir))
+  (setq org-capture-templates
+	'(("t" "todo" entry
+	   (file+headline
+	    (lambda () (expand-file-name "Inbox.org" org-agenda-dir))
+	    "Inbox") "* TODO %i%?")
+	  ("p" "project" entry
+	   (file+headline
+	    (lambda () (expand-file-name "Project.org" org-agenda-dir))
+	    "Tasks") "* TODO %i%?\n%t")
+	  ("w" "wait" entry
+	   (file+headline
+	    (lambda () (expand-file-name "Wait.org" org-agenda-dir))
+	    "Wait") "* WAIT %i%?\n%u")))
+
+  ;; refile
+  (setq org-refile-targets
+	'((nil :maxlevel . 1)
+	  (org-agenda-files :maxlevel . 1)))
 
   ;; babel
   (if (>= emacs-major-version 26)
@@ -521,7 +575,6 @@
 		    tab-width 8
 		    tab-always-indent nil)))
 
-
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
   (setq org-latex-listings t
@@ -533,16 +586,20 @@
 				     ("frame" "noney")
 				     ("breaklines" "true")))
 
-  ;; binding
-  (eval-after-load "org-agenda"
-    '(progn
-       (define-key org-agenda-mode-map "r" 'b/org-agenda-redo)))
+  (defun b/org-agenda-redo ()
+    (interactive)
+    (setq org-agenda-files
+	  (directory-files-recursively org-agenda-dir "\\.org$"))
+    (org-agenda-redo t))
   :bind
   (("\C-ca" . org-agenda)
    ("\C-cl" . org-store-link)
    ("\C-cc" . org-capture)
    ("\C-cb" . org-iswitchb)
-   ("\C-cr" . org-remember)))
+   ("\C-cr" . org-remember)
+;   :map org-agenda-mode-map
+;   ("r" . b/org-agenda-redo)
+   ))
 
 (use-package org-indent
   :straight nil
