@@ -464,14 +464,19 @@
   :defer t
   :config
   ;; basic
-  (add-to-list 'auto-mode-alist		; org mode extension
-	       '("\\.org$" . org-mode))
-  (setq org-todo-keywords			; todo keyword
-	'((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
-  (setq org-hide-leading-stars t
-	org-odd-levels-only t)
-  (add-to-list 'org-emphasis-alist
-	       '("*" (:foreground "red")))
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (add-to-list 'org-emphasis-alist '("*" (:foreground "red")))
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "DROP(p)"))
+	org-hide-leading-stars t
+	org-startup-indented t)
+
+  (custom-set-faces '(org-level-1 ((t (:height 1.0))))
+		    '(org-level-2 ((t (:height 1.0))))
+		    '(org-level-3 ((t (:height 1.0))))
+		    '(org-level-4 ((t (:height 1.0))))
+		    '(org-level-5 ((t (:height 1.0))))
+		    '(org-level-6 ((t (:height 1.0)))))
 
   ;; image
   (setq org-startup-with-inline-images t	; show inline image
@@ -507,13 +512,6 @@
        (dot . t)
        (R . nil))))
 
-  (custom-set-faces '(org-level-1 ((t (:height 1.0))))
-		    '(org-level-2 ((t (:height 1.0))))
-		    '(org-level-3 ((t (:height 1.0))))
-		    '(org-level-4 ((t (:height 1.0))))
-		    '(org-level-5 ((t (:height 1.0))))
-		    '(org-level-6 ((t (:height 1.0)))))
-
   (add-hook 'org-mode-hook
 	    (lambda ()
 	      (setq-default indent-tabs-mode nil
@@ -523,7 +521,6 @@
 		    tab-width 8
 		    tab-always-indent nil)))
 
-  (setq org-startup-indented t)
 
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
@@ -550,8 +547,7 @@
 (use-package org-indent
   :straight nil
   :defer t
-  :delight
-  (org-indent-mode "Ⓘ"))
+  :delight (org-indent-mode "Ⓘ"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
