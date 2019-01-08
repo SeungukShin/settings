@@ -613,7 +613,6 @@
 
 ;; korean holidays
 (use-package korean-holidays
-  :requires holidays
   :defer t
   :config
   (setq calendar-holidays korean-holidays))
@@ -624,11 +623,11 @@
 
 ;; calfw-org
 (use-package calfw-org
-  :requires (org calfw)
   :defer t
   :config
   ;; remove warning message from compiler
-  (declare-function org-bookmark-jump-unhide "org"))
+  (declare-function org-bookmark-jump-unhide "org")
+  :bind ("C-c f" . cfw:open-org-calendar))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; markdown
