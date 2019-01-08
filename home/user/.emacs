@@ -747,12 +747,12 @@
 (use-package wandrlust
   :disabled
   :defer t
-  :config
+  :init
   (autoload 'wl "wl" "Wanderlust" t)
   (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
   (autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
   (autoload 'wl-user-agent-compose "wl-draft" "Compose with Wanderlust." t)
-
+  :config
   ;; inline image
   (setq mime-w3m-safe-url-regexp nil
 	mime-w3m-display-inline-images t)
@@ -856,7 +856,7 @@
 ;; notmuch
 (use-package notmuch
   :defer t
-  :config
+  :init
   (autoload 'notmuch "notmuch" "notmuch mail" t))
 
 ;; gnus
@@ -890,7 +890,6 @@
 	nnir-notmuch-remove-prefix (concat home-dir "Mail/Local/"))
 
   (setq gnus-asynchronous t
-	gnus-nntp-server nil
 	gnus-fetch-old-headers t
 	gnus-auto-select-first nil
 	gnus-check-new-newsgroups nil
@@ -923,12 +922,12 @@
 (use-package mew
   :disabled
   :defer t
-  :config
+  :init
   (autoload 'mew "mew" nil t)
   (autoload 'mew-send "mew" nil t)
 
   (add-to-list 'exec-path (concat user-dir "lisp/mew/bin/"))
-
+  :config
   ;; read mail menu
   (setq read-mail-command 'mew)
 
@@ -990,3 +989,5 @@
   (require 'mew-w3m)
   (setq mew-mime-multipart-alternative-list '("Text/Html" "Text/Plain" ".*"))
   (setq mew-use-text/html t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
