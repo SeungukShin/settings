@@ -1,17 +1,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; basic configure
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; home directory
-(setq home-emacs-directory (expand-file-name "~/"))
-
-;; temp directory
-(setq temp-emacs-directory (concat user-emacs-directory ".cache/"))
-(unless (file-exists-p temp-emacs-directory)
-  (make-directory temp-emacs-directory t))
+;; directories
+(defvar home-dir (expand-file-name "~/"))
+(defvar user-dir user-emacs-directory)
+(defvar temp-dir (concat user-dir ".cache/"))
+(defvar elpa-dir (concat user-dir "elpa/"))
+(unless (file-exists-p temp-dir)
+  (make-directory temp-dir t))
 
 ;; exec path
 (if (eq system-type 'windows-nt)
-    (add-to-list 'exec-path (concat home-emacs-directory "AppData/Roaming/emacs/bin/")))
+    (add-to-list 'exec-path (concat home-dir "AppData/Roaming/emacs/bin/")))
 
 ;; proxy
 (when nil
@@ -26,7 +26,7 @@
 ;; straight
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-dir))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -40,7 +40,7 @@
 
 ;; use-package
 (eval-when-compile
-  (add-to-list 'load-path (concat user-emacs-directory "use-package/"))
+  (add-to-list 'load-path (concat user-dir "use-package/"))
   (require 'use-package))
 
 ;; package
@@ -65,16 +65,16 @@
 
 ;; el-get
 (when nil
-  (add-to-list 'load-path (concat user-emacs-directory "el-get/"))
+  (add-to-list 'load-path (concat user-dir "el-get/"))
   (require 'el-get)
-  (setq el-get-dir (concat user-emacs-directory "lisp/"))
-  (add-to-list 'el-get-recipe-path (concat user-emacs-directory "recipes/"))
+  (setq el-get-dir (concat user-dir "lisp/"))
+  (add-to-list 'el-get-recipe-path (concat user-dir "recipes/"))
   (setq el-get-bundle-sync nil			; allow async. operation
 	el-get-allow-insecure t))		; allow local file
 (when nil
   ;; load path
-  (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-  (let ((default-directory (concat user-emacs-directory "lisp/")))
+  (add-to-list 'load-path (concat user-dir "lisp/"))
+  (let ((default-directory (concat user-dir "lisp/")))
     (normal-top-level-add-to-load-path '("."))
     (normal-top-level-add-subdirs-to-load-path)))
 
@@ -87,13 +87,13 @@
   :config
   (setq init-loader-show-log-after-init t
 	init-loader-byte-compile t)
-  (init-loader-load (concat user-emacs-directory "init.d/")))
+  (init-loader-load (concat user-dir "init.d/")))
 
 ;; reload .emacs
 (defun b/reload-dotemacs-file()
   "reload .emacs"
   (interactive)
-  (load-file (expand-file-name ".emacs" home-emacs-directory)))
+  (load-file (expand-file-name ".emacs" home-dir)))
 (global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
 
 ;; diminish mode name on modeline
@@ -197,16 +197,16 @@
 ;; auto saving
 (setq backup-inhibited t		; disable backaup
       auto-save-default nil		; disable auto save
-      auto-save-list-file-prefix temp-emacs-directory)
+      auto-save-list-file-prefix temp-dir)
 
 ;; save last position
 (save-place-mode t)
-(setq save-place-file (expand-file-name "places" temp-emacs-directory)
+(setq save-place-file (expand-file-name "places" temp-dir)
       save-place-forget-unreadable-files nil)
 
 ;; save recent files
 (recentf-mode t)
-(setq recentf-save-file (expand-file-name "recentf" temp-emacs-directory))
+(setq recentf-save-file (expand-file-name "recentf" temp-dir))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; highlight
@@ -522,14 +522,14 @@
   ;; agenda
   (load-library "find-lisp")
   (setq org-agenda-files			; set agenda files
-;	(file-expand-wildcards (concat home-emacs-directory "Org/*.org"))
-	(find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$")
+;	(file-expand-wildcards (concat home-dir "Org/*.org"))
+	(find-lisp-find-files (concat home-dir "Org/Task") "\.org$")
 	org-agenda-start-on-weekday 0		; agenda starts on sunday
 	org-agenda-span 31)			; number of days for agenda
   (defun b/org-agenda-redo ()
     (interactive)
     (setq org-agenda-files
-	  (find-lisp-find-files (concat home-emacs-directory "Org/Task") "\.org$"))
+	  (find-lisp-find-files (concat home-dir "Org/Task") "\.org$"))
     (org-agenda-redo t))
 
   ;; babel
@@ -758,16 +758,16 @@
   (setq mime-edit-split-message nil)
 
   ;; directory
-  (setq elmo-msgdb-directory (concat user-emacs-directory ".elmo/")
+  (setq elmo-msgdb-directory (concat user-dir ".elmo/")
 	elmo-cache-directory (concat elmo-msgdb-directory "cache/")
 	wl-temporary-file-directory (concat elmo-msgdb-directory "tmp/")
-	wl-folders-file (concat user-emacs-directory ".folders"))
+	wl-folders-file (concat user-dir ".folders"))
 
   ;; user information
   (setq wl-from "user <user@gmail.com>")
 
   ;; local maildir
-  (setq maildir-path (concat home-emacs-directory "Mail/")
+  (setq maildir-path (concat home-dir "Mail/")
 	elmo-maildir-folder-path maildir-path
 	elmo-localdir-folder-path maildir-path
 	elmo-search-namazu-default-index-path maildir-path
@@ -876,7 +876,7 @@
 		  (nnimap-stream ssl)
 		  (nnir-search-engine imap))
 	  (nnmaildir "Archives"
-		     (directory (concat home-emacs-directory "Mail/Local"))
+		     (directory (concat home-dir "Mail/Local"))
 		     (get-new-mail nil)
 		     (nnir-search-engine notmuch))))
 
@@ -887,7 +887,7 @@
 
   (require 'nnir)
   (setq nnir-notmuch-program "notmuch"
-	nnir-notmuch-remove-prefix (concat home-emacs-directory "Mail/Local/"))
+	nnir-notmuch-remove-prefix (concat home-dir "Mail/Local/"))
 
   (setq gnus-asynchronous t
 	gnus-nntp-server nil
@@ -926,7 +926,7 @@
   (autoload 'mew "mew" nil t)
   (autoload 'mew-send "mew" nil t)
 
-  (add-to-list 'exec-path (concat user-emacs-directory "lisp/mew/bin/"))
+  (add-to-list 'exec-path (concat user-dir "lisp/mew/bin/"))
 
   ;; read mail menu
   (setq read-mail-command 'mew)
