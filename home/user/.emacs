@@ -708,12 +708,9 @@
 (use-package flymake
   :delight (flymake-mode "Ⓕ"))
 
-;; ispell
-(use-package ispell)
-
 ;; flyspell
+(use-package ispell)
 (use-package flyspell
-  :requires ispell
   :delight (flyspell-mode "Ⓕ")
   :config
   (add-hook 'org-mode-hook
