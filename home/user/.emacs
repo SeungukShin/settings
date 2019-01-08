@@ -307,7 +307,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm
 (use-package helm
-  :defer nil
   :delight (helm-mode "Ⓗ")
   :config
   (helm-mode t)
@@ -350,7 +349,6 @@
 
 ;; helm-ag
 (use-package helm-ag
-  :requires helm
   :config
   (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
   (setq helm-ag-insert-at-point 'symbol)
@@ -363,7 +361,6 @@
 
 ;; helm-google
 (use-package helm-google
-  :requires helm
   :config
   :bind ("C-c g" . helm-google))
 
@@ -375,7 +372,6 @@
 
 ;; helm-cscope
 (use-package helm-cscope
-  :requires (xcscope helm)
   :delight (helm-cscope-mode "Ⓒ")
   :config
   ;; disable auto database update
@@ -499,16 +495,15 @@
 	(/ (display-pixel-width) 3))
 
   ;; agenda
-  (load-library "find-lisp")
-  (setq org-agenda-files			; set agenda files
-;	(file-expand-wildcards (concat home-dir "Org/*.org"))
-	(find-lisp-find-files (concat home-dir "Org/Task") "\.org$")
+  (defvar org-agenda-dir (concat home-dir "Org/Task/"))
+  (setq org-agenda-files
+	(directory-files-recursively org-agenda-dir "\\.org$")
 	org-agenda-start-on-weekday 0		; agenda starts on sunday
 	org-agenda-span 31)			; number of days for agenda
   (defun b/org-agenda-redo ()
     (interactive)
     (setq org-agenda-files
-	  (find-lisp-find-files (concat home-dir "Org/Task") "\.org$"))
+	  (directory-files-recursively org-agenda-dir "\\.org$"))
     (org-agenda-redo t))
 
   ;; babel
