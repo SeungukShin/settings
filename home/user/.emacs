@@ -279,7 +279,7 @@
   :defer t
   :delight (auto-complete-mode "Ⓐ"))
 
-;; auto-correction
+;; auto correction
 (use-package abbrev
   :straight nil
   :defer t
@@ -307,6 +307,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm
 (use-package helm
+  :defer t
   :delight (helm-mode "Ⓗ")
   :config
   (helm-mode t)
@@ -326,16 +327,8 @@
 
   (global-unset-key (kbd "C-x c"))
 
-  ;; evil binding
-  (with-eval-after-load 'evil
-    (evil-leader/set-key
-     "x" 'helm-M-x
-     "e" 'helm-find-files
-     "b" 'helm-mini
-     "k" 'kill-buffer))
   :bind
-  (;; emacs binding
-   ("C-c h"   . helm-command-prefix)
+  (("C-c h"   . helm-command-prefix)
    ("C-h"     . helm-command-prefix)
    ("M-x"     . helm-M-x)
    ("M-y"     . helm-show-kill-ring)
@@ -349,6 +342,7 @@
 
 ;; helm-ag
 (use-package helm-ag
+  :defer t
   :config
   (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
   (setq helm-ag-insert-at-point 'symbol)
@@ -361,48 +355,36 @@
 
 ;; helm-google
 (use-package helm-google
-  :config
+  :defer t
   :bind ("C-c g" . helm-google))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; cscope
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; xcscope
-(use-package xcscope)
+(use-package xcscope
+  :defer t)
 
 ;; helm-cscope
 (use-package helm-cscope
+  :defer t
   :delight (helm-cscope-mode "Ⓒ")
+  :init
+  (add-hook 'c-mode-common-hook 'helm-cscope-mode)
   :config
   ;; disable auto database update
   (setq cscope-option-do-not-update-database t)
-
-  ;; emacs binding
-  (add-hook 'c-mode-common-hook 'helm-cscope-mode)
-  (add-hook 'helm-cscope-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "C-, cs") 'helm-cscope-find-this-symbol)
-	      (local-set-key (kbd "C-, cg") 'helm-cscope-find-global-definition)
-	      (local-set-key (kbd "C-, cd") 'helm-cscope-find-called-this-function)
-	      (local-set-key (kbd "C-, cc") 'helm-cscope-find-calling-this-function)
-	      (local-set-key (kbd "C-, ct") 'helm-cscope-find-this-text-string)
-	      (local-set-key (kbd "C-, ce") 'helm-cscope-find-egrep-pattern)
-	      (local-set-key (kbd "C-, cf") 'helm-cscope-find-this-file)
-	      (local-set-key (kbd "C-, ci") 'helm-cscope-find-files-including-file)
-	      (local-set-key (kbd "C-, co") 'helm-cscope-pop-mark)))
-
-  ;; evil binding
-  (with-eval-after-load 'evil
-    (evil-leader/set-key-for-mode 'c-mode
-				  "cs" 'helm-cscope-find-this-symbol
-				  "cg" 'helm-cscope-find-global-definition
-				  "cd" 'helm-cscope-find-called-this-function
-				  "cc" 'helm-cscope-find-calling-this-function
-				  "ct" 'helm-cscope-find-this-text-string
-				  "ce" 'helm-cscope-find-egrep-pattern
-				  "cf" 'helm-cscope-find-this-file
-				  "ci" 'helm-cscope-find-files-including-file
-				  "co" 'helm-cscope-pop-mark)))
+  :bind
+  (:map c-mode-base-map
+   ("C-, cs" . helm-cscope-find-this-symbol)
+   ("C-, cg" . helm-cscope-find-global-definition)
+   ("C-, cd" . helm-cscope-find-called-this-function)
+   ("C-, cc" . helm-cscope-find-calling-this-function)
+   ("C-, ct" . helm-cscope-find-this-text-string)
+   ("C-, ce" . helm-cscope-find-egrep-pattern)
+   ("C-, cf" . helm-cscope-find-this-file)
+   ("C-, ci" . helm-cscope-find-files-including-file)
+   ("C-, co" . helm-cscope-pop-mark)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
