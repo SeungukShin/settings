@@ -38,27 +38,22 @@
   (load bootstrap-file nil 'nomessage))
 (setq straight-use-package-by-default t)
 
+;; use package
 (eval-when-compile
   (unless (require 'use-package nil t)
     (straight-use-package 'use-package)))
 
+;; load path
 (when nil
-  ;; load path
-  (add-to-list 'load-path (concat user-dir "lisp/"))
   (let ((default-directory (concat user-dir "lisp/")))
     (normal-top-level-add-to-load-path '("."))
     (normal-top-level-add-subdirs-to-load-path)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; configure
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; init-loader
-(use-package init-loader
-  :disabled
-  :config
-  (setq init-loader-show-log-after-init t
-	init-loader-byte-compile t)
-  (init-loader-load (concat user-dir "init.d/")))
+;; diminish mode name on modeline
+(use-package delight)
+
+;; bind-key
+(use-package bind-key)
 
 ;; reload .emacs
 (defun b/reload-dotemacs-file()
@@ -66,12 +61,6 @@
   (interactive)
   (load-file (expand-file-name ".emacs" home-dir)))
 (global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
-
-;; diminish mode name on modeline
-(use-package delight)
-
-;; bind-key
-(use-package bind-key)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; server
