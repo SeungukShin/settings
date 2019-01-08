@@ -38,39 +38,10 @@
   (load bootstrap-file nil 'nomessage))
 (setq straight-use-package-by-default t)
 
-;; use-package
 (eval-when-compile
-  (add-to-list 'load-path (concat user-dir "use-package/"))
-  (require 'use-package))
+  (unless (require 'use-package nil t)
+    (straight-use-package 'use-package)))
 
-;; package
-(use-package package
-  :config
-  (setq package-archives
-	       '(("melpa" . "http://melpa.org/packages/")
-		 ("gnu" . "http://elpa.gnu.org/packages/")
-		 ("marmalade" . "http://marmalade-repo.org/packages/")))
-;  (package-refresh-contents)
-  (package-initialize))
-
-;; quelpa
-(use-package quelpa
-  :config
-  (setq quelpa-update-melpa-p nil))
-
-(use-package quelpa-use-package
-  :requires (quelpa use-package)
-  :config
-  (setq use-package-ensure-function 'quelpa))
-
-;; el-get
-(when nil
-  (add-to-list 'load-path (concat user-dir "el-get/"))
-  (require 'el-get)
-  (setq el-get-dir (concat user-dir "lisp/"))
-  (add-to-list 'el-get-recipe-path (concat user-dir "recipes/"))
-  (setq el-get-bundle-sync nil			; allow async. operation
-	el-get-allow-insecure t))		; allow local file
 (when nil
   ;; load path
   (add-to-list 'load-path (concat user-dir "lisp/"))
@@ -852,8 +823,6 @@
   (epa-file-enable))
 
 ;; notmuch
-(quelpa '(notmuch :fetcher github :repo "notmuch/notmuch"
-		  :files ("emacs/*.el" "emacs/*.png")))
 (use-package notmuch
   :defer t
   :config
