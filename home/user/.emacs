@@ -265,20 +265,24 @@
 
 ;; eldoc
 (use-package eldoc
+  :defer t
   :delight (eldoc-mode "Ⓓ"))
 
 ;; auto complete
 (use-package auto-complete
+  :defer t
   :delight (auto-complete-mode "Ⓐ"))
 
 ;; auto-correction
 (use-package abbrev
   :straight nil
+  :defer t
   :delight (abbrev-mode "Ⓑ"))
 
 ;; dired
 (use-package dired
   :straight nil
+  :defer t
   :config
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
@@ -286,6 +290,7 @@
 
 ;; async
 (use-package async
+  :defer t
   :config
   (dired-async-mode 1)
   (async-bytecomp-package-mode 1))
