@@ -33,8 +33,8 @@ Xft.rgba:                     rgb
 Xft.autohint:                 false
 Xft.hintstyle:                hintslight
 Xft.lcdfilter:                lcddefault
-URxvt*font:                   xft:D2Coding:pixelsize=16:weight=regular
-URxvt*boldFont:               xft:D2Coding:pixelsize=16:weight=bold
+URxvt*font:                   xft:D2Coding:pixelsize=16:weight=regular,xft:Noto Sans Mono CJK SC:Pixelsize=16:weight=regular
+URxvt*boldFont:               xft:D2Coding:pixelsize=16:weight=bold,xft:Noto Sans Mono CJK SC:Pixelsize=16:weight=bold
 URxvt.depth:                  32
 !URxvt.letterSpace:            -1
 
@@ -55,22 +55,22 @@ URxvt.background:             [80]#06060a
 URxvt.foreground:             grey
 URxvt.cursorColor:            #d1d1d1
 ! Monokai
-URxvt.color0:                 #272822    ! black
-URxvt.color8:                 #75715e
-URxvt.color1:                 #f92672    ! red
-URxvt.color9:                 #f92672
-URxvt.color2:                 #a6e22e    ! green
-URxvt.color10:                #a6e22e
-URxvt.color3:                 #f4bf75    ! yellow
-URxvt.color11:                #f4bf75
-URxvt.color4:                 #66d9ef    ! blue
-URxvt.color12:                #66d9ef
-URxvt.color5:                 #ae81ff    ! magenta
-URxvt.color13:                #ae81ff
-URxvt.color6:                 #a1efe4    ! cyan
-URxvt.color14:                #a1efe4
-URxvt.color7:                 #f8f8f2    ! white
-URxvt.color15:                #f9f8f5
+!URxvt.color0:                 #272822    ! black
+!URxvt.color8:                 #75715e
+!URxvt.color1:                 #f92672    ! red
+!URxvt.color9:                 #f92672
+!URxvt.color2:                 #a6e22e    ! green
+!URxvt.color10:                #a6e22e
+!URxvt.color3:                 #f4bf75    ! yellow
+!URxvt.color11:                #f4bf75
+!URxvt.color4:                 #66d9ef    ! blue
+!URxvt.color12:                #66d9ef
+!URxvt.color5:                 #ae81ff    ! magenta
+!URxvt.color13:                #ae81ff
+!URxvt.color6:                 #a1efe4    ! cyan
+!URxvt.color14:                #a1efe4
+!URxvt.color7:                 #f8f8f2    ! white
+!URxvt.color15:                #f9f8f5
 ! Tango
 URxvt.color0:                 rgb:00/00/00
 URxvt.color1:                 rgb:CC/00/00
@@ -89,3 +89,31 @@ URxvt.color13:                rgb:AD/7F/A8
 URxvt.color14:                rgb:34/E2/E2
 URxvt.color15:                rgb:EE/EE/EC
 URxvt.colorBD:                rgb:ff/ff/ff
+
+!! Fonts
+UXTerm*faceName:              D2Coding
+UXTerm*faceSize:              12
+UXTerm*renderFont:            true
+
+!! Color
+UXTerm*background:            #06060a
+UXTerm*foreground:            grey
+UXTerm*cursorColor:           #d1d1d1
+! Tango
+UXTerm*color0:                 rgb:00/00/00
+UXTerm*color1:                 rgb:CC/00/00
+UXTerm*color2:                 rgb:4E/9A/06
+UXTerm*color3:                 rgb:C4/A0/00
+UXTerm*color4:                 rgb:34/65/A4
+UXTerm*color5:                 rgb:75/50/7B
+UXTerm*color6:                 rgb:06/98/9A
+UXTerm*color7:                 rgb:D3/D7/CF
+UXTerm*color8:                 rgb:55/57/53
+UXTerm*color9:                 rgb:EF/29/29
+UXTerm*color10:                rgb:8A/E2/34
+UXTerm*color11:                rgb:FC/E9/4F
+UXTerm*color12:                rgb:72/9F/CF
+UXTerm*color13:                rgb:AD/7F/A8
+UXTerm*color14:                rgb:34/E2/E2
+UXTerm*color15:                rgb:EE/EE/EC
+UXTerm*colorBD:                rgb:ff/ff/ff
