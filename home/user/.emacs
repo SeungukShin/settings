@@ -145,7 +145,7 @@
   (add-hook 'after-change-major-mode-hook 'fci-mode))
 
 ;; toggle word wrap
-(global-set-key (kbd "C-t") 'toggle-truncate-lines)
+(global-set-key (kbd "C-t") 'visual-line-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
