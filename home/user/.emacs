@@ -359,7 +359,7 @@
   :bind ("C-c g" . helm-google))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; cscope
+;;; reference
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; xcscope
 (use-package xcscope
@@ -385,6 +385,25 @@
    ("C-, cf" . helm-cscope-find-this-file)
    ("C-, ci" . helm-cscope-find-files-including-file)
    ("C-, co" . helm-cscope-pop-mark)))
+
+;; global
+(use-package helm-gtags
+  :defer t
+  :delight (helm-gtags-mode "Ⓖ")
+  :init
+  (add-hook 'c-mode-common-hook 'helm-gtags-mode)
+  :config
+  (custom-set-variables
+   '(helm-gtags-ignore-case t)
+   '(helm-gtags-display-style 'detail))
+  :bind
+  (:map c-mode-base-map
+   ("C-, gs" . helm-gtags-find-symbol)
+   ("C-, gg" . helm-gtags-find-tag)
+   ("C-, gr" . helm-gtags-find-rtag)
+   ("C-, gp" . helm-gtags-find-pattern)
+   ("C-, gf" . helm-gtags-find-files)
+   ("C-, go" . helm-gtags-pop-stack)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
