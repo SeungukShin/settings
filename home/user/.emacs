@@ -606,6 +606,9 @@
   :defer t
   :delight (org-indent-mode "Ⓘ"))
 
+(use-package org-gantt
+  :straight (org-gantt :type git :host github :repo "bshin/org-gantt"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
