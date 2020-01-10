@@ -896,9 +896,11 @@
 		  (nnimap-address "imap.gmail.com")
 		  (nnimap-server-port 993)
 		  (nnimap-stream ssl)
-		  (nnir-search-engine imap))
+		  (nnir-search-engine imap)
+		  (nnmail-expiry-target "nnimap+user@gmail.com:[Gmail]/Trash")
+		  (nnmail-expiry-wait immediate))
 	  (nnmaildir "Archives"
-		     (directory (concat home-dir "Mail/Local"))
+		     (directory (concat home-dir "Mail/Archives"))
 		     (get-new-mail nil)
 		     (nnir-search-engine notmuch))))
 
@@ -909,7 +911,7 @@
 
   (require 'nnir)
   (setq nnir-notmuch-program "notmuch"
-	nnir-notmuch-remove-prefix (concat home-dir "Mail/Local/"))
+	nnir-notmuch-remove-prefix (concat home-dir "Mail/Archives/"))
 
   (setq gnus-asynchronous t
 	gnus-fetch-old-headers t
@@ -928,10 +930,9 @@
 	'((".*"
 	   (display . all))))
 
-  (setq-default gnus-summary-line-format "%U%R%z %(%-15,15f  %B%s%)\n"
+  (setq-default gnus-summary-line-format "%U%R%z  %(%&user-date;  %-15,15f  %B%s%)\n"
 		gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-		gnus-summary-thread-gathering-function
-		'gnus-gather-threads-by-references
+		gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
 		gnus-thread-sort-functions '(gnus-thread-sort-by-date)
 		gnus-sum-thread-tree-false-root ""
 		gnus-sum-thread-tree-indent " "
