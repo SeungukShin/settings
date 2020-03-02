@@ -528,6 +528,7 @@
   (setq org-startup-with-inline-images t	; show inline image
 	org-image-actual-width			; resize inline image (1/3)
 	(/ (display-pixel-width) 3))
+  (setq-default org-image-actual-width 800)
 
   ;; agenda
   (defvar org-agenda-dir (concat home-dir "Org/Task/"))
