@@ -653,7 +653,15 @@
   :delight (org-indent-mode "Ⓘ"))
 
 (use-package org-gantt
-  :straight (org-gantt :type git :host github :repo "bshin/org-gantt"))
+  :straight (org-gantt :type git :host github :repo "bshin/org-gantt")
+  :config
+  (customize-set-variable 'org-gantt-holiday-list
+			  '("2020-01-01" "2020-01-24" "2020-01-27"
+			    "2020-04-15" "2020-04-30"
+			    "2020-05-01" "2020-05-05"
+			    "2020-09-30"
+			    "2020-10-01" "2020-10-02" "2020-10-09"
+			    "2020-12-25")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
