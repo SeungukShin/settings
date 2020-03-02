@@ -353,6 +353,33 @@
    ("C-, ab" . helm-do-ag-buffers)
    ("C-, ao" . helm-ag-pop-stack)))
 
+;; helm-swoop
+(use-package helm-swoop
+  :defer t
+  :config
+  (setq helm-multi-swoop-edit-save t
+        helm-swoop-split-with-multiple-windows nil
+        helm-swoop-split-direction 'split-window-horizontally
+        helm-swoop-speed-or-color t
+        helm-swoop-move-to-line-cycle t
+        helm-swoop-use-line-number-face t
+        helm-swoop-use-fuzzy-match t)
+  :bind
+  (("C-, ss" . helm-swoop)
+   ("C-, sr" . helm-swoop-back-to-last-point)
+   ("C-, sm" . helm-multi-swoop)
+   ("C-, sa" . helm-multi-swoop-all))
+  (:map isearch-mode-map
+   ("C-i" . helm-swoop-from-isearch))
+  (:map helm-swoop-map
+   ("C-s" . helm-next-line)
+   ("C-r" . helm-previous-line)
+   ("C-m" . helm-multi-swoop-current-mode-from-helm-swoop)
+   ("C-a" . helm-multi-swoop-all-from-helm-swoop))
+  (:map helm-multi-swoop-map
+   ("C-s" . helm-next-line)
+   ("C-r" . helm-previous-line)))
+
 ;; helm-google
 (use-package helm-google
   :defer t
