@@ -12,6 +12,8 @@
 ;; exec path
 (if (eq system-type 'windows-nt)
     (add-to-list 'exec-path (concat home-dir "AppData/Roaming/emacs/bin/")))
+(if (eq system-type 'darwin)
+    (add-to-list 'exec-path "/usr/local/bin/"))
 
 ;; proxy
 (when nil
