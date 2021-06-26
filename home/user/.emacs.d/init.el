@@ -503,6 +503,7 @@
   :delight (helm-gtags-mode "Ⓖ")
   :init
   (add-hook 'c-mode-common-hook 'helm-gtags-mode)
+  (add-hook 'java-mode-hook 'helm-gtags-mode)
   :config
   (custom-set-variables
    '(helm-gtags-ignore-case t)
