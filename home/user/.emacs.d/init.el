@@ -518,6 +518,45 @@
    ("C-, go" . helm-gtags-pop-stack)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; language server protocol
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lsp-mode
+(use-package lsp-mode
+  :defer t
+  :init
+  (setq lsp-keymap-prefix "C-.")
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration)
+  :commands lsp-deferred)
+
+;; lsp-ui
+(use-package lsp-ui
+  :defer t
+  :commands lsp-ui-mode)
+
+;; helm-lsp
+(use-package helm-lsp
+  :defer t
+  :commands helm-lsp-workspace-symbol)
+
+;; lsp-treemacs
+(use-package lsp-treemacs
+  :defer t
+  :commands lsp-treemacs-errors-list)
+
+;; yasnippet
+(use-package yasnippet
+  :defer t
+  :config
+  (yas-global-mode 1))
+
+;; lsp-java
+(use-package lsp-java
+  :defer t
+  :config
+  (add-hook 'java-mode-hook 'lsp-deferred))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; style
