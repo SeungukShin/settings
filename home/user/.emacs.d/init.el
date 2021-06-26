@@ -58,16 +58,16 @@
 (use-package bind-key)
 
 ;; reload .emacs
-(defun b/reload-dotemacs-file()
+(defun b/reload-init-file()
   "reload .emacs"
   (interactive)
   (when (y-or-n-p "Rebuild Packages?")
     (byte-recompile-directory user-emacs-directory 0))
-  (when (file-exists-p (expand-file-name ".emacs.elc" home-dir))
-    (delete-file (expand-file-name ".emacs.elc" home-dir)))
-  (byte-compile-file (expand-file-name ".emacs" home-dir))
-  (load-file (expand-file-name ".emacs.elc" home-dir)))
-(global-set-key (kbd "C-c C-l") 'b/reload-dotemacs-file)
+  (when (file-exists-p (expand-file-name "init.elc" user-dir))
+    (delete-file (expand-file-name "init.elc" user-dir)))
+  (byte-compile-file (expand-file-name "init.el" user-dir))
+  (load-file (expand-file-name "init.elc" user-dir)))
+(global-set-key (kbd "C-c C-l") 'b/reload-init-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; server
