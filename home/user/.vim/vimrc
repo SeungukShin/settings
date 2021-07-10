@@ -2,20 +2,27 @@
 " vim-plug
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/vim-plug'			" vim plug
-Plug 'crusoexia/vim-monokai'			" color scheme
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}	" vimproc
-Plug 'Shougo/unite.vim'				" unite
-Plug 'Shougo/neomru.vim'			" unite for mru
-Plug 'tsukkee/unite-tag'			" unite for tags
-Plug 'amitab/vim-unite-cscope'			" unite for cscope
-Plug 'hewes/unite-gtags'			" unite for global
-Plug 'majutsushi/tagbar'			" tags
-Plug 'http://repo.or.cz/vcscommand.git'		" vcs control
-Plug 'mhinz/vim-signify'			" vcs mark
-Plug 'osyo-manga/vim-anzu'			" search count
-Plug 'kien/rainbow_parentheses.vim'		" paren color
-Plug 'jiangmiao/auto-pairs'			" paren pair
+" vim plug
+Plug 'junegunn/vim-plug'
+" color scheme
+Plug 'crusoexia/vim-monokai'
+" unite
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'tsukkee/unite-tag'
+Plug 'amitab/vim-unite-cscope'
+Plug 'hewes/unite-gtags'
+" tagbar
+Plug 'majutsushi/tagbar'
+" vcs
+Plug 'http://repo.or.cz/vcscommand.git'
+Plug 'mhinz/vim-signify'
+" search count
+Plug 'osyo-manga/vim-anzu'
+" paren
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
