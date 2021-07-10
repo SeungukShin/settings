@@ -4,6 +4,9 @@
 call plug#begin('~/.vim/plugged')
 " vim plug
 Plug 'junegunn/vim-plug'
+" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " color scheme
 Plug 'crusoexia/vim-monokai'
 " unite
@@ -479,6 +482,12 @@ if executable('ag')
 endif
 
 nnoremap <leader>, :<C-u>UniteResume search-buffer<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_preview_window = [ 'right:50%', 'ctrl-/' ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
