@@ -16,6 +16,12 @@ Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'amitab/vim-unite-cscope'
 Plug 'hewes/unite-gtags'
+" lsp
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'mattn/vim-lsp-settings'
 " tagbar
 Plug 'majutsushi/tagbar'
 " vcs
@@ -444,6 +450,21 @@ map <leader>s? z=
 " nerdtree
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeShowBookmarks=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" lsp
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lsp_auto_enable=1
+let g:lsp_fold_enabled=1
+nnoremap <leader>ls :<C-u>LspReferences<CR>
+nnoremap <leader>lg :<C-u>LspDefinition<CR>
+nnoremap <leader>ld :<C-u>LspDeclaration<CR>
+nnoremap <leader>lc :<C-u>LspCallHierarchyIncoming<CR>
+nnoremap <leader>lt :<C-u>LspCallHierarchyOutgoing<CR>
+nnoremap <leader>li :<C-u>LspImplementation<CR>
+nnoremap <leader>pg :<C-u>LspPeekDefinition<CR>
+nnoremap <leader>pd :<C-u>LspPeekDeclaration<CR>
+nnoremap <leader>pi :<C-u>LspPeekImplementation<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ctags
