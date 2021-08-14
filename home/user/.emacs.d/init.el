@@ -525,12 +525,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lsp-mode
 (use-package lsp-mode
-  :defer t
   :init
   (setq lsp-keymap-prefix "C-.")
   :hook
-  (lsp-mode . lsp-enable-which-key-integration)
-  :commands lsp-deferred)
+  ((lsp-mode . lsp-enable-which-key-integration)
+   (c-mode-hook . lsp-deferred)
+   (c++-mode-hook . lsp-deferred))
+  :config
+  (setq lsp-auto-configure t)
+  (setq lsp-clients-clangd-executable "clangd")
+  :commands lsp lsp-deferred)
 
 ;; lsp-ui
 (use-package lsp-ui
@@ -556,8 +560,9 @@
 ;; lsp-java
 (use-package lsp-java
   :defer t
+  (add-hook 'java-mode-hook 'lsp-deferred)
   :config
-  (add-hook 'java-mode-hook 'lsp-deferred))
+  (global-set-key (kbd "C-. g o") 'xref-pop-marker-stack))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
