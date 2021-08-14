@@ -571,9 +571,11 @@
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (setq-default indent-tabs-mode t
+			  c-basic-offset 8
 			  tab-width 8
 			  tab-always-indent t)
 	    (setq indent-tabs-mode t
+		  c-basic-offset 8
 		  tab-width 8
 		  tab-always-indent t)))
 
@@ -603,6 +605,21 @@
 
 (global-set-key "\C-c\C-m" 'compile-default-directory)
 (global-set-key "\C-cm"    'compile-work-directory)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Java
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; tab
+(add-hook 'java-mode-hook
+	  (lambda ()
+	    (setq-default indent-tabs-mode t
+			  c-basic-offset 4
+			  tab-width 4
+			  tab-always-indent nil)
+	    (setq indent-tabs-mode nil
+		  c-basic-offset 4
+		  tab-width 4
+		  tab-always-indent nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; python
