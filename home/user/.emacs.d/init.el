@@ -75,7 +75,7 @@
 ;; server
 (use-package server
   :disabled
-  :delight (server-buffer-clients "Ⓢ")
+  :delight (server-buffer-clients "|S")
   :config
   (server-mode 1)
 
@@ -104,8 +104,9 @@
 (size-indication-mode t)		; display file size in mode line
 
 ;; fonts
-(create-fontset-from-fontset-spec
- "-monotype-courier-medium-r-normal-*-*-130-*-*-m-*-fontset-frame,
+(when (display-graphic-p)
+  (create-fontset-from-fontset-spec
+   "-monotype-courier-medium-r-normal-*-*-130-*-*-m-*-fontset-frame,
  korean-ksc5601:-hanyang-gothic-medium-r-normal-*-*-150-*-*-*-*-ksc5601*-0,
  japanese-jisx0208:-ricoh-gothic-medium-r-normal-*-*-150-*-*-*-*-jisx0208*-0,
  japanese-jisx0212:-ricoh-mincho-medium-r-normal-*-*-150-*-*-*-*-jisx0212*-0,
@@ -118,20 +119,20 @@
  indian-is13194:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-is13194-devanagari,
  indian-1-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-1,
  indian-2-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-2")
-(set-fontset-font "fontset-frame" 'latin
-		  (font-spec :name "D2Coding" :size 16))
-(set-fontset-font "fontset-frame" 'han
-		  (font-spec :name "Noto Sans Mono CJK SC" :size 16))
-(set-fontset-font "fontset-frame" 'kana
-		  (font-spec :name "Noto Sans Mono CJK JP" :size 16))
-(set-fontset-font "fontset-frame" 'hangul
-		  (font-spec :name "Noto Sans Mono CJK KR" :size 16))
-(set-face-font 'default "fontset-frame")
-(set-face-attribute 'default nil
-		    :font "fontset-frame"
-		    :height 120)
-(add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
-(add-to-list 'face-font-rescale-alist '("*" . 1.0))
+  (set-fontset-font "fontset-frame" 'latin
+		    (font-spec :name "D2Coding" :size 24))
+  (set-fontset-font "fontset-frame" 'han
+		    (font-spec :name "D2Coding" :size 24))
+  (set-fontset-font "fontset-frame" 'kana
+		    (font-spec :name "Noto Sans Mono CJK JP" :size 24))
+  (set-fontset-font "fontset-frame" 'hangul
+		    (font-spec :name "D2Coding" :size 24))
+  (set-face-font 'default "fontset-frame")
+  (set-face-attribute 'default nil
+		      :font "fontset-frame"
+		      :height 120)
+  (add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
+  (add-to-list 'face-font-rescale-alist '("*" . 1.0)))
 
 ;; theme
 (use-package monokai-theme
@@ -197,7 +198,7 @@
 
 ;; whitespace
 (use-package whitespace
-  :delight (global-whitespace-mode "Ⓦ")
+  :delight (global-whitespace-mode "|WS")
   :config
   (global-whitespace-mode 1)
   (setq whitespace-style
@@ -246,7 +247,7 @@
 
 ;; smartparens
 (use-package smartparens
-  :delight (smartparens-mode "Ⓟ")
+  :delight (smartparens-mode "|SP")
   :config
   (smartparens-global-mode t))
 
@@ -268,24 +269,24 @@
 
 ;; which-key
 (use-package which-key
-  :delight (which-key-mode "Ⓚ")
+  :delight (which-key-mode "|WK")
   :config (which-key-mode))
 
 ;; eldoc
 (use-package eldoc
   :defer t
-  :delight (eldoc-mode "Ⓓ"))
+  :delight (eldoc-mode "|ED"))
 
 ;; auto complete
 (use-package auto-complete
   :defer t
-  :delight (auto-complete-mode "Ⓐ"))
+  :delight (auto-complete-mode "|AC"))
 
 ;; auto correction
 (use-package abbrev
   :straight nil
   :defer t
-  :delight (abbrev-mode "Ⓑ"))
+  :delight (abbrev-mode "|AB"))
 
 ;; dired
 (use-package dired
@@ -313,7 +314,7 @@
 
 ;; git-gutter
 (use-package git-gutter
-  :delight (git-gutter-mode "Ⓖ")
+  :delight (git-gutter-mode "|GG")
   :config (global-git-gutter-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -322,7 +323,7 @@
 ;; helm
 (use-package helm
   :defer t
-  :delight (helm-mode "Ⓗ")
+  :delight (helm-mode "|H")
   :config
   (helm-mode t)
   (helm-autoresize-mode t)
@@ -479,7 +480,7 @@
 ;; helm-cscope
 (use-package helm-cscope
   :defer t
-  :delight (helm-cscope-mode "Ⓒ")
+  :delight (helm-cscope-mode "|HC")
   :init
   (add-hook 'c-mode-common-hook 'helm-cscope-mode)
   :config
@@ -500,7 +501,7 @@
 ;; global
 (use-package helm-gtags
   :defer t
-  :delight (helm-gtags-mode "Ⓖ")
+  :delight (helm-gtags-mode "|HG")
   :init
   (add-hook 'c-mode-common-hook 'helm-gtags-mode)
   (add-hook 'java-mode-hook 'helm-gtags-mode)
@@ -554,6 +555,7 @@
 ;; yasnippet
 (use-package yasnippet
   :defer t
+  :delight (yas-minor-mode "|YS")
   :config
   (yas-global-mode 1))
 
@@ -808,7 +810,7 @@
 (use-package org-indent
   :straight nil
   :defer t
-  :delight (org-indent-mode "Ⓘ"))
+  :delight (org-indent-mode "|OI"))
 
 (use-package org-gantt
   :straight (org-gantt :type git :host github :repo "bshin/org-gantt")
@@ -851,8 +853,8 @@
 (use-package markdown-mode
   :defer t
   :delight
-  (markdown-mode "Ⓜ")
-  (gfm-mode "Ⓜ")
+  (markdown-mode "|MD")
+  (gfm-mode "|GM")
   :init
   (autoload 'markdown-mode "markdown-mode" "Markdown" t)
   (autoload 'gfm-mode "markdown-mode" "GitHub Flavored Markdown" t)
@@ -903,18 +905,18 @@
 ;; gradle
 (use-package gradle-mode
   :defer t
-  :delight (gradle-mode "Ⓡ")
+  :delight (gradle-mode "|GD")
   :config
   (gradle-mode 1))
 
 ;; flymake
 (use-package flymake
-  :delight (flymake-mode "Ⓕ"))
+  :delight (flymake-mode "|FM"))
 
 ;; flyspell
 (use-package ispell)
 (use-package flyspell
-  :delight (flyspell-mode "Ⓕ")
+  :delight (flyspell-mode "|FS")
   :config
   (add-hook 'org-mode-hook
 	    (lambda ()
