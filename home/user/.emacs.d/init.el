@@ -504,6 +504,9 @@
   :init
   (add-hook 'c-mode-common-hook 'helm-gtags-mode)
   (add-hook 'java-mode-hook 'helm-gtags-mode)
+  (add-hook 'ruby-mode-hook 'helm-gtags-mode)
+  (add-hook 'js-mode-hook 'helm-gtags-mode)
+  (add-hook 'typescript-mode-hook 'helm-gtags-mode)
   :config
   (custom-set-variables
    '(helm-gtags-ignore-case t)
