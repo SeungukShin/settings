@@ -666,7 +666,8 @@
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "DROP(p)"))
 	org-hide-leading-stars t
-	org-startup-indented t)
+	org-startup-indented t
+	org-startup-folded t)
 
   (custom-set-faces '(org-level-1 ((t (:height 1.0))))
 		    '(org-level-2 ((t (:height 1.0))))
