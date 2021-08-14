@@ -856,6 +856,7 @@
   (markdown-mode "|MD")
   (gfm-mode "|GM")
   :init
+  (setq markdown-command "pandoc")
   (autoload 'markdown-mode "markdown-mode" "Markdown" t)
   (autoload 'gfm-mode "markdown-mode" "GitHub Flavored Markdown" t)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
