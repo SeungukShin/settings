@@ -289,6 +289,11 @@
   :defer t
   :delight (auto-complete-mode "|AC"))
 
+;; auto complete
+(use-package company
+  :defer t
+  :delight (company-mode "|CM"))
+
 ;; auto correction
 (use-package abbrev
   :straight nil
@@ -660,9 +665,62 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; typescript
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; typescript interactive development environment
+(use-package tide
+  :ensure t
+  :delight (tide-mode "|TD")
+  :init
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)
+    ;; company is an optional dependency. You have to
+    ;; install it separately via package-install
+    ;; `M-x package-install [ret] company`
+    (company-mode +1))
+
+  ;; aligns annotation to the right hand side
+  (setq company-tooltip-align-annotations t))
+
 ;; typescript
 (use-package typescript-mode
-  :defer t)
+  :defer t
+  :hook
+  (typescript-mode-hook . lsp-deferred)
+  :config
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil
+                    tab-width 2
+                    typescript-indent-level 2))))
+
+;; web
+(use-package web-mode
+  :defer t
+  :hook
+  (web-mode-hook . lsp-deferred)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+  :config
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
+  (setq web-mode-enable-auto-indentation nil)
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil
+                    tab-width 2
+                    web-mode-markup-indent-offset 2
+                    web-mode-css-indent-offset 2
+                    web-mode-code-indent-offset 2)))
+  ;; enable typescript-tslint checker
+  (flycheck-add-mode 'typescript-tslint 'web-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; org
@@ -905,6 +963,10 @@
   :delight (gradle-mode "|GD")
   :config
   (gradle-mode 1))
+
+;; flycheck
+(use-package flycheck
+  :delight (flycheck-mode "|FC"))
 
 ;; flymake
 (use-package flymake
