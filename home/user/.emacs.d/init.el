@@ -170,6 +170,10 @@
 (setq default-input-method "korean-hangul")
 (global-set-key [?\S- ] 'toggle-input-method)
 
+;; default indent
+(setq indent-tabs-mode t
+      tab-width 8)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; save
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -570,24 +574,27 @@
   (global-set-key (kbd "C-. g o") 'xref-pop-marker-stack))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; emacs lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; indent
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  tab-width 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; C/C++
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; style
-(setq c-default-style "bsd"
-      c-basic-offset 8)
+(setq c-default-style "bsd")
 (which-function-mode 1)
 
-;; tab
+;; indent
 (add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (setq-default indent-tabs-mode t
-			  c-basic-offset 8
-			  tab-width 8
-			  tab-always-indent t)
-	    (setq indent-tabs-mode t
-		  c-basic-offset 8
-		  tab-width 8
-		  tab-always-indent t)))
+          (lambda ()
+            (setq indent-tabs-mode t
+                  tab-width 8
+                  c-basic-offset 8)))
 
 ;; auto-correction
 (when (featurep 'abbrev)
@@ -619,17 +626,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Java
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; tab
+;; indent
 (add-hook 'java-mode-hook
-	  (lambda ()
-	    (setq-default indent-tabs-mode t
-			  c-basic-offset 4
-			  tab-width 4
-			  tab-always-indent nil)
-	    (setq indent-tabs-mode nil
-		  c-basic-offset 4
-		  tab-width 4
-		  tab-always-indent nil)))
+          (lambda ()
+            (setq indent-tabs-mode t
+                  tab-width 4
+                  js-indent-level 4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; python
@@ -639,11 +641,10 @@
   :defer t
   :config
   (add-hook 'python-mode-hook
-	    (lambda ()
-	      (setq indent-tabs-mode t
-		    python-indent-offset 8
-		    tab-width 8
-		    tab-always-indent t))))
+            (lambda ()
+              (setq indent-tabs-mode t
+                    tab-width 8
+                    python-indent-offset 8))))
 
 ;; jupyter
 (use-package skewer-mode
@@ -776,13 +777,9 @@
        (R . nil))))
 
   (add-hook 'org-mode-hook
-	    (lambda ()
-	      (setq-default indent-tabs-mode nil
-			    tab-width 8
-			    tab-always-indent nil)
-	      (setq indent-tabs-mode nil
-		    tab-width 8
-		    tab-always-indent nil)))
+            (lambda ()
+              (setq indent-tabs-mode nil
+                    tab-width 8)))
 
   ;; beamer
   (add-to-list 'org-latex-packages-alist '("" "listings" nil))
@@ -865,13 +862,9 @@
   (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
   (add-hook 'markdown-mode-hook
-	    (lambda ()
-	      (setq-default indent-tabs-mode nil
-			    tab-width 8
-			    tab-always-indent nil)
-	      (setq indent-tabs-mode nil
-		    tab-width 8
-		    tab-always-indent nil))))
+            (lambda ()
+              (setq indent-tabs-mode nil
+                    tab-width 8))))
 
 ;; markdown preview
 (use-package markdown-preview-mode
