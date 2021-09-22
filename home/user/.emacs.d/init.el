@@ -52,7 +52,10 @@
     (normal-top-level-add-subdirs-to-load-path)))
 
 ;; diminish mode name on modeline
-(use-package delight)
+(use-package delight
+  :delight
+  (visual-line-mode "|VL")
+  (isearch-mode "|IS"))
 
 ;; bind-key
 (use-package bind-key)
