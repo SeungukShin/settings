@@ -752,6 +752,9 @@
 	(/ (display-pixel-width) 3))
   (setq-default org-image-actual-width 800)
 
+  (eval-after-load 'org
+    (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images))
+
   ;; agenda
   (defvar org-agenda-dir (concat home-dir "Org/Task/"))
   (setq org-agenda-files
