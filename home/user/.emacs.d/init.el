@@ -154,6 +154,18 @@
 ;; toggle word wrap
 (global-set-key (kbd "C-t") 'visual-line-mode)
 
+;; beginning of line
+(defun b/beginning-of-line()
+  "beginning of line like vscode"
+  (interactive)
+  (setq prev-point (point))
+  (message "first: %s" (point))
+  (beginning-of-line-text)
+  (message "second: %s" (point))
+  (if (eq prev-point (point))
+    (beginning-of-line)))
+(global-set-key (kbd "C-a") 'b/beginning-of-line)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
