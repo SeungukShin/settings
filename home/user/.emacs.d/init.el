@@ -100,7 +100,7 @@
 ;(scroll-bar-mode -1)			; hide scroll bar
 (auto-image-file-mode t)		; show inline image
 (global-auto-revert-mode t)		; auto refresh
-;(global-linum-mode)			; line number
+(global-display-line-numbers-mode)	; line number
 
 ;; mode line
 (line-number-mode t)			; display line number in mode line
@@ -165,6 +165,17 @@
   (if (eq prev-point (point))
     (beginning-of-line)))
 (global-set-key (kbd "C-a") 'b/beginning-of-line)
+
+;; folding
+(use-package hideshow
+  :delight (hs-minor-mode "|HS")
+  :hook
+  ((prog-mode . hs-minor-mode)
+   (org-mode . hs-minor-mode))
+  :bind
+  (("<C-tab>"     . hs-toggle-hiding)
+   ("<backtab>"   . hs-hide-all)
+   ("<C-backtab>" . hs-show-all)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; language
@@ -313,16 +324,6 @@
   :defer t
   :delight (abbrev-mode "|AB"))
 
-;; dired
-(use-package dired
-  :straight nil
-  :defer t
-  :config
-  (put 'dired-find-alternate-file 'disabled nil)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "^")
-    (lambda () (interactive) (find-alternate-file ".."))))
-
 ;; async
 (use-package async
   :defer t
@@ -428,6 +429,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; file manager
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; dired
+(use-package dired
+  :straight nil
+  :defer t
+  :config
+  (put 'dired-find-alternate-file 'disabled nil)
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "^")
+    (lambda () (interactive) (find-alternate-file ".."))))
+
+;; ranger
+(use-package ranger)
+
 (use-package treemacs
   :defer t
   :config
@@ -488,7 +502,6 @@
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-icons-dired
-  :after (treemacs dired)
   :config
   (treemacs-icons-dired-mode))
 
@@ -1135,6 +1148,7 @@
 
 ;; notmuch
 (use-package notmuch
+  :disabled
   :defer t
   :init
   (autoload 'notmuch "notmuch" "notmuch mail" t))

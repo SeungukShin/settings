@@ -5,8 +5,8 @@ call plug#begin('~/.vim/plugged')
 " vim plug
 Plug 'junegunn/vim-plug'
 " fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 " color scheme
 Plug 'crusoexia/vim-monokai'
 " unite
@@ -207,7 +207,7 @@ hi SpecialKey ctermfg=238 guifg=#444444
 set nu
 
 " Display current line
-hi CursorLine term=bold cterm=bold ctermbg=DarkBlue gui=bold
+"hi CursorLine term=bold cterm=bold ctermbg=DarkBlue gui=bold
 set cursorline
 
 " Display culumn mark
