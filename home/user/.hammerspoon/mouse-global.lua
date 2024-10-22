@@ -5,6 +5,7 @@
 -- add to hammerspoon config and hit hs.reload()
 
 local scrollModifier = "ctrl"
+local scrollModeToggle = false
 local oldMousePosition = {}
 local scrollIntensity = 0.5
 
@@ -28,5 +29,23 @@ dragCtrlToScroll = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, fun
 	end
 end)
 dragCtrlToScroll:start()
+
+button4MissionControl = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(e)
+	local button = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
+	if (button == 2) then
+		scrollModeToggle = not scrollModeToggle
+		if (scrollModeToggle) then
+			ctrlDownMouseTracker:start()
+		else
+			ctrlDownMouseTracker:stop()
+		end
+		return true -- consume this event, so ignore the original behavior
+	end
+	if (button == 3) then
+		hs.spaces.openMissionControl()
+		return true -- consume this event, so ignore the original behavior
+	end
+end)
+button4MissionControl:start()
 
 return dragCtrlToScroll

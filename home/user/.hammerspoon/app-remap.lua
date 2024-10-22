@@ -9,6 +9,10 @@ CAppRemap = {
 
 local CAppRemapImpl = {
 
+	addAppName = function(self, appName)
+		self.appNames[appName] = true
+	end,
+
 	setAppNames = function(self, appNames)
 		self.appNames = appNames
 	end,

@@ -236,7 +236,7 @@ local CFundationRemapImpl = {
         if self.vendorID then
             filter = filter .. '"VendorID":' .. self.vendorID .. ','
         end
-        local optionName = '--filter'
+        local optionName = '--matching'
         if os.execute("hidutil property --help | grep -e '--matching'") then
             optionName = '--matching'
         end
@@ -254,9 +254,11 @@ local CFundationRemapImpl = {
 
         local filter = self:_filterArgument()
         local cmd = '/usr/bin/hidutil property' .. filter .. ' --set \'{"UserKeyMapping":['
+        log.d('device:', filter)
 
         for i, v in ipairs(self._remaps) do
             if type(v) == 'table' then
+            	log.d(string.format('from: %x to: %x', v.from, v.to))
                 cmd = cmd .. '{"HIDKeyboardModifierMappingSrc":' .. v.from .. ',"HIDKeyboardModifierMappingDst":' .. v.to .. '},'
             end
         end
@@ -273,6 +275,7 @@ local CFundationRemapImpl = {
 
     register = function(self)
         local cmd = self:command()
+        log.d(cmd)
         if cmd then
             if os.execute(cmd) ~= true then
                 log.d('error occured while register()')
