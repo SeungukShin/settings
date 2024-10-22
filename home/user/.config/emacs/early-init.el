@@ -1,10 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; startup speed
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq
- gc-cons-threshold most-positive-fixnum              ; increase GC threshold
- gc-cons-percentage 0.6
- package-enable-at-startup nil)                      ; don't install packages
+(setq gc-cons-threshold most-positive-fixnum	; increase GC threshold
+      gc-cons-percentage 0.6
+      package-enable-at-startup nil)		; don't install packages
 
 (add-hook 'emacs-startup-hook
 	  (lambda ()

@@ -1,3 +1,20 @@
+(setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+      gc-cons-percentage 0.6)
+
+;; Startup time
+(defun efs/display-startup-time ()
+  (message
+   "Emacs loaded in %s seconds with %d garbage collections."
+   (emacs-init-time)
+   gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
+(add-hook 'emacs-startup-hook
+  (lambda ()
+    (setq gc-cons-threshold 16777216 ; 16mb
+          gc-cons-percentage 0.1)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; basic configure
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -14,7 +31,8 @@
 (if (eq system-type 'windows-nt)
     (add-to-list 'exec-path (concat home-dir "AppData/Roaming/emacs/bin/")))
 (if (eq system-type 'darwin)
-    (add-to-list 'exec-path "/usr/local/bin/"))
+    (add-to-list 'exec-path (concat home-dir "bin/"))
+    (add-to-list 'exec-path "/opt/homebrew/bin/"))
 
 ;; proxy
 (when nil
@@ -100,43 +118,24 @@
 ;(scroll-bar-mode -1)			; hide scroll bar
 (auto-image-file-mode t)		; show inline image
 (global-auto-revert-mode t)		; auto refresh
-(global-display-line-numbers-mode)	; line number
+;(global-display-line-numbers-mode)	; line number
 
 ;; mode line
-(line-number-mode t)			; display line number in mode line
+;(line-number-mode t)			; display line number in mode line
 (column-number-mode t)			; display column number in mode line
 (size-indication-mode t)		; display file size in mode line
 
 ;; fonts
 (when (display-graphic-p)
-  (create-fontset-from-fontset-spec
-   "-monotype-courier-medium-r-normal-*-*-130-*-*-m-*-fontset-frame,
- korean-ksc5601:-hanyang-gothic-medium-r-normal-*-*-150-*-*-*-*-ksc5601*-0,
- japanese-jisx0208:-ricoh-gothic-medium-r-normal-*-*-150-*-*-*-*-jisx0208*-0,
- japanese-jisx0212:-ricoh-mincho-medium-r-normal-*-*-150-*-*-*-*-jisx0212*-0,
- chinese-big5-1:-dynalab-ming-medium-r-normal-*-*-150-*-*-*-*-big5*-0,
- chinese-big5-2:-dynalab-ming-medium-r-normal-*-*-150-*-*-*-*-big5*-0,
- chinese-gb2312:-zhuhai-song-medium-r-normal-*-*-150-*-*-*-*-gb2312*-*,
- thai-tis620:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-tis620.2529-1,
- vietnamese-viscii-lower:-monotype-courier-medium-r-normal-*-*-130-*-*-*-*-viscii1.1-1,
- lao:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-mulelao-1,
- indian-is13194:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-is13194-devanagari,
- indian-1-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-1,
- indian-2-column:-*-fixed-medium-r-normal-*-*-160-*-*-*-*-muleindian-2")
-  (set-fontset-font "fontset-frame" 'latin
-		    (font-spec :name "D2Coding" :size 24))
-  (set-fontset-font "fontset-frame" 'han
-		    (font-spec :name "D2Coding" :size 24))
-  (set-fontset-font "fontset-frame" 'kana
-		    (font-spec :name "Noto Sans Mono CJK JP" :size 24))
-  (set-fontset-font "fontset-frame" 'hangul
-		    (font-spec :name "D2Coding" :size 24))
-  (set-face-font 'default "fontset-frame")
-  (set-face-attribute 'default nil
-		      :font "fontset-frame"
-		      :height 120)
-  (add-to-list 'default-frame-alist '(font . "fontset-frame"))	;; for daemon
-  (add-to-list 'face-font-rescale-alist '("*" . 1.0)))
+  (set-fontset-font "fontset-default" 'latin
+ 		    (font-spec :name "Inconsolata Nerd Font" :size 16))
+  (set-fontset-font "fontset-default" 'han
+ 		    (font-spec :name "Inconsolata Nerd Font" :size 16))
+  (set-fontset-font "fontset-default" 'kana
+ 		    (font-spec :name "Noto Sans Mono CJK JP" :size 16))
+  (set-fontset-font "fontset-default" 'hangul
+ 		    (font-spec :name "D2Coding" :size 16))
+  (set-frame-font "fontset-default" nil t))
 
 ;; theme
 (use-package monokai-theme
@@ -144,12 +143,12 @@
   (load-theme 'monokai t))
 
 ;; fill column indicator
-(use-package fill-column-indicator
-  :config
-  (setq fci-rule-width 1)
-  (setq fci-rule-color "dark blue")
-  (setq-default fill-column 80)
-  (add-hook 'after-change-major-mode-hook 'fci-mode))
+;(use-package fill-column-indicator
+;  :config
+;  (setq fci-rule-width 1)
+;  (setq fci-rule-color "dark blue")
+;  (setq-default fill-column 80)
+;  (add-hook 'after-change-major-mode-hook 'fci-mode))
 
 ;; toggle word wrap
 (global-set-key (kbd "C-t") 'visual-line-mode)
@@ -233,7 +232,7 @@
   :config
   (global-whitespace-mode 1)
   (setq whitespace-style
-	'(face spaces tabs newline space-mark tab-mark newline-mark))
+	'(face tabs newline space-mark tab-mark newline-mark))
   (setq whitespace-display-mappings
 	'(
 	  (space-mark 32 [183] [46])	; space 32 「 」, 183 moddle dot 「·」,
@@ -360,8 +359,7 @@
   (setq helm-split-window-inside-p t
 	helm-move-to-line-cycle-in-source t
 	helm-ff-search-library-in-sexp t
-	helm-scroll-amount 8
-	helm-M-x-fuzzy-match t
+	helm-scroll-amount 8	helm-M-x-fuzzy-match t
 	helm-buffers-fuzzy-matching t
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t)
@@ -393,6 +391,20 @@
    ("C-, af" . helm-do-ag-this-file)
    ("C-, ab" . helm-do-ag-buffers)
    ("C-, ao" . helm-ag-pop-stack)))
+
+;; fzf
+(use-package fzf
+  :defer t
+  :config
+  (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        fzf/grep-command "rg --no-heading -nH"
+        fzf/position-bottom t
+        fzf/window-height 15)
+  :bind
+  ;; Don't forget to set keybinds!
+  )
 
 ;; helm-swoop
 (use-package helm-swoop
@@ -526,15 +538,15 @@
   (setq cscope-option-do-not-update-database t)
   :bind
   (:map c-mode-base-map
-   ("C-, cs" . helm-cscope-find-this-symbol)
-   ("C-, cg" . helm-cscope-find-global-definition)
-   ("C-, cd" . helm-cscope-find-called-this-function)
-   ("C-, cc" . helm-cscope-find-calling-this-function)
-   ("C-, ct" . helm-cscope-find-this-text-string)
-   ("C-, ce" . helm-cscope-find-egrep-pattern)
-   ("C-, cf" . helm-cscope-find-this-file)
-   ("C-, ci" . helm-cscope-find-files-including-file)
-   ("C-, co" . helm-cscope-pop-mark)))
+   ("C-. cs" . helm-cscope-find-this-symbol)
+   ("C-. cg" . helm-cscope-find-global-definition)
+   ("C-. cd" . helm-cscope-find-called-this-function)
+   ("C-. cc" . helm-cscope-find-calling-this-function)
+   ("C-. ct" . helm-cscope-find-this-text-string)
+   ("C-. ce" . helm-cscope-find-egrep-pattern)
+   ("C-. cf" . helm-cscope-find-this-file)
+   ("C-. ci" . helm-cscope-find-files-including-file)
+   ("C-. co" . helm-cscope-pop-mark)))
 
 ;; global
 (use-package helm-gtags
@@ -600,6 +612,7 @@
 ;; lsp-java
 (use-package lsp-java
   :defer t
+  :init
   (add-hook 'java-mode-hook 'lsp-deferred)
   :config
   (global-set-key (kbd "C-. g o") 'xref-pop-marker-stack))
@@ -754,6 +767,7 @@
 ;; org
 (use-package org
   :defer t
+  ;:straight
   :config
   ;; basic
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -823,7 +837,8 @@
 		     (org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
 		     (org-agenda-start-day "+1d")))
 	    (todo ""
-		  ((org-agenda-todo-ignore-scheduled 'future)))))))
+		  ((org-agenda-prefix-format "%(let ((deadline (org-get-deadline-time (point)))) (if deadline (format-time-string \"%Y-%m-%d\" deadline) \"          \")) ")
+		   (org-agenda-todo 'future)))))))
 
   ;; capture
   (defvar org-agenda-inbox-file (expand-file-name "Inbox.org" org-agenda-dir))
@@ -884,12 +899,19 @@
     (setq org-agenda-files
 	  (directory-files-recursively org-agenda-dir "\\.org$"))
     (org-agenda-redo t))
+
+  (defun b/org-insert-subitem ()
+    (interactive)
+    (command-execute 'org-insert-item)
+    (command-execute 'org-indent-item))
+
   :bind
   (("\C-ca" . org-agenda)
    ("\C-cl" . org-store-link)
    ("\C-cc" . org-capture)
    ("\C-cb" . org-iswitchb)
    ("\C-cr" . org-remember)
+   ("C-M-<return>" . b/org-insert-subitem)
 ;   :map org-agenda-mode-map
 ;   ("r" . b/org-agenda-redo)
    ))
@@ -909,6 +931,13 @@
 			    "2020-09-30"
 			    "2020-10-01" "2020-10-02" "2020-10-09"
 			    "2020-12-25")))
+
+;; org noter
+(use-package org-noter
+  :defer t
+  :after org
+  :config
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; calendar
@@ -965,10 +994,10 @@
 ;;; latex
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auctex
-(use-package auctex
-  :defer t
-  :config
-  (load "auctex.el" nil t t))
+;(use-package auctex
+;  :defer t
+;  :config
+;  (load "auctex.el" nil t t))
 
 ;; latex preview pane
 (use-package latex-preview-pane
@@ -1141,10 +1170,10 @@
 	  "^Cc")))
 
 ;; epa-file for encryption
-(use-package epa-file
-  :straight nil
-  :config
-  (epa-file-enable))
+;(use-package epa-file
+;  :straight nil
+;  :config
+;  (epa-file-enable))
 
 ;; notmuch
 (use-package notmuch
