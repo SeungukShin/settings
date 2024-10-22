@@ -41,6 +41,8 @@ Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 " icon
 Plug 'ryanoasis/vim-devicons'
+" color
+Plug 'powerman/vim-plugin-AnsiEsc'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -116,7 +118,11 @@ let g:mapleader=" "
 nmap <leader>w :w<cr>
 
 " Use the system clipboard
-set clipboard=unnamedplus
+if system('uname -s') == "Darwin\n"
+	set clipboard=unnamed
+else
+	set clipboard=unnamedplus
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " User Interface
