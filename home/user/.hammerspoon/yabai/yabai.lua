@@ -1,38 +1,30 @@
 local Yabai = {
-   name = "Yabai",
-   version = "1.0",
-   author = "Seunguk Shin <seunguk.shin@gmail.com>",
-   license = "MIT - https://opensource.org/licenses/MIT",
+  name = 'Yabai',
+  version = '1.0',
+  author = 'Seunguk Shin <seunguk.shin@gmail.com>',
+  license = 'MIT - https://opensource.org/licenses/MIT',
 
-   -- configuration
-   yabai = '/opt/homebrew/bin/yabai',
-   icon_size = 24,
-   notch_display = 1, -- index in yabai, 0 to ignore
-   refresh_timer = 0, -- in seconds, 0 to disable the timer
-   renames = { -- rename table
-     ['MSTeams'] = 'Microsoft Teams',
-   },
+  -- configuration
+  yabai = '/opt/homebrew/bin/yabai',
+  icon_size = 24,
+  notch_display = 1, -- index in yabai, 0 to ignore
+  refresh_timer = 0, -- in seconds, 0 to disable the timer
+  places = {}, -- place table - places[app name] = space label
+  renames = { -- rename table
+    ['MSTeams'] = 'Microsoft Teams',
+  },
 
-   -- internal data
-   log = hs.logger.new("Yabai", "debug"),
-
-   displays = {}, -- display index table - displays[display index] = {x=x, y=y, w=w, h=h}
-
-   labels = {}, -- space index table - labels[label] = {index=index, visible=true/false}
-   labels_size = 0, -- size of labels
-
-   apps = {}, -- app id table - apps[space index][app] = {name=name, id=id}
-   apps_size = 0, -- size of apps
-
-   canvases = {}, -- canvas table
-   ids = {}, -- window id table
-
-   timer = nil, -- refresh timer
-
-   screenWatcher = nil,
-   spaceWatcher = nil,
-   appWatcher = nil,
+  -- internal data
+  log = hs.logger.new('Yabai', 'info'),
 }
+
+-- add place table item
+-- name: app name
+-- label: space label
+-- return: none
+function Yabai:addPlaceForApp(name, label)
+  self.places[name] = 'label-' .. tostring(label)
+end
 
 -- clear prefix key status
 -- return: none
@@ -115,7 +107,7 @@ end
 -- cb: callback function
 -- return: none
 function Yabai:destroyActiveSpace(cb)
-  spaceLabel = self:query("--spaces --space", "label")
+  spaceLabel = self:query('--spaces --space', 'label')
   self:run({'-m', 'space', '--destroy', spaceLabel}, cb)
 end
 
@@ -172,7 +164,7 @@ end
 -- cb: callback function
 -- return: none
 function Yabai:showSpaceInActiveDisplay(space, cb)
-  display = self:query("--displays --display", "index")
+  display = self:query('--displays --display', 'index')
   self:run({'-m', 'space', 'label-' .. tostring(space), '--display', tostring(display)}, function()
       self:run({'-m', 'display', '--space', 'label-' .. tostring(space)}, cb)
   end)
@@ -184,7 +176,7 @@ end
 -- cb: callback function
 -- return: none
 function Yabai:showWindowIdInDisplay(windowId, display, cb)
-  spaceIndex = self:query("--windows --window " .. tostring(windowId), "space")
+  spaceIndex = self:query('--windows --window ' .. tostring(windowId), 'space')
   self:run({'-m', 'space', tostring(spaceIndex), '--display', tostring(display)}, function()
       self:run({'-m', 'display', '--space', tostring(spaceIndex)}, function()
 	  self:run({'-m', 'windows', '--focus', tostring(windowId)}, cb)
@@ -198,7 +190,6 @@ end
 function Yabai:toggleFullscreen(cb)
   self:run({'-m', 'window', '--toggle', 'zoom-fullscreen'}, cb)
 end
-
 
 --------------------------------------------------------------------------------
 -- display
@@ -251,9 +242,10 @@ function Yabai:showCanvases()
   for _, c in pairs(self.canvases) do
     c:mouseCallback(function(canvas, event, id, x, y)
 	-- find display
-	local dispaly
+	local dispaly = nil
 	for k, v in pairs(self.canvases) do
-	  if v == canvas then display = k end
+	  self.log.d('canvas:', k, v, canvas)
+	  if v:topLeft().x == canvas:topLeft().x then display = k end
 	end
 	-- find window
 	local window = self.ids[math.floor(x / self.icon_size) + 1]
@@ -303,7 +295,7 @@ function Yabai:displaySpaces()
     local labelText = hs.styledtext.new(string.sub(k, 7), {
 					  font={size=20},
 					  color={red=0, green=0, blue=0, alpha=alpha},
-					  paragraphStyle={alignment="center"}
+					  paragraphStyle={alignment='center'}
     })
     self:insertElement({
 	type = 'text',
@@ -314,8 +306,8 @@ function Yabai:displaySpaces()
     table.insert(self.ids, tonumber(string.sub(k, 7)) * -1)
     index = index + 1
     -- add windows
-    if self.apps[self.labels[k].index] ~= nil then
-      for k, v in pairs(self.apps[self.labels[k].index]) do
+    if self.apps[k] ~= nil then
+      for k, v in pairs(self.apps[k]) do
 	local name = v.name
 	if self.renames[v.name] ~= nil then name = self.renames[v.name] end
 	local app = hs.appfinder.appFromName(name)
@@ -336,7 +328,7 @@ function Yabai:displaySpaces()
   end
   -- add key indicator
   self:insertElement({
-      type = "circle",
+      type = 'circle',
       strokeColor = {red=0, green=0, blue=0, alpha=0.5},
       fillColor = {red=0, green=0, blue=0, alpha=0.5},
       center = {x=self.icon_size*index-2, y=2},
@@ -358,10 +350,10 @@ function Yabai:syncApps()
   end
   local windows = hs.json.decode(output)
   for k, v in pairs(windows) do
-    if self.apps[v.space] == nil then
-      self.apps[v.space] = {}
+    if self.apps[self.spaces[v.space]] == nil then
+      self.apps[self.spaces[v.space]] = {}
     end
-    table.insert(self.apps[v.space], {name=v.app, id=v.id})
+    table.insert(self.apps[self.spaces[v.space]], {name=v.app, id=v.id})
     self.apps_size = self.apps_size + 1
   end
 end
@@ -371,6 +363,7 @@ end
 function Yabai:syncSpaces()
   -- reset spaces info.
   self.labels = {}
+  self.spaces = {}
   self.labels_size = 0
   -- import existing labels
   local output = self:execute(self.yabai .. ' -m query --spaces', 'r')
@@ -381,15 +374,18 @@ function Yabai:syncSpaces()
   for k, v in pairs(spaces) do
     if string.sub(v['label'], 1, 6) == 'label-' then
       self.labels[v['label']] = {index=v['index'], visible=v['is-visible']}
+      self.spaces[v['index']] = v['label']
       self.labels_size = self.labels_size + 1
     end
   end
   -- set new labels
   for k, v in pairs(spaces) do
     if string.sub(v['label'], 1, 6) ~= 'label-' then
+      self.log.d(k, v['label'], v['index'])
       local label = self:findUnusedLabel()
       self:run({'-m', 'space', tostring(v['index']), '--label', label}, nil)
       self.labels[label] = {index=v['index'], visible=v['is-visible']}
+      self.spaces[v['index']] = label
       self.labels_size = self.labels_size + 1
     end
   end
@@ -411,62 +407,113 @@ function Yabai:syncDisplays()
   end
 end
 
--- create new instance
--- return: new instance
-function Yabai:new(mods, key)
-  local _self = setmetatable({}, self)
-  self.__index = self
+-- replace apps
+-- return: none
+function Yabai:replaceApps()
+  for k, v in pairs(self.apps) do
+    for _, v in pairs(v) do
+      self.log.d('replace:', k, v.name)
+      if self.places[v.name] ~= nil and k ~= self.places[v.name] then
+	self:run({'-m', 'window', tostring(v.id), '--space', self.places[v.name]}, nil)
+      end
+    end
+  end
+  self:syncApps()
+  self:displaySpaces()
+end
 
-  _self.waitPrefix = true
-  _self.modal = hs.hotkey.modal.new()
+-- init instance
+-- mods: mods key for prefix
+-- key: normal key for prefix
+-- return: none
+function Yabai:init(mods, key)
+  -- set prefix key
+  self.waitPrefix = true
+  self.modal = hs.hotkey.modal.new()
   hs.hotkey.bind(mods, key, function()
-		   _self.waitPrefix = not _self.waitPrefix
-		   if _self.waitPrefix then
-		     _self.modal:exit()
+		   self.waitPrefix = not self.waitPrefix
+		   if self.waitPrefix then
+		     self.modal:exit()
 		   else
-		     _self.modal:enter()
+		     self.modal:enter()
 		   end
-		   _self:updateIndicator()
+		   self:updateIndicator()
   end)
 
-  _self:syncDisplays()
-  _self:syncSpaces()
-  _self:syncApps()
-  _self:displaySpaces()
+  -- sync displays, spaces, windows
+  self:syncDisplays()
+  self:syncSpaces()
+  self:syncApps()
+  -- display spaces
+  self:displaySpaces()
 
-  if _self.refresh_timer > 0 then
-    _self.timer = hs.timer.new(refresh_timer, function()
-				 _self:syncDisplay()
-				 _self:syncSpaces()
-				 _self:syncApps()
-				 _self:displaySpaces()
+  -- set refresh timer
+  if self.refresh_timer > 0 then
+    self.timer = hs.timer.new(refresh_timer, function()
+				self:syncDisplay()
+				self:syncSpaces()
+				self:syncApps()
+				self:displaySpaces()
     end)
-    _self.timer:start()
+    self.timer:start()
   end
 
-  _self.screenWatcher = hs.screen.watcher.new(function()
+  -- set display watcher
+  self.screenWatcher = hs.screen.watcher.new(function()
       self.log.d('screen watcher')
-      _self:syncDisplays()
-      _self:syncSpaces()
-      _self:syncApps()
-      _self:displaySpaces()
+      self:syncDisplays()
+      self:syncSpaces()
+      self:syncApps()
+      self:displaySpaces()
   end)
-  _self.screenWatcher:start()
+  self.screenWatcher:start()
 
-  _self.spaceWatcher = hs.spaces.watcher.new(function()
+  -- set space watcher
+  self.spaceWatcher = hs.spaces.watcher.new(function()
       self.log.d('space watcher')
-      _self:syncSpaces()
-      _self:syncApps()
-      _self:displaySpaces()
+      self:syncSpaces()
+      self:syncApps()
+      self:displaySpaces()
   end)
-  _self.spaceWatcher:start()
+  self.spaceWatcher:start()
 
-  _self.appWatcher = hs.application.watcher.new(function()
+  -- set window watcher
+  self.appWatcher = hs.application.watcher.new(function()
       self.log.d('app watcher')
-      _self:syncApps()
-      _self:displaySpaces()
+      self:syncApps()
+      self:displaySpaces()
   end)
-  _self.appWatcher:start()
+  self.appWatcher:start()
+end
+
+-- create new instance
+-- mods: mods key for prefix
+-- key: normal key for prefix
+-- return: new instance
+function Yabai:new(mods, key)
+  local _self = setmetatable({
+      -- internal data
+      displays = {}, -- display index table - displays[display index] = {x=x, y=y, w=w, h=h}
+
+      labels = {}, -- space label table - labels[label] = {index=index, visible=true/false}
+      spaces = {}, -- space index table - spaces[index] = label
+      labels_size = 0, -- size of labels
+
+      apps = {}, -- app id table - apps[space label][app] = {name=name, id=id}
+      apps_size = 0, -- size of apps
+
+      canvases = {}, -- canvas table - canvases[display index] = canvas
+      ids = {}, -- window id table
+
+      timer = nil, -- refresh timer
+
+      screenWatcher = nil,
+      spaceWatcher = nil,
+      appWatcher = nil,
+			     }, self)
+  self.__index = self
+
+  _self:init(mods, key)
 
   return _self
 end

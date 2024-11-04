@@ -1,84 +1,84 @@
 local AppRemap = require('app-remap')
 
-local keyboardApple = require('keyboard-apple-internal')
---local keyboardAdvantage2 = require('keyboard-kinesis-advantage2')
-local keyboardGlobal = require('keyboard-global')
-
-local mouseMagic = require('mouse-magic-mouse')
-local mouseGlobal = require('mouse-global')
-
 local Yabai = require('yabai/yabai')
 
 local log = hs.logger.new("init", "debug")
-local appNames = {
-	[hs.application.watcher.activated] = hs.application.frontmostApplication():name(),
-	[hs.application.watcher.deactivated] = ""
-}
-local updatedAppNames = {
-	[hs.application.watcher.activated] = true,
-	[hs.application.watcher.deactivated] = true
-}
+
+
+local keyboardApple = require('keyboard-apple-internal')
+--local keyboardAdvantage2 = require('keyboard-kinesis-advantage2')
+local keyboardGlobal = require('keyboard-global')
+local mouseMagic = require('mouse-magic-mouse')
+local mouseGlobal = require('mouse-global')
+
+
+
 
 -- change shift+space to option+space
-local changeInputMethod = AppRemap.new("changeInputMethod")
-changeInputMethod:addAppName('Emacs')
-changeInputMethod:addAppName('Alacritty')
-changeInputMethod:addAppName('kitty')
-changeInputMethod:addAppName('DCV Viewer')
-changeInputMethod:addAppName('Tabby')
-changeInputMethod:setContained(false)
-changeInputMethod:bind({"shift"}, "space", {"option"}, "space")
-changeInputMethod:apply(nil, appNames[hs.application.watcher.activated])
+local remapIME = AppRemap:new('remapIME')
+remapIME:setAppNames({'Emacs', 'Alacritty', 'kitty', 'DCV Viewer', 'Tabby'})
+remapIME:setContained(false)
+
+remapIME:bind({'shift'}, 'space', {'option'}, 'space')
+
+remapIME:start()
+
 
 -- change ctrl to cmd for specific keys
-local changeCtrlCmd = AppRemap.new("changeCtrlCmd")
-changeCtrlCmd:addAppName('DCV Viewer')
-changeCtrlCmd:addAppName('Emacs')
-changeCtrlCmd:addAppName('JetBrains Client')
-changeCtrlCmd:addAppName('Code')
-changeCtrlCmd:addAppName('Alacritty')
-changeCtrlCmd:addAppName('kitty')
-changeCtrlCmd:addAppName('Firefox')
-changeCtrlCmd:addAppName('Tabby')
-changeCtrlCmd:setContained(false)
+local remapCtrlCmd = AppRemap:new('remapCtrlCmd')
+remapCtrlCmd:setAppNames({'DCV Viewer', 'Emacs', 'JetBrains Client', 'Code',
+			  'Alacritty', 'kitty', 'Firefox', 'Tabby'})
+remapCtrlCmd:setContained(false)
 
---changeCtrlCmd:bind({"ctrl"}, "c", {"cmd"}, "c")
---changeCtrlCmd:bind({"ctrl"}, "x", {"cmd"}, "x")
---changeCtrlCmd:bind({"ctrl"}, "v", {"cmd"}, "v")
---changeCtrlCmd:bind({"ctrl"}, "f", {"cmd"}, "f")
-changeCtrlCmd:bind({"ctrl"}, "l", {"cmd"}, "l")
-changeCtrlCmd:bind({"ctrl"}, "t", {"cmd"}, "t")
---changeCtrlCmd:bind({"ctrl"}, "w", {"cmd"}, "w")
+--remapCtrlCmd:bind({'ctrl'}, 'c', {'cmd'}, 'c')
+--remapCtrlCmd:bind({'ctrl'}, 'x', {'cmd'}, 'x')
+--remapCtrlCmd:bind({'ctrl'}, 'v', {'cmd'}, 'v')
+--remapCtrlCmd:bind({'ctrl'}, 'f', {'cmd'}, 'f')
+remapCtrlCmd:bind({'ctrl'}, 'l', {'cmd'}, 'l')
+remapCtrlCmd:bind({'ctrl'}, 't', {'cmd'}, 't')
+--remapCtrlCmd:bind({'ctrl'}, 'w', {'cmd'}, 'w')
 
-changeCtrlCmd:bind({"ctrl"}, "p", {""}, "up")
-changeCtrlCmd:bind({"ctrl"}, "n", {""}, "down")
-changeCtrlCmd:bind({"ctrl"}, "b", {""}, "left")
-changeCtrlCmd:bind({"ctrl"}, "f", {""}, "right")
-changeCtrlCmd:bind({"option"}, "p", {"option"}, "up")
-changeCtrlCmd:bind({"option"}, "n", {"option"}, "down")
-changeCtrlCmd:bind({"option"}, "b", {"option"}, "left")
-changeCtrlCmd:bind({"option"}, "f", {"option"}, "right")
-changeCtrlCmd:bind({"ctrl"}, "v", {""}, "pagedown")
-changeCtrlCmd:bind({"option"}, "v", {""}, "pageup")
-changeCtrlCmd:bind({"ctrl"}, "a", {"cmd"}, "left")
-changeCtrlCmd:bind({"ctrl"}, "e", {"cmd"}, "right")
+remapCtrlCmd:bind({'ctrl'}, 'p', {''}, 'up')
+remapCtrlCmd:bind({'ctrl'}, 'n', {''}, 'down')
+remapCtrlCmd:bind({'ctrl'}, 'b', {''}, 'left')
+remapCtrlCmd:bind({'ctrl'}, 'f', {''}, 'right')
+remapCtrlCmd:bind({'option'}, 'p', {'option'}, 'up')
+remapCtrlCmd:bind({'option'}, 'n', {'option'}, 'down')
+remapCtrlCmd:bind({'option'}, 'b', {'option'}, 'left')
+remapCtrlCmd:bind({'option'}, 'f', {'option'}, 'right')
+remapCtrlCmd:bind({'ctrl'}, 'v', {''}, 'pagedown')
+remapCtrlCmd:bind({'option'}, 'v', {''}, 'pageup')
+remapCtrlCmd:bind({'ctrl'}, 'a', {'cmd'}, 'left')
+remapCtrlCmd:bind({'ctrl'}, 'e', {'cmd'}, 'right')
 
-changeCtrlCmd:bind({"option"}, "w", {"cmd"}, "c")
-changeCtrlCmd:bind({"ctrl"}, "w", {"cmd"}, "x")
-changeCtrlCmd:bind({"ctrl"}, "y", {"cmd"}, "v")
+remapCtrlCmd:bind({'option'}, 'w', {'cmd'}, 'c')
+remapCtrlCmd:bind({'ctrl'}, 'w', {'cmd'}, 'x')
+remapCtrlCmd:bind({'ctrl'}, 'y', {'cmd'}, 'v')
 
-changeCtrlCmd:bind({"ctrl"}, "d", {""}, "forwarddelete")
-changeCtrlCmd:bind({"ctrl"}, "/", {"cmd"}, "z")
-changeCtrlCmd:bind({"ctrl"}, "s", {"cmd"}, "f")
+remapCtrlCmd:bind({'ctrl'}, 'd', {''}, 'forwarddelete')
+remapCtrlCmd:bind({'ctrl'}, '/', {'cmd'}, 'z')
+remapCtrlCmd:bind({'ctrl'}, 's', {'cmd'}, 'f')
 
-changeCtrlCmd:apply(nil, appNames[hs.application.watcher.activated])
+remapCtrlCmd:start()
+--remapCtrlCmd:apply(nil, appNames[hs.application.watcher.activated])
 
 
-
+-- yabai
 local yabai = Yabai:new({'alt'}, 't');
+yabai:addPlaceForApp('Slack', 2)
+yabai:addPlaceForApp('Alacritty', 3)
+yabai:addPlaceForApp('Firefox', 4)
+yabai:addPlaceForApp('Orion', 5)
+yabai:addPlaceForApp('Logseq', 6)
+yabai:addPlaceForApp('Microsoft Teams', 7)
+yabai:addPlaceForApp('Microsoft Outlook', 8)
+yabai:addPlaceForApp('Emacs', 9)
+yabai:replaceApps()
 
 yabai:bind({}, 'escape', function() yabai:clear() end)
-yabai:bind({}, 'r', function() yabai:run({'--restart-service'}, function() ReloadConfiguration:start() end); yabai:clear() end)
+yabai:bind({}, 'r', function() yabai:run({'--restart-service'}, function()
+	ReloadConfiguration:start() end); yabai:clear() end)
+yabai:bind({}, 's', function() yabai:replaceApps(); yabai:clear() end)
 yabai:bind({}, 't', function() yabai:focusPreviousWindow(nil); yabai:clear() end)
 
 yabai:bind({}, 'c', function() yabai:createSpace(nil); yabai:clear() end)
@@ -105,35 +105,22 @@ for i = 1, 10 do
 end
 
 
-
-
---local item = hs.menubar.new()
---item:setIcon(appImage:bitmapRepresentation({w=16,h=16}, true))
---item:setIcon(appImage:setSize({w=32,h=32}))
---local braket_l = ".###.\n.#...\n.###."
---item:setIcon(hs.image.imageFromASCII(braket_l):setSize({w=64,h=64}))
---app:insertElement({
---      type = "rectangle",
---      action = "fill",
---      frame = {x=0,y=0,w=32,h=32},
---}, 1)
-
-
--- alt tab
-switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter{},
-				  {
-				     textSize=10,
-				     selectedThumbnailSize=256,
-				     backgroundColor={0.3,0.3,0.3,0.7},
-				     highlightColor={0.3,0.3,0.3,0.0},
-				     titleBackgroundColor={0.3,0.3,0.3,0.0},
-				  }
+-- switcher
+local switcher = hs.window.switcher.new(hs.window.filter.new():setDefaultFilter{},
+					{
+					  textSize=10,
+					  selectedThumbnailSize=256,
+					  backgroundColor={0.3,0.3,0.3,0.7},
+					  highlightColor={0.3,0.3,0.3,0.0},
+					  titleBackgroundColor={0.3,0.3,0.3,0.0},
+					}
 )
 hs.hotkey.bind('alt', 'tab', function() switcher:next() end)
 hs.hotkey.bind('alt-shift', 'tab', function() switcher:previous() end)
 
+
 -- expose
-expose = hs.expose.new(nil,
+local expose = hs.expose.new(nil,
 		       {
 			  backgroundColor={0.3,0.3,0.3,0.7},
 			  highlightColor={0.3,0.3,0.3,0.0},
@@ -143,60 +130,49 @@ expose = hs.expose.new(nil,
 hs.hotkey.bind('cmd', 'e', function() expose:toggleShow() end)
 
 
-
-
-
 -- application watcher
 function applicationWatch(appName, eventType, appObject)
-	if (eventType == hs.application.watcher.activated or eventType == hs.application.watcher.deactivated) then
-		appNames[eventType] = appName
-		updatedAppNames[eventType] = not updatedAppNames[eventType]
-		if (updatedAppNames[hs.application.watcher.activated] == updatedAppNames[hs.application.watcher.deactivated]) then
-			changeInputMethod:apply(appNames[hs.application.watcher.deactivated], appNames[hs.application.watcher.activated])
-			changeCtrlCmd:apply(appNames[hs.application.watcher.deactivated], appNames[hs.application.watcher.activated])
-		end
-	end
-	--if (eventType == hs.application.watcher.activated) then
-	--	if (appName == 'Alacritty' or appName == 'Emacs') then
-	--		log.d(appName)
-	--		local win = hs.window.focusedWindow()
-	--		if (not win:screen():name():find('Built-in', 1, true)) then
-	--			win:maximize()
-	--		end
-	--	elseif (appName == 'AmazonConnections') then
-	--		log.d(appName)
-	--		appObject:kill()
-	--	end
-	--end
+  -- arrange or kill the app
+  if (eventType == hs.application.watcher.activated) then
+    if (appName == 'Alacritty' or appName == 'Emacs') then
+      log.d(appName)
+      local win = hs.window.focusedWindow()
+      if (not win:screen():name():find('Built-in', 1, true)) then
+  	win:maximize()
+      end
+    elseif (appName == 'AmazonConnections') then
+      log.d(appName)
+      appObject:kill()
+    end
+  end
 end
-appWatcher = hs.application.watcher.new(applicationWatch)
-appWatcher:start()
+--local appWatcher = hs.application.watcher.new(applicationWatch)
+--appWatcher:start()
+
 
 -- sleep watcher
 function sleepWatch(eventType)
-	if (eventType == hs.caffeinate.watcher.systemDidWake) then
-		log.d('wakeup')
-		keyboardApple:register()
-		--keyboardAdvantage2:register()
-		mouseMagic:register()
-	end
+  if (eventType == hs.caffeinate.watcher.systemDidWake) then
+    keyboardApple:register()
+    --keyboardAdvantage2:register()
+    mouseMagic:register()
+  end
 end
-sleepWatcher = hs.caffeinate.watcher.new(sleepWatch)
+local sleepWatcher = hs.caffeinate.watcher.new(sleepWatch)
 sleepWatcher:start()
+
 
 -- usb watcher
 function usbCall()
-	log.d('usb timer')
-	--keyboardAdvantage2:register()
+  keyboardAdvantage2:register()
 end
 
 function usbWatch(data)
-	if (data['eventType'] == 'added' and data['vendorID'] == 0x29ea and data['productID'] == 0x0102) then
-		log.d('usb:', data['productName'])
-		usbTimer = hs.timer.delayed.new(1, usbCall)
-		usbTimer:start()
-	end
+  if (data['eventType'] == 'added' and data['vendorID'] == 0x29ea and data['productID'] == 0x0102) then
+    log.d('usb:', data['productName'])
+    usbTimer = hs.timer.delayed.new(1, usbCall)
+    usbTimer:start()
+  end
 end
-usbWatcher = hs.usb.watcher.new(usbWatch)
-usbWatcher:start()
-
+--local usbWatcher = hs.usb.watcher.new(usbWatch)
+--usbWatcher:start()
